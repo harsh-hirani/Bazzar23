@@ -52,7 +52,5 @@
     background: rgba(150,150,150,0.68);
 }
 #chartdiv {
-    width: 90%;
-}
-#chartdiv canvas{
+    width: 95%;
 }

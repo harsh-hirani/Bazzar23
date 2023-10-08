@@ -1,0 +1,19 @@
+<div id="chartContainer">
+    <div id="chartdiv"></div>
+</div>
+<div id="actions">
+
+    <div class="buy-btn">
+        <button type="button">
+            <i class="bi bi-graph-up-arrow"></i>
+            Buy
+        </button>
+    </div>
+    <div class="sell-btn">
+        <button type="button ">
+            <i class="bi bi-graph-down-arrow"></i>
+            Sell
+        </button>
+    </div>
+
+</div>

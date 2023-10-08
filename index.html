@@ -32,24 +32,24 @@
                         <div class="name">NAME</div>
                         <div class="hr ruler"></div>
                         <div class="link-list">
-                            <div class="links c1">
+                            <div class="links c1" onclick="changeto('portfolio');">
                                 <i class="bi bi-table"></i>
                                 Portfolio
                             </div>
-                            <div class="links c2">
+                            <div class="links c2" onclick="changeto('news');">
                                 <i class="bi bi-newspaper"></i> 
                                 News
                             </div>
-                            <div class="links c3">
+                            <div class="links c3" onclick="changeto('ranking');">
                                 <i class="bi bi-list-stars"></i> 
                                 Ranking
                             </div>
                             <div class="hr ruler"></div>
-                            <div class="links c4">
+                            <div class="links c4" onclick="changeto('query');">
                                 <i class="bi bi-question-circle"></i> 
                                 Query
                             </div>
-                            <div class="links c5">
+                            <div class="links c5" onclick="changeto('contact');">
                                 <i class="bi bi-person-circle"></i> 
                                 Contact
                             </div>
@@ -61,8 +61,27 @@
                     </div>
                     <div id="info"></div>
                     <div id="chart">
-                        <div id="chartContainer" class="">
-                            <div id="chartdiv"></div>
+                        <div id="mainStock" class="active">
+                            <div id="chartContainer">
+                                <div id="chartdiv"></div>
+                            </div>
+                            <div id="actions">
+                                <div class="buy-btn">
+                                    <button type="button">
+                                        <i class="bi bi-graph-up-arrow"></i>
+                                        Buy
+                                    </button>
+                                </div>
+                                <div class="sell-btn">
+                                    <button type="button ">
+                                        <i class="bi bi-graph-down-arrow"></i>
+                                        Sell
+                                    </button>
+                                </div>
+                            
+                            </div>
+                            
+    
                         </div>
                         <div id="portfolio" > portfolio</div>
                         <div id="news">news</div>
@@ -71,7 +90,6 @@
                         <div id="contact">contact</div>
                         <!-- div# -->
                     </div>
-                    <div id="actions"></div>
                     <div id="stockList"></div>
                 </div>
             </main>
@@ -85,15 +103,16 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 <script>
-        document.getElementById("chartdiv").style.height = document.getElementById("chart").clientHeight+"px";
-        var showing = "chartContainer";
+        document.getElementById("chartdiv").style.height = document.getElementById("chartContainer").clientHeight+"px";
+        var showing = "mainStock";
     function changeto(e){
+        // console.log(e);
+        // console.log(showing);
         if(e==showing) return;
         document.getElementById(showing).classList.remove("active");
         document.getElementById(e).classList.add("active");
         showing = e;
     }
-    document.getElementById("chartContainer").classList.add("active");
     
 </script>
     <!-- am chart js -->
