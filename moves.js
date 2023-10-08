@@ -1,0 +1,1 @@
+document.getElementById("notification").classList.toggle("active")

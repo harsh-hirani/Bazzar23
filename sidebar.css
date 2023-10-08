@@ -1,0 +1,53 @@
+#sidebar{
+    display: flex;
+    flex-direction: column;
+}
+#sidebar .name {
+    width: 90%;
+    height: 70px;
+    font-size: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.name + .hr.ruler {
+    margin: 2px auto;
+}
+.hr.ruler{
+    width: 90%;
+    height: 1px;
+    background-color: #000;
+    border-radius: 1px;
+
+}
+#sidebar .link-list {
+    margin: 20px auto;
+    width: 90%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.link-list .links{
+    width: 100%;
+    min-height: 55px;
+    background: rgba(200,200,200,0.5);
+    margin-top: 10px;
+    line-height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 25px;
+}
+.links i {
+    margin-left: 12px;
+    margin-right: 14px;
+    font-size: 1.5rem;
+}
+.link-list .links:hover{
+    background: rgba(150,150,150,0.68);
+}
