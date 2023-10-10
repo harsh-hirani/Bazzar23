@@ -109,6 +109,7 @@
     grid-template-columns: 1fr;
     grid-template-rows: 1.1fr 0.2fr;
     position: absolute;
+    overflow-y: auto;
 }
 #mainStock #chartContainer{
     grid-area: 1/1/2/-1;
@@ -131,7 +132,9 @@
     transform: translateX(0%);
     opacity: 1;
 }
-
+#chartcontrols div:nth-child(2), #chartcontrols div:nth-child(3){
+   /* z-index: ; */
+}
 #actions {
     display: flex;
     width: 100%;
@@ -162,7 +165,7 @@
     /* laptop */
     #game {
         display: grid;
-        grid-template-rows: 0.2fr 1fr;
+        grid-template-rows: 0.1fr 1fr;
         grid-template-columns: 1.5fr 2.3fr 7.5fr;
     }
 
@@ -200,9 +203,12 @@
     }
 
     #chart {
-        min-height: 400px;
+        min-height: 500px;
+        height:  auto;
     }
-
+    #mainStock #actions {
+        margin-top: 20px;
+    }
     #actions {
         min-height: 30px;
     }

@@ -10,8 +10,20 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="layout.css">
-    <link rel="stylesheet" href="sidebar.css">
+    <!-- <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="sidebar.css"> -->
+    <style>
+        #chartcontrols {
+  height: auto;
+  padding: 5px 5px 0 16px;
+  max-width: 100%;
+    }
+    <?php 
+    include 'layout.css';
+    include 'sidebar.css';
+    ?>
+
+    </style>
     <title>Bazzar23 - Bulls & Bears</title>
 </head>
 
@@ -63,6 +75,7 @@
                     <div id="chart">
                         <div id="mainStock" class="active">
                             <div id="chartContainer">
+                                <div id="chartcontrols"></div>
                                 <div id="chartdiv"></div>
                             </div>
                             <div id="actions">
@@ -90,7 +103,9 @@
                         <div id="contact">contact</div>
                         <!-- div# -->
                     </div>
-                    <div id="stockList"></div>
+                    <div id="stockList">
+                        
+                    </div>
                 </div>
             </main>
         </div>
@@ -118,8 +133,13 @@
     <!-- am chart js -->
     <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/stock.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
-    <script src="chartload.js"></script>
+    <!-- <script src="chartload.js"></script> -->
+
+    <script>
+<?php include 'finalchartstock.js';?>
+    </script>
 </body>
 
 </html>
