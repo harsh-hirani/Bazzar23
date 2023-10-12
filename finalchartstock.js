@@ -52,8 +52,8 @@ var valueAxis = mainPanel.yAxes.push(am5xy.ValueAxis.new(root, {
 
 var dateAxis = mainPanel.xAxes.push(am5xy.GaplessDateAxis.new(root, {
   baseInterval: {
-    timeUnit: "minute",
-    count: 30
+    timeUnit: "day",
+    count: 1
   },
   renderer: am5xy.AxisRendererX.new(root, {}),
   tooltip: am5.Tooltip.new(root, {})
@@ -282,59 +282,60 @@ var toolbar = am5stock.StockToolbar.new(root, {
 })
 
 // data
-var data = [
+// var data = 
+var du = [
   { Date: 1617192000000, Open: 515.67, High: 528.13, Low: 515.44, Close: 521.66, Volume: 3503100 },
-  
+
   {
-    Date: 1629892800000,
-    Open: 550.16,
-    High: 552.84,
-    Low: 545.45,
-    Close: 547.58,
-    Volume: 2065600
+      Date: 1629892800000,
+      Open: 550.16,
+      High: 552.84,
+      Low: 545.45,
+      Close: 547.58,
+      Volume: 2065600
   },
   {
-    Date: 1629896400000,
-    Open: 552.12,
-    High: 554.76,
-    Low: 549.28,
-    Close: 553.20,
-    Volume: 1953400
+      Date: 1629896400000,
+      Open: 552.12,
+      High: 554.76,
+      Low: 549.28,
+      Close: 553.20,
+      Volume: 1953400
   },
   {
-    Date: 1629900000000,
-    Open: 553.30,
-    High: 556.42,
-    Low: 551.10,
-    Close: 555.88,
-    Volume: 2041200
+      Date: 1629900000000,
+      Open: 553.30,
+      High: 556.42,
+      Low: 551.10,
+      Close: 555.88,
+      Volume: 2041200
   },
   {
-    Date: 1629903600000,
-    Open: 556.00,
-    High: 559.80,
-    Low: 554.50,
-    Close: 558.75,
-    Volume: 2124500
+      Date: 1629903600000,
+      Open: 556.00,
+      High: 559.80,
+      Low: 554.50,
+      Close: 558.75,
+      Volume: 2124500
   },
   {
-    Date: 1696950593558,
-    Open: 550.00,
-    High: 659.80,
-    Low: 424.50,
-    Close: 458.75,
-    Volume: 2124500
+      Date: 1696950593558,
+      Open: 550.00,
+      High: 659.80,
+      Low: 424.50,
+      Close: 458.75,
+      Volume: 2124500
   },
   {
-    Date: 1696960593558,
-    Open: 458.00,
-    High: 659.80,
-    Low: 424.50,
-    Close: 610.75,
-    Volume: 2124500
+      Date: 1696960593558,
+      Open: 458.00,
+      High: 659.80,
+      Low: 424.50,
+      Close: 610.75,
+      Volume: 2124500
   }
-  
-  
+
+
 ];
 
 var tooltip = am5.Tooltip.new(root, {
@@ -387,8 +388,17 @@ function makeEvent(date, letter, color, description) {
 
 
 // set data to all series
-valueSeries.data.setAll(data);
-volumeSeries.data.setAll(data);
-sbSeries.data.setAll(data);
+// var du = []
+$.post("http://localhost/bazzar/server/stockapi.php",{stockId:"axis"},(data)=>{
+  du = data.data;
+  console.log(du);
+  valueSeries.data.setAll(du);
+  volumeSeries.data.setAll(du);
+  sbSeries.data.setAll(du);
+});
+
+  valueSeries.data.setAll(du);
+  volumeSeries.data.setAll(du);
+  sbSeries.data.setAll(du);
 
 }); // end am5.ready()

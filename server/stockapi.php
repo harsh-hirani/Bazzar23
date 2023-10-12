@@ -10,6 +10,9 @@ if (isset($_POST['stockId'])) {
         $load = array() ;
         for($i=0;$i<mysqli_num_rows($data);$i++){
             $dump = mysqli_fetch_assoc($data);
+            foreach ($dump as $key => $value) {
+                $dump[$key] = (int)$value;
+            }
             $load[$i] = $dump;
         }
         echo json_encode(["status" => $status, "data" => $load]);

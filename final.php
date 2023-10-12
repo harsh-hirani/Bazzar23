@@ -131,6 +131,7 @@
     
 </script>
     <!-- am chart js -->
+    <script src="http://localhost/globle/jq/jquery-3.6.0.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/stock.js"></script>
