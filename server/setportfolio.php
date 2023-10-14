@@ -2,7 +2,7 @@
 include 'conn.php';
 header('Content-Type:application/json');
 $status = 'false';  
-$username = $_POST['username'];
+$username = 'name';
 $quantity = $_POST['quantity'];
 $stockId = $_POST['stockId'];
 $operation = $_POST['operation'];
@@ -21,7 +21,7 @@ if ($operation == 'buy') {
     $data = mysqli_query($conn,$sql);
     if ($data) {
         $status = 'true';
-        echo json_encode(["status" => $status, "data" => array("message" => "success")]);
+        echo json_encode(["status" => $status, "data" => array("message" => "success","price" => $value,"quantity" => $quantity)]);
     }else{
         echo json_encode(["status" => $status, "data" => array("error" => mysql_error($conn))]);
     }
@@ -61,7 +61,7 @@ if ($operation == 'buy') {
             $i++;
         }
         // echo json_encode(["status" => $status, "load" => $load]);
-        echo json_encode(["status" => $status, "data" => array("message" => "success")]);
+        echo json_encode(["status" => $status, "data" => array("message" => "success","price" => $value,"quantity" => ($quantity-$quantityLeft))]);
     }else{
         echo json_encode(["status" => $status, "data" => array("error" => mysql_error($conn))]);
     }
