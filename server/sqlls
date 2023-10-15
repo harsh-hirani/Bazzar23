@@ -1,0 +1,4 @@
+stock linear data;;
+-- CREATE TABLE `bazzar`.`stocklinear_hdfc` ( `id` INT(255) NOT NULL AUTO_INCREMENT , `datetime` BIGINT(20) NOT NULL , `buyOrSell` INT(2) NOT NULL , `quantity` INT(50) NOT NULL , `newPrice` INT(50) NOT NULL , `beforePrice` INT(50) NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+CREATE TABLE `bazzar`.`stocklinear_axis` ( `id` INT(255) NOT NULL AUTO_INCREMENT , `datetime` BIGINT(20) NOT NULL , `buyOrSell` INT(2) NOT NULL COMMENT 'buy = 0\r\nsell = 1' , `quantity` INT(200) NOT NULL , `newPrice` INT(50) NOT NULL , `beforePrice` INT(50) NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;

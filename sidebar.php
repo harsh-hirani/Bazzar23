@@ -1,7 +1,7 @@
 <div class="name">
     <div class="investedMoney">
-        <p>Total Investment</p>
-        <p class="money"><span id="currentBalanceBox">5300</span> Rs.</p>
+        <p>Current Balance:</p>
+        <p class="money"><span id="currentBalanceBox">--.--</span> Rs.</p>
     </div>
     <div class="growth">
         +1.04%

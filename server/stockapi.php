@@ -1,13 +1,10 @@
 <?php
+include 'conn.php'; 
 header('Content-Type:application/json');
-$arry = array(
-    0=>'axis',
-    1=>'hdfc'
-);
-if (isset($_POST['stockId'])) {
-    $SQL = "SELECT time as Date,open as Open,high as High,low as Low,close as Close,volume as Volume FROM stock_profile_".$arry[$_POST['stockId']];
 
-    include 'conn.php'; 
+if (isset($_POST['stockId'])) {
+    $SQL = "SELECT time as Date,open as Open,high as High,low as Low,close as Close,volume as Volume FROM stock_profile_".$stockarray[$_POST['stockId']];
+
     $data = mysqli_query($conn,$SQL);
     if ($data) {
         $status = 'true';

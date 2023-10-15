@@ -122,7 +122,7 @@
     for($i=0;$i<12;$i++)
     {
     ?>
-    <div class="iteam" onclick="graphchange(this,'<?php echo $i;?>')">
+    <div class="iteam" onclick="graphchange(this,'<?php echo ($i+1);?>')">
         <div class="img">
             <img src="/download.png" alt="">
         </div>

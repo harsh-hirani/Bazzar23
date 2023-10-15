@@ -16,8 +16,9 @@ if ($data) {
         $dump = mysqli_fetch_assoc($data);
         
         $load['allowed'] = (int)$dump['total'];
-        $load['stock'] = (int)$stock;
-        $load['price'] = 50;
+        $load['stockId'] = (int)$stock;
+        $load['name'] = $stockarray[$stock];
+        $load['price'] = getValue($stock,$stockarray,$conn);
     
     echo json_encode(["status" => $status, "data" => $load]);
 

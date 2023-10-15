@@ -31,8 +31,8 @@ Buy</button>
                     </div>
                     <div class="col-4">
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="buystockQuantity" disabled>
-                            <label for="buystockQuantity">price</label>
+                            <input type="number" class="form-control" id="buystockprice" disabled>
+                            <label for="buystockprice">price</label>
                         </div>
                     </div>
                 </div>

@@ -10,7 +10,7 @@ Sell</button>
 <div class="offcanvas offcanvas-bottom" tabindex="-1" id="sellcanvasBottom" aria-labelledby="offcanvasBottomLabel">
   <div class="offcanvas-header">
     <h5 class="offcanvas-title px-4" id="offcanvasBottomLabel">Sell</h5>
-    <button type="button" class="btn-close text-reset" style="width: 70%;" data-bs-dismiss="offcanvas" aria-label="Close" id="selloffcanvasclosebutton"></button>
+    <button type="button" class="btn-close text-reset" style="width: 70%;" data-bs-dismiss="offcanvas" aria-label="Close" id="selloffcanvasclosebutton" onclick="closecansav()"></button>
   </div>
   <div class="offcanvas-body small ">
     <div class="container">

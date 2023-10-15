@@ -8,11 +8,10 @@ $stockId = $_POST['stockId'];
 $operation = $_POST['operation'];
 $time = floor(microtime(true) * 1000);
 
-function getValue($stockId){
-    return 50;
-}
-$value = getValue($stockId);
+
+$value = getValue($stockId,$stockarray,$conn);
 if ($operation == 'buy') {
+    $opcode = 0;
     //INSERT INTO `name_portfolio` (`id`, `stockId`, `quantity`) 
     //VALUES ( '1', '50', '60', '-1', '-1', '1697037390671', '-1', '0');
 
@@ -21,15 +20,24 @@ if ($operation == 'buy') {
     $data = mysqli_query($conn,$sql);
     if ($data) {
         $status = 'true';
-        echo json_encode(["status" => $status, "data" => array("message" => "success","price" => $value,"quantity" => $quantity)]);
+        $newprice = $value + 5*$quantity;
+        $buysql = "INSERT INTO `stocklinear_$stockarray[$stockId]`(`datetime`, `buyOrSell`, `quantity`, `newPrice`, `beforePrice`) VALUES 
+        ('$time','$opcode','$quantity','$newprice','$value')";
+        mysqli_query($conn,$buysql);
+        $balance =(int) mysqli_fetch_assoc(mysqli_query($conn,$sql = "SELECT balance from `user_current_sts` where id=$id"))['balance'];
+        $finalbalance = $balance - $value * $quantity;
+        $updatebalancesql = "UPDATE `user_current_sts` SET `balance`='$finalbalance',`date`='$time' WHERE id=$id";
+        mysqli_query($conn,$updatebalancesql);
+        echo json_encode(["status" => $status, "data" => array("message" => "success","name"=>$stockarray[$stockId],"price" => $value,"newprice"=>$newprice,"quantity" => $quantity,"balance" => $finalbalance)]);
     }else{
         echo json_encode(["status" => $status, "data" => array("error" => mysql_error($conn))]);
     }
 }elseif ($operation == 'sell') {
+    $opcode = 1;
     $sql = "SELECT * FROM `".$username."_portfolio` WHERE stockId = '$stockId' AND fixed = '0' ORDER BY id ASC ";
     $data = mysqli_query($conn,$sql);
     if ($data) {
-        // $status = 'true';
+        $status = 'true';
          $load = array() ;
         for($i=0;$i<mysqli_num_rows($data);$i++){
             $dump = mysqli_fetch_assoc($data);
@@ -51,8 +59,9 @@ if ($operation == 'buy') {
                 $sql = "UPDATE `name_portfolio` set `fixed`='1',`cost`='$value',`pal`='',`sellDate`='$time',`quantity`='$quantityLeft' where id='".$row['id']."'";
                  mysqli_query($conn,$sql); 
                 $addQuantity = $quantityInRow - $quantityLeft;
+                $pppp = $row['value'];
                 $sql = "INSERT INTO `".$username."_portfolio` (`stockId`, `quantity`, `value`, `cost`, `pal`, `buyDate`, `sellDate`, `fixed`)
-                values ('$stockId', '$addQuantity','$value','-1','-1','$time','-1','0')"; 
+                values ('$stockId', '$addQuantity','$pppp','-1','-1','$time','-1','0')"; 
                  mysqli_query($conn,$sql);
                 $quantityLeft = 0;
             }
@@ -60,8 +69,17 @@ if ($operation == 'buy') {
             
             $i++;
         }
+        
         // echo json_encode(["status" => $status, "load" => $load]);
-        echo json_encode(["status" => $status, "data" => array("message" => "success","price" => $value,"quantity" => ($quantity-$quantityLeft))]);
+        $newprice = $value - 5*($quantity-$quantityLeft);
+        $buysql = "INSERT INTO `stocklinear_$stockarray[$stockId]`(`datetime`, `buyOrSell`, `quantity`, `newPrice`, `beforePrice`) VALUES 
+        ('$time','$opcode','$quantity','$newprice','$value')";
+        mysqli_query($conn,$buysql);
+        $balance =(int) mysqli_fetch_assoc(mysqli_query($conn,$sql = "SELECT balance from `user_current_sts` where id=$id"))['balance'];
+        $finalbalance = $balance + $value * ($quantity-$quantityLeft);
+        $updatebalancesql = "UPDATE `user_current_sts` SET `balance`='$finalbalance',`date`='$time' WHERE id=$id";
+        mysqli_query($conn,$updatebalancesql);
+        echo json_encode(["status" => $status, "data" => array("message" => "success","name"=>$stockarray[$stockId],"price" => $value,"newprice"=>$newprice,"quantity" => ($quantity-$quantityLeft),"balance"=>$finalbalance)]);
     }else{
         echo json_encode(["status" => $status, "data" => array("error" => mysql_error($conn))]);
     }
