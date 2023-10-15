@@ -59,8 +59,8 @@ var valueAxis = mainPanel.yAxes.push(am5xy.ValueAxis.new(root, {
 
 var dateAxis = mainPanel.xAxes.push(am5xy.GaplessDateAxis.new(root, {
   baseInterval: {
-    timeUnit: "day",
-    count: 1
+    timeUnit: "minute",
+    count: 4
   },
   renderer: am5xy.AxisRendererX.new(root, {}),
   tooltip: am5.Tooltip.new(root, {})
@@ -394,19 +394,17 @@ function makeEvent(date, letter, color, description) {
 
 
 
-// set data to all series
-// var du = []
-// $.post("http://localhost/bazzar/server/stockapi.php",{stockId:"axis"},(data)=>{
-//   du = data.data;
-//   console.log(du);
-//   valueSeries.data.setAll(du);
-//   volumeSeries.data.setAll(du);
-//   sbSeries.data.setAll(du);
-// });
-
+//set data to all series
+var du = []
+$.post("http://localhost/bazzar/server/stockapi.php",{stockId:1},(data)=>{
+  du = data.data;
+  console.log(du);
   valueSeries.data.setAll(du);
   volumeSeries.data.setAll(du);
   sbSeries.data.setAll(du);
+});
+
+ 
 GRAPH.valueSeries = valueSeries;
 GRAPH.volumeSeries = volumeSeries;
 GRAPH.sbSeries = sbSeries;

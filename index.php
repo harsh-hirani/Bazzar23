@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta http-equiv="Permissions-Policy"content="interest-cohort=()" >
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -99,7 +99,12 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
     <script>
-        document.getElementById("chartdiv").style.height = (document.getElementById("chartContainer").clientHeight - 30)+"px";
+        if(window.innerWidth > 768){
+            document.getElementById("chartdiv").style.height = (document.getElementById("chartContainer").clientHeight - 30)+"px";
+        } else{
+            document.getElementById("chartdiv").style.height = 300+"px";
+
+        }
         var orignal = document.getElementsByClassName('orignal');
         let cvalue = 1;
 
@@ -109,14 +114,8 @@
             cvalue = event.target.value;
         }
 
-        var showing = "mainStock";
-        function changeto(e) {
-            if (e == showing) return;
-            document.getElementById(showing).classList.remove("active");
-            document.getElementById(e).classList.add("active");
-            showing = e;
 
-        }
+
 
         var open = document.getElementById("open");
         var close = document.getElementById("close");

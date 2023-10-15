@@ -12,6 +12,8 @@ var buystockname = document.getElementById("buystockname");
 var sellstockname = document.getElementById("sellstockname");
 var buyoffcanvasclosebutton = document.getElementById("buyoffcanvasclosebutton");
 var selloffcanvasclosebutton = document.getElementById("selloffcanvasclosebutton");
+
+var portfoliotablebody = document.getElementById("portfoliotablebody");
 // global variables
 
 
@@ -19,5 +21,13 @@ var selloffcanvasclosebutton = document.getElementById("selloffcanvasclosebutton
 
 // current variables
 var offcanvas = false;
-var currentGraph = 0;
+var currentGraph = 1;
 var operation = 0; // buy = 0, sell = 1
+var showing = "mainStock";
+// stock list
+stockarray = [
+    {id:1,
+    name:"axis"},
+    {id:2,
+    name: "hdfc"}
+];

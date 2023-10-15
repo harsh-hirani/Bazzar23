@@ -11,6 +11,7 @@ function getValue($stockId,$ar,$c){
     $value = mysqli_fetch_assoc(mysqli_query($c, $livesql))['newPrice'];
     return (int)$value;
 }
-$id = 1;
-// $id = $_COOKIE['userid'];
+// $id = 1;
+$id = $_COOKIE['userId'];
+$username = $_COOKIE['username'];
 ?>

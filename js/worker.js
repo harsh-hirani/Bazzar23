@@ -4,6 +4,33 @@ $.post('http://localhost/bazzar/server/initial.php',{},(data)=>{
     console.log(data);
     currentBalanceBox.innerHTML = data.data.balance;
 });
+
+function changeto(e) {
+    if (e == showing) return;
+    if(e== 'portfolio'){
+        $.post("http://localhost/bazzar/server/getportfolio.php",{},(data)=>{
+            console.log(data);
+            // document.getElementById("portfolio").innerHTML = data.data;
+            var load = ``;
+            data.data.forEach(element => {
+                console.log(stockarray[parseInt(element.stockId)-1]);
+                load += `<tr>
+                <th scope="row" class="text-center">1</th>
+                <td class="text-center">${stockarray[parseInt(element.stockId)-1].name}</td>
+                <td class="text-center">${element.quantity}</td>
+                <td class="text-center">${element.value}</td>
+                <td class="text-center">${element.cost}</td>
+                <td class="text-center">${element.pal}</td>
+                <td class="text-center">${element.buyDate}</td>
+                        </tr>`;
+            });
+            portfoliotablebody.innerHTML = load;
+        });
+    }
+    document.getElementById(showing).classList.remove("active");
+    document.getElementById(e).classList.add("active");
+    showing = e;
+}
 function closecansav(){
     offcanvas = false;
 }
@@ -96,3 +123,16 @@ $.post("http://localhost/bazzar/server/setportfolio.php",{stockId:currentGraph,o
 });
 
 }
+
+
+// GRAPH refresher
+setInterval(()=>{
+    $.post("http://localhost/bazzar/server/stockapi.php",{stockId:currentGraph},(data)=>{
+        // GRAPH.valueSeries.data.clear();
+        // GRAPH.volumeSeries.data.clear();
+        // GRAPH.sbSeries.data.clear();
+            GRAPH.valueSeries.data.setAll(data.data);
+            GRAPH.volumeSeries.data.setAll(data.data);
+            GRAPH.sbSeries.data.setAll(data.data);
+    });
+},2.5*60000)

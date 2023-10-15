@@ -4,9 +4,9 @@ include 'conn.php';
 
 header('Content-Type:application/json');
 $status = 'false';
-if (isset($_POST['username']) ) {
-    if($_COOKIE['username'] == $_POST['username'] || $_POST['username'] != ""){
-        $sql = "SELECT * FROM `name_portfolio`";
+if (isset($_COOKIE['username']) ) {
+    if( $_COOKIE['username'] != ""){
+        $sql = "SELECT * FROM `".$_COOKIE['username']."_portfolio` ORDER BY id DESC";
         $data = mysqli_query($conn,$sql);
         if ($data) {
             $status = 'true';

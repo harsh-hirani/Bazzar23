@@ -1,7 +1,7 @@
 <div>
     <h1 class="text-center fw-bolder my-4">QUERY</h1>
 </div>
-<form action="" class=" form m-3">
+<div class=" form m-3">
     <div class="imgsvg">
         <img src="assets/undraw_real_time_analytics_re_yliv.svg" alt="">
 
@@ -29,4 +29,4 @@
     </div>
 
 
-</form>
+        </div>

@@ -2,7 +2,6 @@
 include 'conn.php';
 header('Content-Type:application/json');
 $status = 'false';  
-$username = 'name';
 $quantity = $_POST['quantity'];
 $stockId = $_POST['stockId'];
 $operation = $_POST['operation'];
@@ -51,7 +50,7 @@ if ($operation == 'buy') {
             $row = $load[$i];
             $quantityInRow = $row['quantity'];
             if ($quantityLeft >= $quantityInRow){
-                $sql = "UPDATE `name_portfolio` set `fixed`='1',`cost`='$value',`pal`='',`sellDate`='$time' where id='".$row['id']."'";
+                $sql = "UPDATE `".$username."_portfolio` set `fixed`='1',`cost`='$value',`pal`='',`sellDate`='$time' where id='".$row['id']."'";
                  mysqli_query($conn,$sql);
 
                 $quantityLeft = $quantityLeft - $quantityInRow;

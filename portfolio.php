@@ -26,7 +26,7 @@
             <th scope="col" class="text-center">HOLD</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="portfoliotablebody">
         <tr>
             <th scope="row" class="text-center">1</th>
             <td class="text-center">HDFC</td>
