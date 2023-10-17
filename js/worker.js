@@ -12,10 +12,10 @@ function changeto(e) {
             console.log(data);
             // document.getElementById("portfolio").innerHTML = data.data;
             var load = ``;
-            data.data.forEach(element => {
+            data.data.forEach((element,index) => {
                 console.log(stockarray[parseInt(element.stockId)-1]);
                 load += `<tr>
-                <th scope="row" class="text-center">1</th>
+                <th scope="row" class="text-center">${index+1}</th>
                 <td class="text-center">${stockarray[parseInt(element.stockId)-1].name}</td>
                 <td class="text-center">${element.quantity}</td>
                 <td class="text-center">${element.value}</td>
