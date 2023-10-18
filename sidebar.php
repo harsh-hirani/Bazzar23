@@ -13,7 +13,7 @@
 </div>
 <div class="hr ruler"></div>
 <div class="link-list" id="links">
-    <div class="links c1" onclick="changeto('portfolio');">
+    <div class="links" id="c1" onclick="changeto('portfolio');">
         <div class="original">PORTFOLIO</div>
         <div class="letters">
             <i class="bi bi-table"></i>
@@ -28,7 +28,7 @@
             <span>O</span>
         </div>
     </div>
-    <div class="links c2 " onclick="changeto('news');">
+    <div class="links" id="c2 " onclick="changeto('news');">
         <div class="original">NEWS</div>
         <div class="letters">
             <i class="bi bi-newspaper"></i>
@@ -38,7 +38,7 @@
             <span>S</span>
         </div>
     </div>
-    <div class="links c3" onclick="changeto('ranking');">
+    <div class="links" id="c3" onclick="changeto('ranking');">
 
         <div class="original">RANKING</div>
         <div class="letters">
@@ -48,11 +48,12 @@
             <span>N</span>
             <span>K</span>
             <span>I</span>
+            <span>N</span>
             <span>G</span>
         </div>
     </div>
     <div class="hr ruler"></div>
-    <div class="links c4" onclick="changeto('query');">
+    <div class="links" id="c4" onclick="changeto('query');">
 
         <div class="original">QUERY</div>
         <div class="letters">
@@ -64,7 +65,7 @@
             <span>Y</span>
         </div>
     </div>
-    <div class="links c5" onclick="changeto('contact');">
+    <div class="links" id="c5" onclick="changeto('contact');">
 
         <div class="original">CONTACT</div>
         <div class="letters">

@@ -6,6 +6,21 @@
     overflow-x: hidden;
     overflow-y: auto;
   }
+   /* scroller  */
+ 
+   .leaderboard::-webkit-scrollbar {
+  width: 12.5px;
+}
+.leaderboard::-webkit-scrollbar-track {
+  background: #8035f1;
+  border-radius: 50px;
+}
+
+.leaderboard::-webkit-scrollbar-thumb {
+  background: #00cc99;
+  border-radius: 50px;
+}
+
   .leaderboard header {
     --start: 15%;
     height: 130px;

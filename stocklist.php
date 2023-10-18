@@ -12,22 +12,6 @@
             <div class="stock-price-change">-0.2%</div>
         </div>
     </div>
-</div>
-
-<div class="stock">
-    <div class="stock-image">
-        <img src="assets/download.png" height="100%"alt="">
-    </div>
-    <div class="stock-info">
-        <div class="stock-name">
-            <div class="stock-full-name">NAME</div>
-            <div class="stock-code">MN</div>
-        </div>
-        <div class="stock-price">
-            <div class="stock-price-current">155.2</div>
-            <div class="stock-price-change">-0.2%</div>
-        </div>
-    </div>
 </div> -->
 <div id="stocklistcover">
 
@@ -124,7 +108,7 @@
     ?>
     <div class="iteam" onclick="graphchange(this,'<?php echo ($i+1);?>')">
         <div class="img">
-            <img src="/download.png" alt="">
+            <img src="assets/download.png" alt="">
         </div>
         <div class="stockname">
             <p class="mainName"><?php echo $array[$i]['name'];?></p>

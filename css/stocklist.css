@@ -7,6 +7,23 @@
     /* background-color: #fff; */
     overflow-x: hidden;
 }
+
+
+ /* scroller  */
+ 
+ #stocklistcover::-webkit-scrollbar {
+    width: 12.5px;
+}
+#stocklistcover::-webkit-scrollbar-track {
+    background: #2b3432;
+    border-radius: 50px;
+}
+
+#stocklistcover::-webkit-scrollbar-thumb {
+    background: #6600ff;
+    border-radius: 50px;
+}
+
 .stocks{
     background: #20211c;
 }

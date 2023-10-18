@@ -24,6 +24,7 @@ var offcanvas = false;
 var currentGraph = 1;
 var operation = 0; // buy = 0, sell = 1
 var showing = "mainStock";
+var activeSection = "c1";
 // stock list
 stockarray = [
     {id:1,

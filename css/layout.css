@@ -121,7 +121,7 @@
     overflow-y: auto;
 }
 #chart{
-    background: #8b966b;
+    background: #000000;
 }
 #chart>div {
     position: absolute;
@@ -163,7 +163,25 @@
         width: 100%;
     }
 }
+ /* scroller  */
+ 
+ #portfolio::-webkit-scrollbar {
+    width: 12.5px;
+}
+#portfolio::-webkit-scrollbar-track {
+    background: #00cc99;
+    border-radius: 50px;
+}
 
+#portfolio::-webkit-scrollbar-thumb {
+    background: #6600ff;
+    border-radius: 50px;
+}
+.gradient-border {
+    border: 10px solid transparent;
+    border-image: linear-gradient(to right, #FFC371, #FF5F6D) 1;
+   
+  }
 @media (min-width: 768px) {
 
     /* laptop */
@@ -209,9 +227,6 @@
     #chart {
         min-height: 500px;
         height:  auto;
-    }
-    #mainStock #actions {
-        margin-top: 20px;
     }
     #actions {
         min-height: 30px;

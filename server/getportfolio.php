@@ -14,6 +14,11 @@ if (isset($_COOKIE['username']) ) {
             for($i=0;$i<mysqli_num_rows($data);$i++){
                 $dump = mysqli_fetch_assoc($data);
                 $load[$i] = $dump;
+                if($dump['pal'] != '-1'){
+                    $load[$i]['pal'] = intval($dump['cost']) - intval($dump['value']);
+                }else{
+                    $load[$i]['pal'] = -1;
+                }
             }
             echo json_encode(["status" => $status, "data" => $load]);
         }else{

@@ -14,13 +14,14 @@ function changeto(e) {
             var load = ``;
             data.data.forEach((element,index) => {
                 console.log(stockarray[parseInt(element.stockId)-1]);
-                load += `<tr>
+                colorCode = (element.cost != -1)?((element.pal <0 )?"text-danger":"text-success"):"text-white";
+                load += `<tr class="${colorCode} fw-bold">
                 <th scope="row" class="text-center">${index+1}</th>
                 <td class="text-center">${stockarray[parseInt(element.stockId)-1].name}</td>
                 <td class="text-center">${element.quantity}</td>
                 <td class="text-center">${element.value}</td>
                 <td class="text-center">${element.cost}</td>
-                <td class="text-center">${element.pal}</td>
+                <td class="text-center">${element.pal }</td>
                 <td class="text-center">${element.buyDate}</td>
                         </tr>`;
             });
