@@ -1,9 +1,9 @@
 <?php
-$user = 'name';
+
 $stock = $_POST['stockId'];
 header('Content-Type:application/json');
 
-$SQL = "SELECT sum(quantity) as total FROM ".$user."_portfolio WHERE stockId = '".$stock."' and fixed = 0";
+$SQL = "SELECT sum(quantity) as total FROM ".$username."_portfolio WHERE stockId = '".$stock."' and fixed = 0";
 
 include 'conn.php';
 

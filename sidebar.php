@@ -80,7 +80,7 @@
         </div>
 
     </div>
-    <div class="links c6">
+    <div class="links c6" onclick="location.replace('logout.php')">
 
         <div class="original">LOGOUT</div>
         <div class="letters">

@@ -1,6 +1,6 @@
 document.getElementById("stocklistcover").style.height = (window.innerHeight - 50 - document.getElementById("nav").clientHeight) + "px";
 //initial load
-$.post('http://localhost/bazzar/server/initial.php',{},(data)=>{
+$.post(baseurl+'/server/initial.php',{},(data)=>{
     console.log(data);
     currentBalanceBox.innerHTML = data.data.balance;
 });
@@ -8,7 +8,7 @@ $.post('http://localhost/bazzar/server/initial.php',{},(data)=>{
 function changeto(e) {
     if (e == showing) return;
     if(e== 'portfolio'){
-        $.post("http://localhost/bazzar/server/getportfolio.php",{},(data)=>{
+        $.post(baseurl+"/server/getportfolio.php",{},(data)=>{
             console.log(data);
             // document.getElementById("portfolio").innerHTML = data.data;
             var load = ``;
@@ -47,7 +47,7 @@ function graphchange(e,graph){
     }
     changeto('mainStock');
     if(graph==currentGraph) return;
-    $.post("http://localhost/bazzar/server/stockapi.php",{stockId:graph},(data)=>{
+    $.post(baseurl+"/server/stockapi.php",{stockId:graph},(data)=>{
         GRAPH.valueSeries.data.clear();
         GRAPH.volumeSeries.data.clear();
         GRAPH.sbSeries.data.clear();
@@ -65,7 +65,7 @@ function loadbuy() {
     buystockQuantity.value = 1;
     operation = 0;
     offcanvas = true;
-    $.post("http://localhost/bazzar/server/checker.php",{stockId:currentGraph},(data)=>{
+    $.post(baseurl+"/server/checker.php",{stockId:currentGraph},(data)=>{
         buysendbutton.style.opacity = 1;
         buystockname.value = data.data.name;
         buystatus.innerHTML = "Holdings: " + data.data.allowed;
@@ -77,7 +77,7 @@ e.disabled = true;
 e.style.opacity = 0
 
 buystatus.innerHTML = "Processing...";
-$.post("http://localhost/bazzar/server/setportfolio.php",{stockId:currentGraph,operation:'buy',quantity:buystockQuantity.value},(data)=>{  
+$.post(baseurl+"/server/setportfolio.php",{stockId:currentGraph,operation:'buy',quantity:buystockQuantity.value},(data)=>{  
     buystatus.innerHTML = data.data.message+".";
     buystatus.innerHTML = data.data.quantity+" bought at "+(data.data.price*data.data.quantity)+".";
     if(data.data.message=="success"){
@@ -98,7 +98,7 @@ function loadsell(){
     sellstockQuantity.value = 1;
     operation = 1;
     offcanvas = true;
-    $.post("http://localhost/bazzar/server/checker.php",{stockId:currentGraph},(data)=>{
+    $.post(baseurl+"/server/checker.php",{stockId:currentGraph},(data)=>{
         sellsendbutton.style.opacity = 1;
         sellstockname.value = data.data.name;
         sellstatus.innerHTML = "Holdings: "+data.data.allowed;
@@ -109,7 +109,7 @@ function sell(e) {
 e.disabled = true;
 e.style.opacity = 0;
 sellstatus.innerHTML = "Processing...";
-$.post("http://localhost/bazzar/server/setportfolio.php",{stockId:currentGraph,operation:'sell',quantity:sellstockQuantity.value},(data)=>{
+$.post(baseurl+"/server/setportfolio.php",{stockId:currentGraph,operation:'sell',quantity:sellstockQuantity.value},(data)=>{
     sellstatus.innerHTML = data.data.message+".";
     sellstatus.innerHTML = data.data.quantity+" sold at "+(data.data.price*data.data.quantity)+".";
     if(data.data.message=="success"){
@@ -128,7 +128,7 @@ $.post("http://localhost/bazzar/server/setportfolio.php",{stockId:currentGraph,o
 
 // GRAPH refresher
 setInterval(()=>{
-    $.post("http://localhost/bazzar/server/stockapi.php",{stockId:currentGraph},(data)=>{
+    $.post(baseurl+"/server/stockapi.php",{stockId:currentGraph},(data)=>{
         // GRAPH.valueSeries.data.clear();
         // GRAPH.volumeSeries.data.clear();
         // GRAPH.sbSeries.data.clear();

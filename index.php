@@ -1,3 +1,9 @@
+<?php
+if(!isset($_COOKIE['username'])){
+    echo "<script>location.replace('login.php')</script>";
+}else{
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -36,7 +42,7 @@
         </div>
 
         <div id="content">
-            <nav id="nav"> </nav>
+            <nav id="nav" class="text-danger px-5 fs-1 fw-bolder"> <?php echo $_COOKIE['username'];?></nav>
             <main id="main">
                 <div id="notification"></div>
                 <div id="game">
@@ -147,3 +153,7 @@
 </body>
 
 </html>
+
+<?php
+}
+?>

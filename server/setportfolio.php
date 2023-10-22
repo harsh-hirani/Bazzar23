@@ -55,7 +55,7 @@ if ($operation == 'buy') {
 
                 $quantityLeft = $quantityLeft - $quantityInRow;
             }else{
-                $sql = "UPDATE `name_portfolio` set `fixed`='1',`cost`='$value',`pal`='',`sellDate`='$time',`quantity`='$quantityLeft' where id='".$row['id']."'";
+                $sql = "UPDATE `".$username."_portfolio` set `fixed`='1',`cost`='$value',`pal`='',`sellDate`='$time',`quantity`='$quantityLeft' where id='".$row['id']."'";
                  mysqli_query($conn,$sql); 
                 $addQuantity = $quantityInRow - $quantityLeft;
                 $pppp = $row['value'];

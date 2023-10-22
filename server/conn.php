@@ -12,6 +12,9 @@ function getValue($stockId,$ar,$c){
     return (int)$value;
 }
 // $id = 1;
-$id = $_COOKIE['userId'];
-$username = $_COOKIE['username'];
+if (isset($_COOKIE['userId'])&& isset($_COOKIE['username'])) {
+    # code...
+    $id = $_COOKIE['userId'];
+    $username = $_COOKIE['username'];
+}
 ?>

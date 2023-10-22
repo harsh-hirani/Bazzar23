@@ -1,3 +1,8 @@
+
+//urls
+
+var baseurl = "http://bazzar.bnb.great-site.net";
+
 //dom
 var currentBalanceBox = document.getElementById("currentBalanceBox");
 var buysendbutton = document.getElementById("buysendbutton");
