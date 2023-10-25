@@ -26,9 +26,7 @@ $.post(baseurl+'/server/initial.php',{},(data)=>{
     document.getElementById("stock1").click();
     pricesTabs = document.getElementsByClassName("unixprice");
     changeTabs = document.getElementsByClassName("unixchange");
-    $.post(baseurl+"/server/checker.php",{stockId:currentGraph},(data)=>{
-        loadedStockPrice = data.data.price;
-    });
+
 
     $.post(baseurl+"/server/stockprice.php",{},(data)=>{
         data.data.forEach((element,index) => {

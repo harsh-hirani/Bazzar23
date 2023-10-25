@@ -82,9 +82,7 @@ if ($operation == 'buy') {
                 values ('$stockId', '$addQuantity','$pppp','-1','-1','$time','-1','0')"; 
                  mysqli_query($conn,$sql);
                 $quantityLeft = 0;
-            }
-            
-            
+            }            
             $i++;
         }
         
