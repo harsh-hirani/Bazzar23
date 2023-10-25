@@ -3,9 +3,6 @@
         <p>Current Balance:</p>
         <p class="money"><span id="currentBalanceBox">--.--</span> Rs.</p>
     </div>
-    <div class="growth">
-        +1.04%
-    </div>
 </div>
 <div id="menu">
     <i class="bi bi-list" id="open" onclick="extent()"></i>

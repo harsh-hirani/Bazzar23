@@ -16,103 +16,20 @@
 <div id="stocklistcover">
 
     <div class="search">
-        <input type="text" name="search" id="searchbar" class="my-4 searchbar"
-            placeholder="search here...">
+        <input type="text" name="search" id="searchbar" class="my-4 searchbar" disabled
+            placeholder="StockList">
     </div>
-    <div class="stocklists">
+    <div class="stocklists" id="stocklistsContainer">
 
-    <?php
 
-    $array = array(
-        array(
-            "name"=>"axis",
-            "scode"=>"AXS"
-        ),array(
-            "name"=>"HDFC",
-            "scode"=>"HDF"
-        ),
-        array(
-            "name"=>"axis",
-            "scode"=>"AXS"
-        ),array(
-            "name"=>"HDFC",
-            "scode"=>"HDF"
-        ),
-        array(
-            "name"=>"axis",
-            "scode"=>"AXS"
-        ),array(
-            "name"=>"HDFC",
-            "scode"=>"HDF"
-        ),
-        array(
-            "name"=>"axis",
-            "scode"=>"AXS"
-        ),array(
-            "name"=>"HDFC",
-            "scode"=>"HDF"
-        ),
-        array(
-            "name"=>"axis",
-            "scode"=>"AXS"
-        ),array(
-            "name"=>"HDFC",
-            "scode"=>"HDF"
-        ),
-        array(
-            "name"=>"axis",
-            "scode"=>"AXS"
-        ),array(
-            "name"=>"HDFC",
-            "scode"=>"HDF"
-        ),
-        array(
-            "name"=>"axis",
-            "scode"=>"AXS"
-        ),array(
-            "name"=>"HDFC",
-            "scode"=>"HDF"
-        ),
-        array(
-            "name"=>"axis",
-            "scode"=>"AXS"
-        ),array(
-            "name"=>"HDFC",
-            "scode"=>"HDF"
-        ),
-        array(
-            "name"=>"axis",
-            "scode"=>"AXS"
-        ),array(
-            "name"=>"HDFC",
-            "scode"=>"HDF"
-        ),
-        array(
-            "name"=>"axis",
-            "scode"=>"AXS"
-        ),array(
-            "name"=>"HDFC",
-            "scode"=>"HDF"
-        ),
-        array(
-            "name"=>"axis",
-            "scode"=>"AXS"
-        ),array(
-            "name"=>"HDFC",
-            "scode"=>"HDF"
-        )
-
-    );
-    for($i=0;$i<12;$i++)
-    {
-    ?>
+<!--     
     <div class="iteam" onclick="graphchange(this,'<?php echo ($i+1);?>')">
         <div class="img">
             <img src="assets/download.png" alt="">
         </div>
         <div class="stockname">
-            <p class="mainName"><?php echo $array[$i]['name'];?></p>
-            <p><?php echo $array[$i]['scode'];?></p>
+            <p class="mainName"><?/*php echo $array[$i]['name'];*/?></p>
+            <p><?php /*echo $array[$i]['scode'];*/?></p>
         </div>
         <div class="stockprize">
             <p style="font-weight: 700;">500 Rs.</p>
@@ -120,7 +37,8 @@
         </div>
     </div>
     <div class="line"></div>
-    <?php }
-    ?>
+-->
+
+    
     </div>
 </div>

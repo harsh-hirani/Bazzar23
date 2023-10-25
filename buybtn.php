@@ -25,7 +25,7 @@ Buy</button>
                     </div>
                     <div class="col-5">
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="buystockQuantity" value='1'>
+                            <input type="number" class="form-control" id="buystockQuantity" value='1' oninput="buychecker(this)">
                             <label for="buystockQuantity">Quantity</label>
                         </div>
                     </div>

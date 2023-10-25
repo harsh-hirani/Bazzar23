@@ -32,7 +32,7 @@ BEGIN
     -- current time
     SELECT UNIX_TIMESTAMP()*1000 INTO tttt;
     -- total volume
-    SELECT COUNT(newPrice) into vvvv FROM stocklinear_axis;
+    SELECT sum(quantity) into vvvv FROM stocklinear_axis;
 
     -- Insert the calculated values into the output_table
     INSERT INTO stock_profile_axis (time, open, high, low, close,volume)

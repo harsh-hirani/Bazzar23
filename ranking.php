@@ -4,7 +4,7 @@
     <h1 class="leaderboard__title"><span class="leaderboard__title--top">Forbes</span><span class="leaderboard__title--bottom">Leaderboard</span></h1>
   </header>
   
-  <main class="leaderboard__profiles">
+  <main class="leaderboard__profiles" id="leaderboardRanking">
     <article class="leaderboard__profile">
       <span class="leaderboard__name">Mark Zuckerberg</span>
       <span class="leaderboard__value">35.7<span>B</span></span>

@@ -1,6 +1,6 @@
 <div class="pageName">
     <h1 class="fw-bolder">PORTFOLIO</h1>
-    <div data-tooltip="Price:-$20" class="button">
+    <!-- <div data-tooltip="Price:-$20" class="button">
         <div class="button-wrapper">
             <div class="text">Buy Stocks</div>
             <span class="icon">
@@ -12,7 +12,7 @@
                 </svg>
             </span>
         </div>
-    </div>
+    </div> -->
 </div>
 <table class="table my-4">
     <thead>

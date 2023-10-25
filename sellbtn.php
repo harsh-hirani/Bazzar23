@@ -26,7 +26,7 @@ Sell</button>
                     </div>
                     <div class="col-5">
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="sellstockQuantity" placeholder="name@example.com">
+                            <input type="number" class="form-control" id="sellstockQuantity" placeholder="quan" oninput="sellchecker(this)">
                             <label for="sellstockQuantity">Quantity</label>
                         </div>
                     </div>

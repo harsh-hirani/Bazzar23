@@ -19,7 +19,7 @@ if ($operation == 'buy') {
     $data = mysqli_query($conn,$sql);
     if ($data) {
         $status = 'true';
-        $newprice = $value + 5*$quantity;
+        $newprice = $value + 0.32*$quantity+($value>10000)?$value*0.001:0;
         $buysql = "INSERT INTO `stocklinear_$stockarray[$stockId]`(`datetime`, `buyOrSell`, `quantity`, `newPrice`, `beforePrice`) VALUES 
         ('$time','$opcode','$quantity','$newprice','$value')";
         mysqli_query($conn,$buysql);
@@ -70,7 +70,7 @@ if ($operation == 'buy') {
         }
         
         // echo json_encode(["status" => $status, "load" => $load]);
-        $newprice = $value - 5*($quantity-$quantityLeft);
+        $newprice = $value - 0.35*($quantity-$quantityLeft);
         $buysql = "INSERT INTO `stocklinear_$stockarray[$stockId]`(`datetime`, `buyOrSell`, `quantity`, `newPrice`, `beforePrice`) VALUES 
         ('$time','$opcode','$quantity','$newprice','$value')";
         mysqli_query($conn,$buysql);

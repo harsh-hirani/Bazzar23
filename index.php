@@ -1,6 +1,6 @@
 <?php
 if(!isset($_COOKIE['username'])){
-    echo "<script>location.replace('login.php')</script>";
+    echo "<script>location.replace('./register')</script>";
 }else{
 ?>
 
@@ -42,7 +42,9 @@ if(!isset($_COOKIE['username'])){
         </div>
 
         <div id="content">
-            <nav id="nav" class="text-danger px-5 fs-1 fw-bolder"> <?php echo $_COOKIE['username'];?></nav>
+            <nav id="nav" class="text-danger px-5 fs-1 fw-bolder"> 
+                <?php echo $_COOKIE['username'];?>
+            </nav>
             <main id="main">
                 <div id="notification"></div>
                 <div id="game">

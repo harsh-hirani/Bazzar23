@@ -1,11 +1,11 @@
 <?php
 
+include 'conn.php';
 $stock = $_POST['stockId'];
 header('Content-Type:application/json');
 
 $SQL = "SELECT sum(quantity) as total FROM ".$username."_portfolio WHERE stockId = '".$stock."' and fixed = 0";
 
-include 'conn.php';
 
 $data = mysqli_query($conn,$SQL);
 $status = 'false';
