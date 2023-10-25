@@ -19,7 +19,7 @@ if ($operation == 'buy') {
     $data = mysqli_query($conn,$sql);
     if ($data) {
         $status = 'true';
-        $newprice = $value + 0.32*$quantity+($value>10000)?$value*0.001:0;
+        $newprice = $value + 0.32*$quantity;
         $buysql = "INSERT INTO `stocklinear_$stockarray[$stockId]`(`datetime`, `buyOrSell`, `quantity`, `newPrice`, `beforePrice`) VALUES 
         ('$time','$opcode','$quantity','$newprice','$value')";
         mysqli_query($conn,$buysql);

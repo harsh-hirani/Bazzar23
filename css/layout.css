@@ -150,17 +150,22 @@
 .sell-btn {
     margin-left: -7%;
     width: 40%;
-
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     & button {
-        width: 100%;
+        width: 45%;
     }
 }
 
 .buy-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 40%;
 
     & button {
-        width: 100%;
+        width: 45%;
     }
 }
  /* scroller  */
@@ -206,11 +211,6 @@
     #chart {
         grid-area: 2/3/3/-1;
     }
-
-    #actions {
-        grid-area: 3/3/-1/-1;
-
-    }
 }
 
 @media (max-width: 768px) {
@@ -225,11 +225,14 @@
     }
 
     #chart {
-        min-height: 500px;
+        min-height: 550px;
         height:  auto;
     }
+    #chart #mainStock{
+        grid-template-rows: 1fr 0.29fr;
+    }
     #actions {
-        min-height: 30px;
+        min-height: 60px;
     }
 
     #stockList {
@@ -241,5 +244,31 @@
     }
     #chartcontrols{
         height: 500px;
+    }
+
+    .sell-btn {
+        margin-left: -7%;
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        & button {
+            width: 100%;
+            margin-bottom: 4px;
+        }
+    }
+    
+    .buy-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        width: 40%;
+    
+        & button {
+            width: 100%;
+            margin-bottom: 4px;
+        }
     }
 }

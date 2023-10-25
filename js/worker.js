@@ -69,6 +69,7 @@ function getTimestampDifference(timestamp1, timestamp2) {
     }   
   }
 function changeto(e) {
+    srink();
     if (e == showing) return;
     if(e== 'portfolio'){
         $.post(baseurl+"/server/getportfolio.php",{},(data)=>{
@@ -113,12 +114,8 @@ function closecansav(){
 function graphchange(e,graph){
     if(offcanvas==true){
         closecansav();
-        if(operation==0){
-            buyoffcanvasclosebutton.click();
+        offcanvasclosebutton.click();
 
-        }else{
-            selloffcanvasclosebutton.click();
-        }
     }
     changeto('mainStock');
     if(graph==currentGraph) return;
@@ -138,22 +135,25 @@ function graphchange(e,graph){
 }
 
 
-function loadbuy() {
-
-    buysendbutton.style.opacity = 0;
-    buystockQuantity.value = 1;
-    operation = 0;
+function loadoffset(title) {
+    offsettitle.innerHTML = title;
+    offsetsendbutton.style.opacity = 0;
+    offsetstockQuantity.value = 1;
+    operation = (title == "Buy")?0:1;
+    offsetButton.innerHTML = title;
     offcanvas = true;
     console.log('object');
     $.post(baseurl+"/server/checker.php",{stockId:currentGraph},(data)=>{
-        buysendbutton.style.opacity = 1;
-        buystockname.value = stockarray[currentGraph-1].name;
-        buystatus.innerHTML = "Holdings: " + data.data.allowed;
-        buystockprice.value = data.data.price;
+        offsetsendbutton.style.opacity = 1;
+        offsetstockname.value = stockarray[currentGraph-1].name;
+        offsetstatus.innerHTML = "Holdings: " + data.data.allowed;
+        offsetstockprice.value = data.data.price;
         loadedStockPrice = data.data.price;
         loadedStockHolding = data.data.allowed;
     });
 }
+
+
 function buychecker(e){
     // console.log(e.value);
     if(e.value<1){
@@ -167,21 +167,21 @@ function buychecker(e){
             // alert("Please select a less quantity")
         }
     }
-    buystockprice.value = parseInt(loadedStockPrice)*parseInt(e.value);
+    offsetstockprice.value = parseInt(loadedStockPrice)*parseInt(e.value);
 }
 function buy(e) {
     e.disabled = true;
     e.style.opacity = 0
 
-    buystatus.innerHTML = "Processing...";
-    $.post(baseurl+"/server/setportfolio.php",{stockId:currentGraph,operation:'buy',quantity:buystockQuantity.value},(data)=>{  
-        buystatus.innerHTML = data.data.message+".";
-        buystatus.innerHTML = data.data.quantity+" bought at "+(data.data.price*data.data.quantity)+".";
+    offsetstatus.innerHTML = "Processing...";
+    $.post(baseurl+"/server/setportfolio.php",{stockId:currentGraph,operation:'buy',quantity:offsetstockQuantity.value},(data)=>{  
+        offsetstatus.innerHTML = data.data.message+".";
+        offsetstatus.innerHTML = data.data.quantity+" bought at "+(data.data.price*data.data.quantity)+".";
         if(data.data.message=="success"){
             currentBalanceBox.innerHTML = data.data.balance;
             setTimeout(()=>{
                 e.disabled = false;
-                buyoffcanvasclosebutton.click();
+                offcanvasclosebutton.click();
                 closecansav()
                 e.disabled = false;
             },2000)
@@ -190,20 +190,7 @@ function buy(e) {
 
 }
 
-function loadsell(){
-    sellsendbutton.style.opacity = 0;
-    sellstockQuantity.value = 1;
-    operation = 1;
-    offcanvas = true;
-    $.post(baseurl+"/server/checker.php",{stockId:currentGraph},(data)=>{
-        sellsendbutton.style.opacity = 1;
-        sellstockname.value = data.data.name;
-        sellstatus.innerHTML = "Holdings: "+data.data.allowed;
-        sellstockprice.value = data.data.price;
-        loadedStockPrice = data.data.price;
-        loadedStockHolding = data.data.allowed;
-    });
-}
+
 function sellchecker(e){
     // console.log(e.value);
     if(e.value<1){
@@ -214,29 +201,42 @@ function sellchecker(e){
             // alert("Please select a less quantity")
         }
     }
-    sellstockprice.value = parseInt(loadedStockPrice)*parseInt(e.value);
+    offsetstockprice.value = parseInt(loadedStockPrice)*parseInt(e.value);
 }
 function sell(e) {
     e.disabled = true;
     e.style.opacity = 0;
-    sellstatus.innerHTML = "Processing...";
-    $.post(baseurl+"/server/setportfolio.php",{stockId:currentGraph,operation:'sell',quantity:sellstockQuantity.value},(data)=>{
-        sellstatus.innerHTML = data.data.message+".";
-        sellstatus.innerHTML = data.data.quantity+" sold at "+(data.data.price*data.data.quantity)+".";
+    offsetstatus.innerHTML = "Processing...";
+    $.post(baseurl+"/server/setportfolio.php",{stockId:currentGraph,operation:'sell',quantity:offsetstockQuantity.value},(data)=>{
+        offsetstatus.innerHTML = data.data.quantity+" sold at "+(data.data.price*data.data.quantity)+".";
+       
         if(data.data.message=="success"){
             currentBalanceBox.innerHTML = data.data.balance;
 
             setTimeout(()=>{
                 e.disabled=false;
                 closecansav()
-                selloffcanvasclosebutton.click();
+                offcanvasclosebutton.click();
             },2000)
         }
     });
 
 }
+function handleChecks(q){
+    if(operation == 0){
+         buychecker(q);
+    }else if(operation == 1){
+         sellchecker(q);
+    }
+}
+function perform(e){
+    if(operation == 0){
+        buy(e);
+    }else if(operation == 1){
+        sell(e);
+    }
 
-
+}
 // GRAPH refresher
 setInterval(()=>{
     $.post(baseurl+"/server/stockapi.php",{stockId:currentGraph},(data)=>{

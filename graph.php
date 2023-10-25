@@ -10,5 +10,7 @@
     <div class="sell-btn">
         <?php include 'sellbtn.php'; ?>
     </div>
-
+    <?php
+include 'offset.php';
+    ?>
 </div>

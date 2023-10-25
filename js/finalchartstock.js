@@ -396,7 +396,7 @@ function makeEvent(date, letter, color, description) {
 
 //set data to all series
 var du = []
-$.post("http://localhost/bazzar/server/stockapi.php",{stockId:1},(data)=>{
+$.post(baseurl+"/server/stockapi.php",{stockId:1},(data)=>{
   du = data.data;
   console.log(du);
   valueSeries.data.setAll(du);

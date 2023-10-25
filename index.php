@@ -75,11 +75,7 @@ if(!isset($_COOKIE['username'])){
                                     <h1>CONTACT <span>ME</span> </h1>
                                 </div>
                                 <div class="info">
-                                    <label for="name">Name</label><br>
-                                    <input type="text" name="name" id="name" placeholder="Enter your Name..."><br>
-                                    <label for="email">Email</label><br>
-                                    <input type="email" name="email" id="email" placeholder="name@gmail.com...">
-                                    <br>
+                                    
                                     <label for="msg">Massage</label>
                                     <br>
                                     <textarea name="msg" id="msg" cols="30" rows="5"
@@ -131,18 +127,22 @@ if(!isset($_COOKIE['username'])){
         var sidebar = document.getElementById('sidebar');
         var links = document.getElementById('links');
         const extent = () => {
-            sidebar.style.height = "auto";
-            links.style.transform = `translateY(${0}vh)`;
-            open.style.right = -100 + "px";
-            close.style.right = -35 + "px";
-            links.style.transition = "transform 0.3s ease";
+            if(window.innerWidth<768){
+                sidebar.style.height = "auto";
+                links.style.transform = `translateY(${0}vh)`;
+                open.style.right = -100 + "px";
+                close.style.right = -35 + "px";
+                links.style.transition = "transform 0.3s ease";
+            }
         }
 
         const srink = () => {
-            sidebar.style.height = 10 + "vh";
-            open.style.right = -35 + "px";
-            close.style.right = -100 + "px";
-            links.style.transform = "translateY(-100vh)";
+            if(window.innerWidth<768){
+                sidebar.style.height = 10 + "vh";
+                open.style.right = -35 + "px";
+                close.style.right = -100 + "px";
+                links.style.transform = "translateY(-100vh)";
+            }
         }
 
 
