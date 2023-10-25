@@ -63,9 +63,9 @@ function getTimestampDifference(timestamp1, timestamp2) {
     if (days > 0) {
       return `${days} days`;
     } else if (hours > 0) {
-      return `${hours} hour, ${minutes} min`;
+      return `${hours} hour, ${minutes%60} min`;
     }else{
-        return `${minutes} min, ${second} sec`;
+        return `${minutes%60} min, ${second%60} sec`;
     }   
   }
 function changeto(e) {
@@ -73,20 +73,26 @@ function changeto(e) {
     if (e == showing) return;
     if(e== 'portfolio'){
         $.post(baseurl+"/server/getportfolio.php",{},(data)=>{
+
             console.log(data);
-            // document.getElementById("portfolio").innerHTML = data.data;
             var load = ``;
             data.data.forEach((element,index) => {
+                if(data.data.fixed<2){
+                    colorCode = (element.cost != -1)?((element.pal <0 )?"text-danger":"text-success"):"text-white";
+                    
+                }else{
+                    colorCode = (element.cost != -1)?((element.pal >=0 )?"text-danger":"text-success"):"text-white";
+
+                }
                 console.log(stockarray[parseInt(element.stockId)-1]);
-                colorCode = (element.cost != -1)?((element.pal <0 )?"text-danger":"text-success"):"text-white";
                 load += `<tr class="${colorCode} fw-bold">
                 <th scope="row" class="text-center">${index+1}</th>
                 <td class="text-center">${stockarray[parseInt(element.stockId)-1].name}</td>
                 <td class="text-center">${element.quantity}</td>
                 <td class="text-center">${element.value}</td>
-                <td class="text-center">${(element.pal>0)?element.cost:'NA'}</td>
-                <td class="text-center">${(element.pal>0)?element.pal:'NA' }</td>
-                <td class="text-center">${(element.pal>0)?getTimestampDifference(element.sellDate,element.buyDate):'not sold yet'}</td>
+                <td class="text-center">${(element.fixed % 2 == 0)?'NA':element.cost}</td>
+                <td class="text-center">${(element.fixed % 2 == 0)?'NA':element.pal }</td>
+                <td class="text-center">${(element.fixed % 2 == 0)?'not setteled':getTimestampDifference(element.sellDate,element.buyDate)}</td>
                         </tr>`;
             });
             portfoliotablebody.innerHTML = load;
@@ -139,11 +145,29 @@ function loadoffset(title) {
     offsettitle.innerHTML = title;
     offsetsendbutton.style.opacity = 0;
     offsetstockQuantity.value = 1;
-    operation = (title == "Buy")?0:1;
+    switch (title) {
+        case "Buy":
+            operation = 0;
+            break;
+        case "Sell":
+            operation = 1;
+            break;
+        case "Short Sell":
+            operation = 2;
+            break;
+        case "Short Buy":
+            operation = 3;
+            break;
+        default:
+            break;
+    }
     offsetButton.innerHTML = title;
     offcanvas = true;
     console.log('object');
-    $.post(baseurl+"/server/checker.php",{stockId:currentGraph},(data)=>{
+    let sendop = (operation<2)?0:2;
+    console.log(sendop);
+    $.post(baseurl+"/server/checker.php",{stockId:currentGraph,operationcode:sendop},(data)=>{
+        console.log(data);
         offsetsendbutton.style.opacity = 1;
         offsetstockname.value = stockarray[currentGraph-1].name;
         offsetstatus.innerHTML = "Holdings: " + data.data.allowed;
@@ -172,10 +196,8 @@ function buychecker(e){
 function buy(e) {
     e.disabled = true;
     e.style.opacity = 0
-
     offsetstatus.innerHTML = "Processing...";
     $.post(baseurl+"/server/setportfolio.php",{stockId:currentGraph,operation:'buy',quantity:offsetstockQuantity.value},(data)=>{  
-        offsetstatus.innerHTML = data.data.message+".";
         offsetstatus.innerHTML = data.data.quantity+" bought at "+(data.data.price*data.data.quantity)+".";
         if(data.data.message=="success"){
             currentBalanceBox.innerHTML = data.data.balance;
@@ -208,11 +230,9 @@ function sell(e) {
     e.style.opacity = 0;
     offsetstatus.innerHTML = "Processing...";
     $.post(baseurl+"/server/setportfolio.php",{stockId:currentGraph,operation:'sell',quantity:offsetstockQuantity.value},(data)=>{
-        offsetstatus.innerHTML = data.data.quantity+" sold at "+(data.data.price*data.data.quantity)+".";
-       
+        offsetstatus.innerHTML = data.data.quantity+" sold at "+(data.data.price*data.data.quantity)+".";       
         if(data.data.message=="success"){
             currentBalanceBox.innerHTML = data.data.balance;
-
             setTimeout(()=>{
                 e.disabled=false;
                 closecansav()
@@ -227,13 +247,55 @@ function handleChecks(q){
          buychecker(q);
     }else if(operation == 1){
          sellchecker(q);
+    }else if (operation == 2){
+        buychecker(q);
+    }else if (operation == 3){
+        sellchecker(q);
     }
+}
+
+function shortsell(e){
+    e.disabled = true;
+    e.style.opacity = 0;
+    offsetstatus.innerHTML = "Processing...";
+    $.post(baseurl+"/server/setportfolio.php",{stockId:currentGraph,operation:'shortsell',quantity:offsetstockQuantity.value},(data)=>{
+        offsetstatus.innerHTML = data.data.quantity+" Short sold at "+(data.data.price*data.data.quantity)+".";
+        if(data.data.message=="success"){
+            currentBalanceBox.innerHTML = data.data.balance;
+            setTimeout(()=>{
+                e.disabled=false;
+                closecansav()
+                offcanvasclosebutton.click();
+            },2000)
+        }
+    });
+}
+function shortbuy(e){
+    e.disabled = true;
+    e.style.opacity = 0;
+    offsetstatus.innerHTML = "Processing...";
+    $.post(baseurl+"/server/setportfolio.php",{stockId:currentGraph,operation:'shortbuy',quantity:offsetstockQuantity.value},(data)=>{
+        console.log(data);
+        offsetstatus.innerHTML = data.data.quantity+" sold at "+(data.data.price*data.data.quantity)+".";       
+        if(data.data.message=="success"){
+            currentBalanceBox.innerHTML = data.data.balance;
+            setTimeout(()=>{
+                e.disabled=false;
+                closecansav()
+                offcanvasclosebutton.click();
+            },2000)
+        }
+    });    
 }
 function perform(e){
     if(operation == 0){
         buy(e);
     }else if(operation == 1){
         sell(e);
+    }else if(operation == 2){
+        shortsell(e);
+    }else if(operation == 3){
+        shortbuy(e);
     }
 
 }
@@ -247,4 +309,20 @@ setInterval(()=>{
             GRAPH.volumeSeries.data.setAll(data.data);
             GRAPH.sbSeries.data.setAll(data.data);
     });
-},2.5*60000)
+
+    $.post(baseurl+"/server/stockprice.php",{},(data)=>{
+        data.data.forEach((element,index) => {
+            pricesTabs[index].innerHTML = element.nextValue;
+            let change = element.nextValue - element.prevValue;
+            if(change < 0){
+                //loosing
+                changeTabs[index].classList.add("down");
+                changeTabs[index].classList.remove("up");
+            }else{
+                changeTabs[index].classList.remove("down");
+                changeTabs[index].classList.add("up");
+            }
+            changeTabs[index].innerHTML = (100*change/element.prevValue).toFixed(2)+"%";
+        });
+    }); 
+},60000)

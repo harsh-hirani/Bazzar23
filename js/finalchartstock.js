@@ -60,7 +60,7 @@ var valueAxis = mainPanel.yAxes.push(am5xy.ValueAxis.new(root, {
 var dateAxis = mainPanel.xAxes.push(am5xy.GaplessDateAxis.new(root, {
   baseInterval: {
     timeUnit: "minute",
-    count: 4
+    count: 2
   },
   renderer: am5xy.AxisRendererX.new(root, {}),
   tooltip: am5.Tooltip.new(root, {})

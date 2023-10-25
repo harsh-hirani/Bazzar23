@@ -34,7 +34,7 @@ var portfoliotablebody = document.getElementById("portfoliotablebody");
 // current variables
 var offcanvas = false;
 var currentGraph = 0;
-var operation = 0; // buy = 0, sell = 1
+var operation = 0; // buy = 0, sell = 1, shortsell = 2, shortbuy = 3
 var showing = "mainStock";
 var activeSection = "c1";
 // stock list

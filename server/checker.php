@@ -2,9 +2,10 @@
 
 include 'conn.php';
 $stock = $_POST['stockId'];
+$opcode = $_POST['operationcode'];
 header('Content-Type:application/json');
 
-$SQL = "SELECT sum(quantity) as total FROM ".$username."_portfolio WHERE stockId = '".$stock."' and fixed = 0";
+$SQL = "SELECT sum(quantity) as total FROM ".$username."_portfolio WHERE stockId = '".$stock."' and fixed = $opcode ";
 
 
 $data = mysqli_query($conn,$SQL);
@@ -20,7 +21,7 @@ if ($data) {
         $load['name'] = $stockarray[$stock];
         $load['price'] = getValue($stock,$stockarray,$conn);
     
-    echo json_encode(["status" => $status, "data" => $load]);
+    echo json_encode(["status" => $status,"code"=>$opcode, "data" => $load]);
 
 }else{  
     echo json_encode(["status" => $status, "data" => array("error" => mysql_error($conn))]);
