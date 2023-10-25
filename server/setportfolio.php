@@ -70,12 +70,12 @@ if ($operation == 'buy') {
             $row = $load[$i];
             $quantityInRow = $row['quantity'];
             if ($quantityLeft >= $quantityInRow){
-                $sql = "UPDATE `".$username."_portfolio` set `fixed`='1',`cost`='$value',`pal`='',`sellDate`='$time' where id='".$row['id']."'";
+                $sql = "UPDATE `".$username."_portfolio` set `fixed`='1',`cost`='$value',`pal`='0',`sellDate`='$time' where id='".$row['id']."'";
                  mysqli_query($conn,$sql);
 
                 $quantityLeft = $quantityLeft - $quantityInRow;
             }else{
-                $sql = "UPDATE `".$username."_portfolio` set `fixed`='1',`cost`='$value',`pal`='',`sellDate`='$time',`quantity`='$quantityLeft' where id='".$row['id']."'";
+                $sql = "UPDATE `".$username."_portfolio` set `fixed`='1',`cost`='$value',`pal`='0',`sellDate`='$time',`quantity`='$quantityLeft' where id='".$row['id']."'";
                  mysqli_query($conn,$sql); 
                 $addQuantity = $quantityInRow - $quantityLeft;
                 $pppp = $row['value'];
@@ -125,13 +125,13 @@ if ($operation == 'buy') {
             $quantityInRow = $row['quantity'];
             $valuein = $row['value'];
             if ($quantityLeft >= $quantityInRow){
-                $sql = "UPDATE `".$username."_portfolio` set `fixed`='3',`cost`='$value',`pal`='',`sellDate`='$time' where id='".$row['id']."'";
+                $sql = "UPDATE `".$username."_portfolio` set `fixed`='3',`cost`='$value',`pal`='0',`sellDate`='$time' where id='".$row['id']."'";
                 mysqli_query($conn,$sql);
                 
                 $quantityLeft = $quantityLeft - $quantityInRow;
                 $piceincome = $piceincome + (($valuein * 2 ) - $value)*$quantityInRow;
             }else{
-                $sql = "UPDATE `".$username."_portfolio` set `fixed`='3',`cost`='$value',`pal`='',`sellDate`='$time',`quantity`='$quantityLeft' where id='".$row['id']."'";
+                $sql = "UPDATE `".$username."_portfolio` set `fixed`='3',`cost`='$value',`pal`='0',`sellDate`='$time',`quantity`='$quantityLeft' where id='".$row['id']."'";
                  mysqli_query($conn,$sql); 
                 $addQuantity = $quantityInRow - $quantityLeft;
                 $piceincome = $piceincome + (($valuein * 2 ) - $value)*$quantityLeft;
