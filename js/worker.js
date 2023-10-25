@@ -195,7 +195,8 @@ function buy(e) {
     e.disabled = true;
     e.style.opacity = 0
     offsetstatus.innerHTML = "Processing...";
-    $.post(baseurl+"/server/setportfolio.php",{stockId:currentGraph,operation:'buy',quantity:offsetstockQuantity.value},(data)=>{  
+    $.post(baseurl+"/server/setportfolio.php",{stockId:currentGraph,operation:'buy',quantity:offsetstockQuantity.value},(data)=>{
+        console.log(data);  
         offsetstatus.innerHTML = data.data.quantity+" bought at "+(data.data.price*data.data.quantity)+".";
         if(data.data.message=="success"){
             currentBalanceBox.innerHTML = data.data.balance;
@@ -228,6 +229,7 @@ function sell(e) {
     e.style.opacity = 0;
     offsetstatus.innerHTML = "Processing...";
     $.post(baseurl+"/server/setportfolio.php",{stockId:currentGraph,operation:'sell',quantity:offsetstockQuantity.value},(data)=>{
+        console.log(data);
         offsetstatus.innerHTML = data.data.quantity+" sold at "+(data.data.price*data.data.quantity)+".";       
         if(data.data.message=="success"){
             currentBalanceBox.innerHTML = data.data.balance;
@@ -257,6 +259,7 @@ function shortsell(e){
     e.style.opacity = 0;
     offsetstatus.innerHTML = "Processing...";
     $.post(baseurl+"/server/setportfolio.php",{stockId:currentGraph,operation:'shortsell',quantity:offsetstockQuantity.value},(data)=>{
+        console.log(data);
         offsetstatus.innerHTML = data.data.quantity+" Short sold at "+(data.data.price*data.data.quantity)+".";
         if(data.data.message=="success"){
             currentBalanceBox.innerHTML = data.data.balance;
