@@ -52,6 +52,7 @@ if ($operation == 'buy') {
     }
 }elseif ($operation == 'sell') {
     $opcode = 1;
+    try{
     $sql = "SELECT * FROM `".$username."_portfolio` WHERE stockId = '$stockId' AND fixed = '0' ORDER BY id ASC ";
     $data = mysqli_query($conn,$sql);
     if ($data) {
@@ -99,6 +100,9 @@ if ($operation == 'buy') {
     }else{
         echo json_encode(["status" => $status, "data" => array("error" => mysql_error($conn))]);
     }
+}catch(Exception $e){
+    echo json_encode(["status" => $status, "data" => array("error" => $e,"sql"=>$sql,"message"=>$e->getMessage() . " at line " . $e->getLine() . " of " . $e->getFile() . "<br>" . $e->getTraceAsString())]);
+}
 
 }elseif($operation == "shortbuy"){
     $opcode = 3;
