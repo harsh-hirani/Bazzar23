@@ -75,11 +75,11 @@ function changeto(e) {
             console.log(data);
             var load = ``;
             data.data.forEach((element,index) => {
-                if(data.data.fixed == 0 || data.data.fixed == 2){
+                if(element.fixed == 0 || element.fixed == 2){
                     colorCode = "text-white";
-                }else if(data.data.fixed == 1){
+                }else if(element.fixed == 1){
                     colorCode = (element.pal <0 )?"text-danger":"text-success";
-                }else if(data.data.fixed == 3){
+                }else if(element.fixed == 3){
                     colorCode = (element.pal <0 )?"text-success":"text-danger";
                 }
                 console.log(stockarray[parseInt(element.stockId)-1]);
