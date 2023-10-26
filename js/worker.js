@@ -79,7 +79,7 @@ function changeto(e) {
                     colorCode = (element.cost != -1)?((element.pal <0 )?"text-danger":"text-success"):"text-white";
                     
                 }else{
-                    colorCode = (element.cost != -1)?((element.pal >=0 )?"text-danger":"text-success"):"text-white";
+                    colorCode = (element.cost != -1)?((element.pal >=0 )?"text-success":"text-danger"):"text-white";
 
                 }
                 console.log(stockarray[parseInt(element.stockId)-1]);
