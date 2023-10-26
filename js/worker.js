@@ -71,7 +71,7 @@ function changeto(e) {
     if (e == showing) return;
     if(e== 'portfolio'){
         $.post(baseurl+"/server/getportfolio.php",{},(data)=>{
-
+            let colorCode = "text-white";
             console.log(data);
             var load = ``;
             data.data.forEach((element,index) => {
