@@ -75,12 +75,12 @@ function changeto(e) {
             console.log(data);
             var load = ``;
             data.data.forEach((element,index) => {
-                if(data.data.fixed<2){
-                    colorCode = (element.cost != -1)?((element.pal <0 )?"text-danger":"text-success"):"text-white";
-                    
-                }else{
-                    colorCode = (element.cost != -1)?((element.pal >=0 )?"text-success":"text-danger"):"text-white";
-
+                if(data.data.fixed == 0 || data.data.fixed == 2){
+                    colorCode = "text-white";
+                }else if(data.data.fixed == 1){
+                    colorCode = (element.pal <0 )?"text-danger":"text-success";
+                }else if(data.data.fixed == 3){
+                    colorCode = (element.pal <0 )?"text-success":"text-danger";
                 }
                 console.log(stockarray[parseInt(element.stockId)-1]);
                 load += `<tr class="${colorCode} fw-bold">
