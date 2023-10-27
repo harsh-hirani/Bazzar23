@@ -6,6 +6,9 @@ var baseurl = ".";
 //dom
 var pricesTabs = [];
 var changeTabs = [];
+var lefter = document.getElementById("lefter");
+var righter = document.getElementById("righter");  
+
 var leaderboardRanking = document.getElementById("leaderboardRanking"); 
 var stocklistsContainer = document.getElementById("stocklistsContainer");
 var currentBalanceBox = document.getElementById("currentBalanceBox");

@@ -308,7 +308,7 @@ button {
  }
  
  button:hover {
-  color: #e8e8e8;
+  color: #e8e8e8 !important;
  }
  
  button:hover::before {

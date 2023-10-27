@@ -127,6 +127,30 @@ function graphchange(e,graph){
     var idos = (currentGraph === 0)?"stock2":"stock"+currentGraph;
     document.getElementById(idos).classList.remove("active");
 
+    $.post(baseurl+"/erver/checker.php",{stockId:graph,operationcode:5},(data)=>{
+        
+        if (data.data.allowed0 == 0 && data.data.allowed2 == 0){
+            lefter.innerHTML = `<button class="buy" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" onclick="loadoffset('Buy')"><i class="bi bi-graph-up-arrow"></i>
+            Buy</button>`;
+            righter.innerHTML = `<button class="sell" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom"
+            onclick="loadoffset('Short Sell')"><i class="bi bi-graph-up-arrow"></i>
+           Short Sell</button>`;
+        }else if(data.data.allowed0 > 0 ){
+            lefter.innerHTML = `<button class="buy" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" onclick="loadoffset('Buy')"><i class="bi bi-graph-up-arrow"></i>
+            Buy</button>`;
+            righter.innerHTML = `<button class="sell" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom"
+            onclick="loadoffset('Sell')"><i class="bi bi-graph-down-arrow"></i>
+           Sell</button>`;
+        }else if(data.data.allowed2 > 0){
+            lefter.innerHTML = `<button class="buy" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" 
+            onclick="loadoffset('Short Buy')"><i class="bi bi-graph-up-arrow"></i>
+            SOF</button>`;
+            righter.innerHTML = `<button class="sell" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom"
+            onclick="loadoffset('Short Sell')"><i class="bi bi-graph-up-arrow"></i>
+           Short Sell</button>`;
+        }
+    });
+
     $.post(baseurl+"/server/stockapi.php",{stockId:graph},(data)=>{
         GRAPH.valueSeries.data.clear();
         GRAPH.volumeSeries.data.clear();
