@@ -265,16 +265,6 @@ var toolbar = am5stock.StockToolbar.new(root, {
   container: document.getElementById("chartcontrols"),
   stockChart: stockChart,
   controls: [
-    am5stock.IndicatorControl.new(root, {
-      stockChart: stockChart,
-      legend: valueLegend
-    }),
-    am5stock.DateRangeSelector.new(root, {
-      stockChart: stockChart
-    }),
-    am5stock.PeriodSelector.new(root, {
-      stockChart: stockChart
-    }),
     seriesSwitcher,
     am5stock.DrawingControl.new(root, {
       stockChart: stockChart
