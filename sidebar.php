@@ -50,7 +50,7 @@
         </div>
     </div>
     <div class="hr ruler"></div>
-    <div class="links" id="c4" onclick="changeto('query');">
+    <!-- <div class="links" id="c4" onclick="changeto('query');">
 
         <div class="original">QUERY</div>
         <div class="letters">
@@ -61,8 +61,8 @@
             <span>R</span>
             <span>Y</span>
         </div>
-    </div>
-    <div class="links" id="c5" onclick="changeto('contact');">
+    </div> -->
+    <!-- <div class="links" id="c5" onclick="changeto('contact');">
 
         <div class="original">CONTACT</div>
         <div class="letters">
@@ -76,7 +76,7 @@
             <span>T</span>
         </div>
 
-    </div>
+    </div> -->
     <div class="links c6" onclick="location.replace('logout.php')">
 
         <div class="original">LOGOUT</div>

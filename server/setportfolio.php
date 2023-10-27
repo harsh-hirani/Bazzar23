@@ -19,7 +19,7 @@ if ($operation == 'buy') {
     $data = mysqli_query($conn,$sql);
     if ($data) {
         $status = 'true';
-        $newprice = $value + 0.32*$quantity;
+        $newprice = $value + 0.0*$quantity;
         $buysql = "INSERT INTO `stocklinear_$stockarray[$stockId]`(`datetime`, `buyOrSell`, `quantity`, `newPrice`, `beforePrice`) VALUES 
         ('$time','$opcode','$quantity','$newprice','$value')";
         mysqli_query($conn,$buysql);
@@ -38,7 +38,7 @@ if ($operation == 'buy') {
     $data = mysqli_query($conn,$sql);
     if ($data) {
         $status = 'true';
-        $newprice = $value - 0.32*$quantity;
+        $newprice = $value - 0.0*$quantity;
         $buysql = "INSERT INTO `stocklinear_$stockarray[$stockId]`(`datetime`, `buyOrSell`, `quantity`, `newPrice`, `beforePrice`) VALUES 
         ('$time','$opcode','$quantity','$newprice','$value')";
         mysqli_query($conn,$buysql);
@@ -88,12 +88,12 @@ if ($operation == 'buy') {
         }
         
         // echo json_encode(["status" => $status, "load" => $load]);
-        $newprice = $value - 0.35*($quantity-$quantityLeft);
+        $newprice = $value - 0.0*($quantity-$quantityLeft);
         $buysql = "INSERT INTO `stocklinear_$stockarray[$stockId]`(`datetime`, `buyOrSell`, `quantity`, `newPrice`, `beforePrice`) VALUES 
         ('$time','$opcode','$quantity','$newprice','$value')";
         mysqli_query($conn,$buysql);
-        $balance =(int) mysqli_fetch_assoc(mysqli_query($conn,$sql = "SELECT balance from `user_current_sts` where id=$id"))['balance'];
-        $finalbalance = $balance + $value * ($quantity-$quantityLeft);
+        $balance =(float) mysqli_fetch_assoc(mysqli_query($conn,$sql = "SELECT balance from `user_current_sts` where id=$id"))['balance'];
+        $finalbalance = $balance + $value * ($quantity-$quantityLeft) * (1-0.0005);
         $updatebalancesql = "UPDATE `user_current_sts` SET `balance`='$finalbalance',`date`='$time' WHERE id=$id";
         mysqli_query($conn,$updatebalancesql);
         echo json_encode(["status" => $status, "data" => array("message" => "success","name"=>$stockarray[$stockId],"price" => $value,"newprice"=>$newprice,"quantity" => ($quantity-$quantityLeft),"balance"=>$finalbalance)]);
@@ -147,7 +147,7 @@ if ($operation == 'buy') {
         }
         
         // echo json_encode(["status" => $status, "load" => $load]);
-        $newprice = $value + 0.35*($quantity-$quantityLeft);
+        $newprice = $value + 0.0*($quantity-$quantityLeft);
         $buysql = "INSERT INTO `stocklinear_$stockarray[$stockId]`(`datetime`, `buyOrSell`, `quantity`, `newPrice`, `beforePrice`) VALUES 
         ('$time','$opcode','$quantity','$newprice','$value')";
         mysqli_query($conn,$buysql);

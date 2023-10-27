@@ -2,7 +2,7 @@
 <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
   <div class="offcanvas-header">
     <h5 class="offcanvas-title px-4" id="offcanvasBottomLabel"></h5>
-    <button type="button" class="btn-close text-reset " style="width: 75%;" data-bs-dismiss="offcanvas" aria-label="Close" id="offcanvasclosebutton"></button>
+    <button type="button" class="btn-close text-reset " style="width: 10%;" data-bs-dismiss="offcanvas" aria-label="Close" id="offcanvasclosebutton"></button>
   </div>
   <div class="offcanvas-body small">
     <div class="container">
