@@ -2,7 +2,8 @@
 var GRAPH = {
   "valueSeries":undefined,
   "volumeSeries":undefined,
-  "sbSeries":undefined
+  "sbSeries":undefined,
+  "setSeriesType":undefined
 }
 
 
@@ -227,6 +228,7 @@ function setSeriesType(seriesType) {
 
   // Remove previous series
   var data = currentSeries.data.values;
+  console.log("first",data);
   mainPanel.series.removeValue(currentSeries);
 
   // Create new series
@@ -236,7 +238,8 @@ function setSeriesType(seriesType) {
       series = mainPanel.series.push(am5xy.LineSeries.new(root, newSettings));
       break;
     case "candlestick":
-      
+      series = mainPanel.series.push(am5xy.CandlestickSeries.new(root, newSettings));
+      break;
     case "procandlestick":
       newSettings.clustered = false;
       series = mainPanel.series.push(am5xy.CandlestickSeries.new(root, newSettings));
@@ -249,11 +252,28 @@ function setSeriesType(seriesType) {
       series = mainPanel.series.push(am5xy.OHLCSeries.new(root, newSettings));
       break;
   }
+  /*
+    switch (seriesType) {
+      case "line":
+        // Create a LineSeries
+        series = mainPanel.series.push(am5xy.LineSeries.new(root, newSettings));
+        break;
+      case "candlestick":
+        // Create a CandlestickSeries
+        series = mainPanel.series.push(am5xy.CandlestickSeries.new(root, newSettings));
+        break;
+      case "ohlc":
+        // Create an OHLCSeries
+        series = mainPanel.series.push(am5xy.OHLCSeries.new(root, newSettings));
+        break;
+    }
+  */
 
   // Set new series as stockSeries
   if (series) {
     valueLegend.data.removeValue(currentSeries);
     series.data.setAll(data);
+    console.log(series.data.values);
     stockChart.set("stockSeries", series);
     var cursor = mainPanel.get("cursor");
     if (cursor) {
@@ -288,57 +308,12 @@ var toolbar = am5stock.StockToolbar.new(root, {
 // var data = 
 var du = [
   { Date: 1617192000000, Open: 515.67, High: 528.13, Low: 515.44, Close: 521.66, Volume: 3503100 },
-
-  {
-      Date: 1629892800000,
-      Open: 550.16,
-      High: 552.84,
-      Low: 545.45,
-      Close: 547.58,
-      Volume: 2065600
-  },
-  {
-      Date: 1629896400000,
-      Open: 552.12,
-      High: 554.76,
-      Low: 549.28,
-      Close: 553.20,
-      Volume: 1953400
-  },
-  {
-      Date: 1629900000000,
-      Open: 553.30,
-      High: 556.42,
-      Low: 551.10,
-      Close: 555.88,
-      Volume: 2041200
-  },
-  {
-      Date: 1629903600000,
-      Open: 556.00,
-      High: 559.80,
-      Low: 554.50,
-      Close: 558.75,
-      Volume: 2124500
-  },
-  {
-      Date: 1696950593558,
-      Open: 550.00,
-      High: 659.80,
-      Low: 424.50,
-      Close: 458.75,
-      Volume: 2124500
-  },
-  {
-      Date: 1696960593558,
-      Open: 458.00,
-      High: 659.80,
-      Low: 424.50,
-      Close: 610.75,
-      Volume: 2124500
-  }
-
-
+{Date: 1629892800000,Open: 550.16,High: 552.84,Low: 545.45,Close: 547.58,Volume: 2065600},
+  {Date: 1629896400000,Open: 552.12,High: 554.76,Low: 549.28,Close: 553.20,Volume: 1953400},
+  {Date: 1629900000000,Open: 553.30,High: 556.42,Low: 551.10,Close: 555.88,Volume: 2041200},
+  {Date: 1629903600000,Open: 556.00,High: 559.80,Low: 554.50,Close: 558.75,Volume: 2124500},
+  {Date: 1696950593558,Open: 550.00,High: 659.80,Low: 424.50,Close: 458.75,Volume: 2124500},
+  {Date: 1696960593558,Open: 458.00,High: 659.80,Low: 424.50,Close: 610.75,Volume: 2124500 }
 ];
 
 var tooltip = am5.Tooltip.new(root, {
@@ -354,38 +329,7 @@ tooltip.get("background").setAll({
 });
 
 
-function makeEvent(date, letter, color, description) {
-  var dataItem = dateAxis.createAxisRange(dateAxis.makeDataItem({ value: date }))
-  var grid = dataItem.get("grid");
-  if (grid) {
-    grid.setAll({ visible: true, strokeOpacity: 0.2, strokeDasharray: [3, 3] })
-  }
 
-  var bullet = am5.Container.new(root, {
-    dy: -100
-  });
-
-  var circle = bullet.children.push(am5.Circle.new(root, {
-    radius: 10,
-    stroke: color,
-    fill: am5.color(0xffffff),
-    tooltipText: description,
-    tooltip: tooltip,
-    tooltipY: 0
-  }));
-
-  var label = bullet.children.push(am5.Label.new(root, {
-    text: letter,
-    centerX: am5.p50,
-    centerY: am5.p50
-  }));
-
-  dataItem.set("bullet", am5xy.AxisBullet.new(root, {
-    location: 0,
-    stacked: true,
-    sprite: bullet
-  }));
-}
 
 
 

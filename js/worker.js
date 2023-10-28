@@ -94,7 +94,7 @@ function changeto(e) {
                 }else if(element.fixed == 1){
                     colorCode = (element.pal <0 )?"text-danger":"text-success";
                 }else if(element.fixed == 3){
-                    colorCode = (element.pal <0 )?"text-success":"text-danger";
+                    colorCode = (element.pal <=0 )?"text-success":"text-danger";
                 }
                 console.log(stockarray[parseInt(element.stockId)-1]);
                 load += `<tr class="${colorCode} fw-bold">
@@ -104,7 +104,7 @@ function changeto(e) {
                 <td class="text-center">${element.value}</td>
                 <td class="text-center">${(element.fixed % 2 == 0)?'NA':element.cost}</td>
                 <td class="text-center">${(element.fixed % 2 == 0)?'NA':element.pal }</td>
-                <td class="text-center">${(element.fixed % 2 == 0)?'not setteled':getTimestampDifference(element.sellDate,element.buyDate)}</td>
+                <td class="text-center">${(element.fixed % 2 == 0)?`<span onclick="release(${(element.fixed==0)?0:2},${element.stockId},${element.quantity})" class="smallBtn">Release</span>`:getTimestampDifference(element.sellDate,element.buyDate)}</td>
                         </tr>`;
             });
             portfoliotablebody.innerHTML = load;
@@ -130,29 +130,6 @@ function closecansav(){
     offcanvas = false;
 }
 function doneworker(graph=currentGraph){
-    $.post(baseurl+"/server/checker.php",{stockId:graph,operationcode:5},(data)=>{
-        
-        if (data.data.allowed0 == 0 && data.data.allowed2 == 0){
-            lefter.innerHTML = `<button class="buy" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" onclick="loadoffset('Buy')"><i class="bi bi-graph-up-arrow"></i>
-            Buy</button>`;
-            righter.innerHTML = `<button class="sell" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom"
-            onclick="loadoffset('Short Sell')"><i class="bi bi-graph-up-arrow"></i>
-           Short Sell</button>`;
-        }else if(data.data.allowed0 > 0 ){
-            lefter.innerHTML = `<button class="buy" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" onclick="loadoffset('Buy')"><i class="bi bi-graph-up-arrow"></i>
-            Buy</button>`;
-            righter.innerHTML = `<button class="sell" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom"
-            onclick="loadoffset('Sell')"><i class="bi bi-graph-down-arrow"></i>
-           Sell</button>`;
-        }else if(data.data.allowed2 > 0){
-            lefter.innerHTML = `<button class="buy" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" 
-            onclick="loadoffset('Short Buy')"><i class="bi bi-graph-up-arrow"></i>
-            SOF</button>`;
-            righter.innerHTML = `<button class="sell" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom"
-            onclick="loadoffset('Short Sell')"><i class="bi bi-graph-up-arrow"></i>
-           Short Sell</button>`;
-        }
-    });
     initupdates();
 }
 
@@ -171,10 +148,10 @@ function graphchange(e,graph){
 
    
     $.post(baseurl+"/server/stockapi.php",{stockId:graph},(data)=>{
-        GRAPH.valueSeries.data.clear();
-        GRAPH.volumeSeries.data.clear();
-        GRAPH.sbSeries.data.clear();
-            GRAPH.valueSeries.data.setAll(data.data);
+
+            // GRAPH.valueSeries.data.setAll(data.data);
+            setFinalData(data.data);
+            setSeriesType(currentGraphType)
             GRAPH.volumeSeries.data.setAll(data.data);
             GRAPH.sbSeries.data.setAll(data.data);
     });
@@ -347,6 +324,14 @@ function perform(e){
         shortbuy(e);
     }
     
+}
+function release(t,id,q){
+    document.getElementById('stock'+id).click()
+    if(t== 0){
+        sellbtn.click();
+    }else{
+        ssbtn.click();
+    }
 }
 // GRAPH refresher
 setInterval(()=>{

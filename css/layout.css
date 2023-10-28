@@ -155,7 +155,7 @@
     align-items: center;
     justify-content: space-between;
     & button {
-        width: 90%;
+        width: 45%;
     }
 }
 
@@ -166,7 +166,7 @@
     width: 40%;
 
     & button {
-        width: 90%;
+        width: 45%;
     }
 }
  /* scroller  */
@@ -295,4 +295,12 @@
 }
 .info-item:first-child{
     min-width: 120px;
+}
+.smallBtn{
+    border: 2px solid #ffffff;
+    padding: 2px 4px;
+    color: #ffffff;
+    background: #2c2a35;
+    border-radius: 3px;
+    cursor: pointer;
 }

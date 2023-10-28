@@ -23,12 +23,8 @@ var offsetstockprice = document.getElementById("sellstockprice")
 var offsetstockname = document.getElementById("sellstockname");
 var offcanvasclosebutton = document.getElementById("offcanvasclosebutton");
 var offsetButton = document.getElementById("offsetButton");
-// var buysendbutton = document.getElementById("buysendbutton");
-// var buystatus = document.getElementById("buystatus");
-// var buystockQuantity = document.getElementById("buystockQuantity");
-// var buystockprice = document.getElementById("buystockprice");
-// var buystockname = document.getElementById("buystockname");
-// var buyoffcanvasclosebutton = document.getElementById("buyoffcanvasclosebutton");
+var sellbtn = document.getElementById("sellbtn");
+var ssbtn = document.getElementById("ssbtn");
 var loadedStockPrice = 0;
 var loadedStockHolding = 0;
 var portfoliotablebody = document.getElementById("portfoliotablebody");
@@ -40,7 +36,7 @@ var portfoliotablebody = document.getElementById("portfoliotablebody");
 // current variables
 var offcanvas = false;
 var currentGraph = 0;
-var currentGraphTypeChanged = 0;
+var currentGraphType = 'candlestick';
 var operation = 0; // buy = 0, sell = 1, shortsell = 2, shortbuy = 3
 var showing = "mainStock";
 var activeSection = "c1";
@@ -81,3 +77,11 @@ stockarray = [
     {id:17,
     name: "Page Industries"},
 ];
+
+var globalStockData = [];
+function getFinalData(){
+    return globalStockData;
+}
+function setFinalData(d){
+    globalStockData = d;
+}

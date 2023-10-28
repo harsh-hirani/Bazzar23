@@ -8,7 +8,8 @@
     <script >
         <?php 
         include "js/vars.js";
-        include 'js/finalchartstock.js';
+        //  include 'js/finalchartstock.js';
+         include "js/testchart.js";
         include 'js/stocklistGenerater.js';
         include 'js/stocklistUpdater.js';
         include 'js/worker.js';

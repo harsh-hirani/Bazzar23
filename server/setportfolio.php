@@ -164,9 +164,9 @@ if ($operation == 'buy') {
 
         $tax = (float)$ttmp['tax'] + (float) ($taxper * $piceincome);
         $finalbalance = $balance + $piceincome;
-        $updatebalancesql = "UPDATE `user_current_sts` SET `balance`='$finalbalance',`date`='$time' WHERE id=$id";
+        $updatebalancesql = "UPDATE `user_current_sts` SET `balance`='$finalbalance',`tax`='$tax',`date`='$time' WHERE id=$id";
         mysqli_query($conn,$updatebalancesql);
-        echo json_encode(["status" => $status, "data" => array("message" => "success","name"=>$stockarray[$stockId],"price" => $value,"newprice"=>$newprice,"quantity" => ($quantity-$quantityLeft),"balance"=>$finalbalance)]);
+        echo json_encode(["status" => $status, "data" => array("message" => "success","name"=>$stockarray[$stockId],"price" => $value,"newprice"=>$newprice,"quantity" => ($quantity-$quantityLeft),"balance"=>$finalbalance,"tax"=>$tax)]);
     }else{
         echo json_encode(["status" => $status, "data" => array("error" => mysql_error($conn))]);
     }
