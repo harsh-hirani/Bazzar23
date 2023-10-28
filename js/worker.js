@@ -19,7 +19,18 @@ stockarray.forEach((element,index) => {
     <div class="line"></div>
     `;
 });
+function initupdates(){
+    
+    $.post(baseurl+'/server/initial.php',{},(data)=>{
+        console.log(data);
+        currentBalanceBox.innerHTML = parseFloat(data.data.balance).toFixed(2);
+    
 
+        invenstmentBox.innerHTML = parseFloat(data.data.investment).toFixed(2)+" Rs";
+        profitBox.innerHTML = parseFloat(data.data.pal).toFixed(2)+" Rs";
+        taxBox.innerHTML = parseFloat(data.data.tax).toFixed(2)+" Rs";
+    });
+}
 $.post(baseurl+'/server/initial.php',{},(data)=>{
     console.log(data);
     currentBalanceBox.innerHTML = parseFloat(data.data.balance).toFixed(2);
@@ -142,6 +153,7 @@ function doneworker(graph=currentGraph){
            Short Sell</button>`;
         }
     });
+    initupdates();
 }
 
 function graphchange(e,graph){
