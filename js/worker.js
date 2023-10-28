@@ -147,14 +147,14 @@ function graphchange(e,graph){
         offcanvasclosebutton.click();
 
     }
+    
     changeto('mainStock');
-    if(graph==currentGraph) return;
+    if(graph==currentGraph) {doneworker(); return};
     e.classList.add("active");
     var idos = (currentGraph === 0)?"stock2":"stock"+currentGraph;
     document.getElementById(idos).classList.remove("active");
 
-   doneworker();
-
+  
     $.post(baseurl+"/server/stockapi.php",{stockId:graph},(data)=>{
         GRAPH.valueSeries.data.clear();
         GRAPH.volumeSeries.data.clear();
