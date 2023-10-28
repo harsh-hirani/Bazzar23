@@ -115,7 +115,7 @@ function changeto(e) {
             var load = ``;
             data.data.forEach((element,index) => {
                 load += `<article class="leaderboard__profile">
-                            <span class="leaderboard__name"> ${element.name}</span>
+                            <span class="leaderboard__name">#${index+1} ${element.name}</span>
                             <span class="leaderboard__value">${parseFloat(element.balance).toFixed(2)}<span>Rs</span></span>
                         </article>`;
             });
