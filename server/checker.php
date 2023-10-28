@@ -19,9 +19,9 @@ if($opcode == 5 || $opcode == '5'){
 
     $dump = mysqli_fetch_assoc($d1);
     $dump2 = mysqli_fetch_assoc($d2);
-    $load['allowed0'] = (int)$dump['total'];
-    $load['allowed2'] = (int)$dump2['total'];
-    $load['stockId'] = (int)$stock;
+    $load['allowed0'] = (float)$dump['total'];
+    $load['allowed2'] = (float)$dump2['total'];
+    $load['stockId'] = (float)$stock;
     $load['name'] = $stockarray[$stock];
     $load['price'] = getValue($stock,$stockarray,$conn);
 
@@ -35,8 +35,8 @@ echo json_encode(["status" => $status,"code"=>$opcode, "data" => $load]);
     
         $dump = mysqli_fetch_assoc($data);
         
-        $load['allowed'] = (int)$dump['total'];
-        $load['stockId'] = (int)$stock;
+        $load['allowed'] = (float)$dump['total'];
+        $load['stockId'] = (float)$stock;
         $load['name'] = $stockarray[$stock];
         $load['price'] = getValue($stock,$stockarray,$conn);
     

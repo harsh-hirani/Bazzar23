@@ -24,7 +24,7 @@ $stockarray = array(
 function getValue($stockId,$ar,$c){
     $livesql = "SELECT newPrice FROM `stocklinear_$ar[$stockId]` ORDER BY id DESC LIMIT 1";
     $value = mysqli_fetch_assoc(mysqli_query($c, $livesql))['newPrice'];
-    return (int)$value;
+    return (float)$value;
 }
 // $id = 1;
 if (isset($_COOKIE['userId'])&& isset($_COOKIE['username'])) {

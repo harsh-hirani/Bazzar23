@@ -22,7 +22,7 @@ stockarray.forEach((element,index) => {
 
 $.post(baseurl+'/server/initial.php',{},(data)=>{
     console.log(data);
-    currentBalanceBox.innerHTML = data.data.balance;
+    currentBalanceBox.innerHTML = parseFloat(data.data.balance).toFixed(2);
     document.getElementById("stock1").click();
     pricesTabs = document.getElementsByClassName("unixprice");
     changeTabs = document.getElementsByClassName("unixchange");
@@ -210,15 +210,15 @@ function buychecker(e){
     if(e.value<1){
         e.value = 1;
     }else {
-        let currentStockPrice=  parseInt(loadedStockPrice);
-        let cuttableAmmount = parseInt(e.value)*currentStockPrice;
-        let currentBalance = parseInt(currentBalanceBox.innerText);
+        let currentStockPrice=  parseFloat(loadedStockPrice);
+        let cuttableAmmount = parseFloat(e.value)*currentStockPrice;
+        let currentBalance = parseFloat(currentBalanceBox.innerText);
         if(cuttableAmmount> currentBalance){
             e.value = Math.floor(currentBalance/currentStockPrice);
             // alert("Please select a less quantity")
         }
     }
-    offsetstockprice.value = parseInt(loadedStockPrice)*parseInt(e.value);
+    offsetstockprice.value = parseFloat(loadedStockPrice)*parseFloat(e.value);
 }
 function buy(e) {
     e.disabled = true;
@@ -228,7 +228,7 @@ function buy(e) {
         console.log(data);  
         offsetstatus.innerHTML = data.data.quantity+" bought at "+(data.data.price*data.data.quantity)+".";
         if(data.data.message=="success"){
-            currentBalanceBox.innerHTML = data.data.balance;
+            currentBalanceBox.innerHTML = parseFloat(data.data.balance).toFixed(2);
             doneworker();
             setTimeout(()=>{
                 e.disabled = false;
@@ -262,7 +262,7 @@ function sell(e) {
         console.log(data);
         offsetstatus.innerHTML = data.data.quantity+" sold at "+(data.data.price*data.data.quantity)+".";       
         if(data.data.message=="success"){
-            currentBalanceBox.innerHTML = data.data.balance;
+            currentBalanceBox.innerHTML = data.data.balance.toFixed(2);
             doneworker();
             setTimeout(()=>{
                 e.disabled=false;
@@ -293,7 +293,7 @@ function shortsell(e){
         console.log(data);
         offsetstatus.innerHTML = data.data.quantity+" Short sold at "+(data.data.price*data.data.quantity)+".";
         if(data.data.message=="success"){
-            currentBalanceBox.innerHTML = data.data.balance;
+            currentBalanceBox.innerHTML = parseFloat(data.data.balance).toFixed(2);
             doneworker();
             setTimeout(()=>{
                 e.disabled=false;
@@ -311,7 +311,7 @@ function shortbuy(e){
         console.log(data);
         offsetstatus.innerHTML = data.data.quantity+" sold at "+(data.data.price*data.data.quantity)+".";       
         if(data.data.message=="success"){
-            currentBalanceBox.innerHTML = data.data.balance;
+            currentBalanceBox.innerHTML = parseFloat(data.data.balance).toFixed(2);
             doneworker();
             setTimeout(()=>{
                 e.disabled=false;

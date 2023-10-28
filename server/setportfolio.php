@@ -23,7 +23,7 @@ if ($operation == 'buy') {
         $buysql = "INSERT INTO `stocklinear_$stockarray[$stockId]`(`datetime`, `buyOrSell`, `quantity`, `newPrice`, `beforePrice`) VALUES 
         ('$time','$opcode','$quantity','$newprice','$value')";
         mysqli_query($conn,$buysql);
-        $balance =(int) mysqli_fetch_assoc(mysqli_query($conn,$sql = "SELECT balance from `user_current_sts` where id=$id"))['balance'];
+        $balance =(float) mysqli_fetch_assoc(mysqli_query($conn,$sql = "SELECT balance from `user_current_sts` where id=$id"))['balance'];
         $finalbalance = $balance - $value * $quantity;
         $updatebalancesql = "UPDATE `user_current_sts` SET `balance`='$finalbalance',`date`='$time' WHERE id=$id";
         mysqli_query($conn,$updatebalancesql);
@@ -42,7 +42,7 @@ if ($operation == 'buy') {
         $buysql = "INSERT INTO `stocklinear_$stockarray[$stockId]`(`datetime`, `buyOrSell`, `quantity`, `newPrice`, `beforePrice`) VALUES 
         ('$time','$opcode','$quantity','$newprice','$value')";
         mysqli_query($conn,$buysql);
-        $balance =(int) mysqli_fetch_assoc(mysqli_query($conn,$sql = "SELECT balance from `user_current_sts` where id=$id"))['balance'];
+        $balance =(float) mysqli_fetch_assoc(mysqli_query($conn,$sql = "SELECT balance from `user_current_sts` where id=$id"))['balance'];
         $finalbalance = $balance - $value * $quantity;
         $updatebalancesql = "UPDATE `user_current_sts` SET `balance`='$finalbalance',`date`='$time' WHERE id=$id";
         mysqli_query($conn,$updatebalancesql);
@@ -151,7 +151,7 @@ if ($operation == 'buy') {
         $buysql = "INSERT INTO `stocklinear_$stockarray[$stockId]`(`datetime`, `buyOrSell`, `quantity`, `newPrice`, `beforePrice`) VALUES 
         ('$time','$opcode','$quantity','$newprice','$value')";
         mysqli_query($conn,$buysql);
-        $balance =(int) mysqli_fetch_assoc(mysqli_query($conn,$sql = "SELECT balance from `user_current_sts` where id=$id"))['balance'];
+        $balance =(float) mysqli_fetch_assoc(mysqli_query($conn,$sql = "SELECT balance from `user_current_sts` where id=$id"))['balance'];
 
 
         $finalbalance = $balance + $piceincome;

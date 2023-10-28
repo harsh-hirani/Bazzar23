@@ -13,9 +13,10 @@ if (isset($_COOKIE['username']) ) {
              $load = array() ;
             for($i=0;$i<mysqli_num_rows($data);$i++){
                 $dump = mysqli_fetch_assoc($data);
+                
                 $load[$i] = $dump;
                 if($dump['pal'] != '-1'){
-                    $load[$i]['pal'] = intval($dump['cost']) - intval($dump['value']);
+                    $load[$i]['pal'] = floatval($dump['cost']) - floatval($dump['value']);
                 }else{
                     $load[$i]['pal'] = -1;
                 }
