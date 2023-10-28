@@ -4,7 +4,7 @@ var GRAPH = {
   "volumeSeries":undefined,
   "sbSeries":undefined
 }
-function forcechange(intard){
+
 
 
 am5.ready(function() {
@@ -392,7 +392,7 @@ function makeEvent(date, letter, color, description) {
 
 //set data to all series
 var du = []
-$.post(baseurl+"/server/stockapi.php",{stockId:intard},(data)=>{
+$.post(baseurl+"/server/stockapi.php",{stockId:1},(data)=>{
   du = data.data;
   console.log(du);
   valueSeries.data.setAll(du);
@@ -405,5 +405,3 @@ GRAPH.valueSeries = valueSeries;
 GRAPH.volumeSeries = volumeSeries;
 GRAPH.sbSeries = sbSeries;
 }); // end am5.ready()
-}
-forcechange(1);
