@@ -319,15 +319,15 @@ function shortbuy(e){
 }
 function perform(e){
     if(operation == 0){
-        buy(e);
+        buy(e).then(()=>{doneworker()});
     }else if(operation == 1){
-        sell(e);
+        sell(e).then(()=>{doneworker()});
     }else if(operation == 2){
-        shortsell(e);
+        shortsell(e).then(()=>{doneworker()});
     }else if(operation == 3){
-        shortbuy(e);
+        shortbuy(e).then(()=>{doneworker()});
     }
-    doneworker();
+    
 }
 // GRAPH refresher
 setInterval(()=>{
