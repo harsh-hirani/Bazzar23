@@ -32,9 +32,9 @@ if ($conn->query($sql) === TRUE) {
     CREATE TABLE `bazzar`.`".$name."_portfolio` ( `id` INT(255) NOT NULL AUTO_INCREMENT ,
      `stockId` INT(11) NOT NULL ,
       `quantity` INT(11) NOT NULL ,
-       `value` INT(11) NOT NULL ,
-        `cost` INT(11) NOT NULL ,
-         `pal` INT(11) NOT NULL ,
+       `value` FLOAT(20) NOT NULL ,
+        `cost` FLOAT(20) NOT NULL ,
+         `pal` FLOAT(20) NOT NULL ,
          `buyDate` BIGINT(20) NOT NULL ,
          `sellDate` BIGINT(20) NOT NULL ,
          `fixed` INT(11) NOT NULL ,
@@ -43,8 +43,8 @@ if ($conn->query($sql) === TRUE) {
     $sql = "SELECT * FROM `users` WHERE `uname` = '$name' AND `email` = '$email'";
     $result = $conn->query($sql);
     $id = mysqli_fetch_assoc($result)['id'];
-    $sql = "INSERT INTO `user_current_sts`( `id`,`balance`, `lose`, `profit`, `date`, `isAllowed`) VALUES 
-    ('$id','100000','0','0','$time','1')";
+    $sql = "INSERT INTO `user_current_sts`( `id`,`balance`, `lose`, `profit`, `tax`, `date`, `isAllowed`) VALUES 
+    ('$id','100000','0','0','0','$time','1')";
     $conn->query($sql);
     setcookie("username", $name, time() + (86400 * 30), "/");
     setcookie("userId", $id, time() + (86400 * 30), "/");

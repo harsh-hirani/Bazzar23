@@ -24,12 +24,12 @@ $.post(baseurl+'/server/initial.php',{},(data)=>{
     console.log(data);
     currentBalanceBox.innerHTML = parseFloat(data.data.balance).toFixed(2);
 
-    document.getElementById("stock<?php echo (isset($_GET['graph']))?$_GET['graph']:1;?>").click();
+    document.getElementById("stock1").click();
     pricesTabs = document.getElementsByClassName("unixprice");
     changeTabs = document.getElementsByClassName("unixchange");
-    invenstmentBox.innerHTML = parseFloat(data.data.invenstment).toFixed(2);
-    profitBox.innerHTML = parseFloat(data.data.pal).toFixed(2);
-    taxBox.innerHTML = parseFloat(data.data.tax).toFixed(2);
+    invenstmentBox.innerHTML = parseFloat(data.data.invenstment).toFixed(2)+" Rs";
+    profitBox.innerHTML = parseFloat(data.data.pal).toFixed(2)+" Rs";
+    taxBox.innerHTML = parseFloat(data.data.tax).toFixed(2)+" Rs";
 
     $.post(baseurl+"/server/stockprice.php",{},(data)=>{
         data.data.forEach((element,index) => {
@@ -157,10 +157,7 @@ function graphchange(e,graph){
     if (currentGraph === 0){}else{
     document.getElementById("stock"+currentGraph).classList.remove("active");}
 
-    if(currentGraphTypeChanged == 1){
-        document.getElementById('chartdiv').innerHTML = "";
-        location.replace("./?graph="+graph);
-    }
+   
     $.post(baseurl+"/server/stockapi.php",{stockId:graph},(data)=>{
         GRAPH.valueSeries.data.clear();
         GRAPH.volumeSeries.data.clear();
