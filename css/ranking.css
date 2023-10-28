@@ -126,4 +126,7 @@
       display: flex;
       flex-direction: column;
     }
+    .leaderboard__profile{
+      padding-bottom: 1px;
+    }
   }
