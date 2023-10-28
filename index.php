@@ -54,7 +54,7 @@ if(!isset($_COOKIE['username'])){
 
                     <div id="info">
                         <div class="info-item">
-                            <div class="title">invenstment</div>
+                            <div class="title">investment</div>
                             <div class="infoinner" id="info1"></div>
                         </div>
                         <div class="info-item">

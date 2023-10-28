@@ -27,7 +27,7 @@ $.post(baseurl+'/server/initial.php',{},(data)=>{
     document.getElementById("stock1").click();
     pricesTabs = document.getElementsByClassName("unixprice");
     changeTabs = document.getElementsByClassName("unixchange");
-    invenstmentBox.innerHTML = parseFloat(data.data.invenstment).toFixed(2)+" Rs";
+    invenstmentBox.innerHTML = parseFloat(data.data.investment).toFixed(2)+" Rs";
     profitBox.innerHTML = parseFloat(data.data.pal).toFixed(2)+" Rs";
     taxBox.innerHTML = parseFloat(data.data.tax).toFixed(2)+" Rs";
 
