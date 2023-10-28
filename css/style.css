@@ -59,6 +59,10 @@
     border: 2px solid #000;
     /* z-index: 1000; */
 }
+.investedMoney{
+    grid-area: 1/1/-1/-1;
+}
+
 
 .name .investedMoney, .name .growth{
     font-size: 1.8vh;
@@ -112,12 +116,10 @@
 #portfolio table tbody{
     color: #fff;
 }
-
 @media screen and (max-width:800px){
     #portfolio{
         border-radius: 0px;
     }
-
 }
 
 @media screen and (max-width:500px){
