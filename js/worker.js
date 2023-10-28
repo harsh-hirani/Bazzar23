@@ -115,18 +115,7 @@ function changeto(e) {
 function closecansav(){
     offcanvas = false;
 }
-function graphchange(e,graph){
-    if(offcanvas==true){
-        closecansav();
-        offcanvasclosebutton.click();
-
-    }
-    changeto('mainStock');
-    if(graph==currentGraph) return;
-    e.classList.add("active");
-    var idos = (currentGraph === 0)?"stock2":"stock"+currentGraph;
-    document.getElementById(idos).classList.remove("active");
-
+function doneworker(){
     $.post(baseurl+"/server/checker.php",{stockId:graph,operationcode:5},(data)=>{
         
         if (data.data.allowed0 == 0 && data.data.allowed2 == 0){
@@ -150,6 +139,21 @@ function graphchange(e,graph){
            Short Sell</button>`;
         }
     });
+}
+
+function graphchange(e,graph){
+    if(offcanvas==true){
+        closecansav();
+        offcanvasclosebutton.click();
+
+    }
+    changeto('mainStock');
+    if(graph==currentGraph) return;
+    e.classList.add("active");
+    var idos = (currentGraph === 0)?"stock2":"stock"+currentGraph;
+    document.getElementById(idos).classList.remove("active");
+
+   doneworker();
 
     $.post(baseurl+"/server/stockapi.php",{stockId:graph},(data)=>{
         GRAPH.valueSeries.data.clear();
@@ -322,7 +326,7 @@ function perform(e){
     }else if(operation == 3){
         shortbuy(e);
     }
-
+    doneworker();
 }
 // GRAPH refresher
 setInterval(()=>{
