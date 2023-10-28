@@ -127,7 +127,7 @@ function graphchange(e,graph){
     var idos = (currentGraph === 0)?"stock2":"stock"+currentGraph;
     document.getElementById(idos).classList.remove("active");
 
-    $.post(baseurl+"/erver/checker.php",{stockId:graph,operationcode:5},(data)=>{
+    $.post(baseurl+"/server/checker.php",{stockId:graph,operationcode:5},(data)=>{
         
         if (data.data.allowed0 == 0 && data.data.allowed2 == 0){
             lefter.innerHTML = `<button class="buy" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom" onclick="loadoffset('Buy')"><i class="bi bi-graph-up-arrow"></i>
