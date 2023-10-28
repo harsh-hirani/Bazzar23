@@ -229,6 +229,7 @@ function buy(e) {
         offsetstatus.innerHTML = data.data.quantity+" bought at "+(data.data.price*data.data.quantity)+".";
         if(data.data.message=="success"){
             currentBalanceBox.innerHTML = data.data.balance;
+            doneworker();
             setTimeout(()=>{
                 e.disabled = false;
                 offcanvasclosebutton.click();
@@ -262,6 +263,7 @@ function sell(e) {
         offsetstatus.innerHTML = data.data.quantity+" sold at "+(data.data.price*data.data.quantity)+".";       
         if(data.data.message=="success"){
             currentBalanceBox.innerHTML = data.data.balance;
+            doneworker();
             setTimeout(()=>{
                 e.disabled=false;
                 closecansav()
@@ -292,6 +294,7 @@ function shortsell(e){
         offsetstatus.innerHTML = data.data.quantity+" Short sold at "+(data.data.price*data.data.quantity)+".";
         if(data.data.message=="success"){
             currentBalanceBox.innerHTML = data.data.balance;
+            doneworker();
             setTimeout(()=>{
                 e.disabled=false;
                 closecansav()
@@ -309,6 +312,7 @@ function shortbuy(e){
         offsetstatus.innerHTML = data.data.quantity+" sold at "+(data.data.price*data.data.quantity)+".";       
         if(data.data.message=="success"){
             currentBalanceBox.innerHTML = data.data.balance;
+            doneworker();
             setTimeout(()=>{
                 e.disabled=false;
                 closecansav()
