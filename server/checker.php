@@ -5,7 +5,7 @@ $stock = $_POST['stockId'];
 $opcode = $_POST['operationcode'];
 header('Content-Type:application/json');
 
-
+try{
 
 $status = 'false';
 
@@ -45,5 +45,9 @@ echo json_encode(["status" => $status,"code"=>$opcode, "data" => $load]);
 }else{  
     echo json_encode(["status" => $status, "data" => array("error" => mysql_error($conn))]);
 }
+}
+
+}catch(Exception $e){
+    echo json_encode(["status" => $status, "data" => array("error" => $e,"sql"=>$sql,"message"=>$e->getMessage() . " at line " . $e->getLine() . " of " . $e->getFile() . "<br>" . $e->getTraceAsString())]);
 }
 ?>
