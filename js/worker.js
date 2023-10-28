@@ -115,7 +115,7 @@ function changeto(e) {
 function closecansav(){
     offcanvas = false;
 }
-function doneworker(){
+function doneworker(graph=currentGraph){
     $.post(baseurl+"/server/checker.php",{stockId:graph,operationcode:5},(data)=>{
         
         if (data.data.allowed0 == 0 && data.data.allowed2 == 0){
