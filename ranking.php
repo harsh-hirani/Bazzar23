@@ -1,7 +1,7 @@
 
 <article class="leaderboard">
   <header>
-    <h1 class="leaderboard__title"><span class="leaderboard__title--top">bazaar 5.0</span><span class="leaderboard__title--bottom">Leaderboard</span></h1>
+    <h1 class="leaderboard__title"><span class="leaderboard__title--top">bazaar</span><span class="leaderboard__title--bottom">Leaderboard</span></h1>
   </header>
   
   <main class="leaderboard__profiles" id="leaderboardRanking">
