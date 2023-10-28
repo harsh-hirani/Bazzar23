@@ -5,13 +5,11 @@ $stock = $_POST['stockId'];
 $opcode = $_POST['operationcode'];
 header('Content-Type:application/json');
 
-$SQL = "SELECT sum(quantity) as total FROM ".$username."_portfolio WHERE stockId = '".$stock."' and fixed = $opcode ";
 
 
-$data = mysqli_query($conn,$SQL);
 $status = 'false';
 
-if($opcode == 5){
+if($opcode == 5 || $opcode == '5'){
     $status = 'true';
     $load = array() ;
     $sql0 = "SELECT sum(quantity) as total FROM ".$username."_portfolio WHERE stockId = '".$stock."' and fixed = '0' ";
@@ -29,10 +27,9 @@ if($opcode == 5){
 
 echo json_encode(["status" => $status,"code"=>$opcode, "data" => $load]);
 }else{
-
-
-
-if ($data) {
+    $SQL = "SELECT sum(quantity) as total FROM ".$username."_portfolio WHERE stockId = '".$stock."' and fixed = $opcode ";
+    $data = mysqli_query($conn,$SQL);
+    if ($data) {
     $status = 'true';
     $load = array() ;
     
