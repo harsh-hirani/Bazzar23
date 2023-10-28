@@ -23,10 +23,13 @@ stockarray.forEach((element,index) => {
 $.post(baseurl+'/server/initial.php',{},(data)=>{
     console.log(data);
     currentBalanceBox.innerHTML = parseFloat(data.data.balance).toFixed(2);
-    document.getElementById("stock1").click();
+
+    document.getElementById("stock<?php echo (isset($_GET['graph']))?$_GET['graph']:1;?>").click();
     pricesTabs = document.getElementsByClassName("unixprice");
     changeTabs = document.getElementsByClassName("unixchange");
-
+    invenstmentBox.innerHTML = parseFloat(data.data.invenstment).toFixed(2);
+    profitBox.innerHTML = parseFloat(data.data.pal).toFixed(2);
+    taxBox.innerHTML = parseFloat(data.data.tax).toFixed(2);
 
     $.post(baseurl+"/server/stockprice.php",{},(data)=>{
         data.data.forEach((element,index) => {
@@ -102,7 +105,7 @@ function changeto(e) {
             data.data.forEach((element,index) => {
                 load += `<article class="leaderboard__profile">
                             <span class="leaderboard__name"> ${element.name}</span>
-                            <span class="leaderboard__value">${element.balance}<span>Rs</span></span>
+                            <span class="leaderboard__value">${parseFloat(element.balance).toFixed(2)}<span>Rs</span></span>
                         </article>`;
             });
             leaderboardRanking.innerHTML = load;
@@ -151,10 +154,13 @@ function graphchange(e,graph){
     changeto('mainStock');
     if(graph==currentGraph) {doneworker(); return};
     e.classList.add("active");
-    var idos = (currentGraph === 0)?"stock2":"stock"+currentGraph;
-    document.getElementById(idos).classList.remove("active");
+    if (currentGraph === 0){}else{
+    document.getElementById("stock"+currentGraph).classList.remove("active");}
 
-  
+    if(currentGraphTypeChanged == 1){
+        document.getElementById('chartdiv').innerHTML = "";
+        location.replace("./?graph="+graph);
+    }
     $.post(baseurl+"/server/stockapi.php",{stockId:graph},(data)=>{
         GRAPH.valueSeries.data.clear();
         GRAPH.volumeSeries.data.clear();
@@ -258,8 +264,8 @@ function sell(e) {
     e.disabled = true;
     e.style.opacity = 0;
     offsetstatus.innerHTML = "Processing...";
-    $.post(baseurl+"/server/setportfolio.php",{stockId:currentGraph,operation:'sell',quantity:offsetstockQuantity.value},(data)=>{
-        console.log(data);
+    $.post(baseurl+"/server/setportfolio.php",{stockId:currentGraph,operation:'sell',quantity:offsetstockQuantity.value},(data,s)=>{
+        console.log(s,data);
         offsetstatus.innerHTML = data.data.quantity+" sold at "+(data.data.price*data.data.quantity)+".";       
         if(data.data.message=="success"){
             currentBalanceBox.innerHTML = data.data.balance.toFixed(2);
@@ -323,13 +329,13 @@ function shortbuy(e){
 }
 function perform(e){
     if(operation == 0){
-        buy(e).then(()=>{doneworker()});
+        buy(e);
     }else if(operation == 1){
-        sell(e).then(()=>{doneworker()});
+        sell(e);
     }else if(operation == 2){
-        shortsell(e).then(()=>{doneworker()});
+        shortsell(e);
     }else if(operation == 3){
-        shortbuy(e).then(()=>{doneworker()});
+        shortbuy(e);
     }
     
 }

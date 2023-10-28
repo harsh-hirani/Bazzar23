@@ -2,7 +2,7 @@
 <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
   <div class="offcanvas-header">
     <h5 class="offcanvas-title px-4" id="offcanvasBottomLabel"></h5>
-    <button type="button" class="btn-close text-reset " style="width: 10%;" data-bs-dismiss="offcanvas" aria-label="Close" id="offcanvasclosebutton"></button>
+    <button type="button" class="btn-clos text-reset " style="width: 10%;background:#fff;" data-bs-dismiss="offcanvas" aria-label="Close" id="offcanvasclosebutton">X</button>
   </div>
   <div class="offcanvas-body small">
     <div class="container">
@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="col-lg-2">
-                <button class="send" style="width: 80%;max-width: 140px;" id="sellsendbutton" onclick="perform(this)">
+                <button class="send" style="width: 100%;max-width: 140px;" id="sellsendbutton" onclick="perform(this)">
                     <div class="svg-wrapper-1">
                         <div class="svg-wrapper">
                             <svg height="24" width="24" viewBox="0 0 24 24"

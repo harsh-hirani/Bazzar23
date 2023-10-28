@@ -53,6 +53,18 @@ if(!isset($_COOKIE['username'])){
                     </div>
 
                     <div id="info">
+                        <div class="info-item">
+                            <div class="title">invenstment</div>
+                            <div class="infoinner" id="info1"></div>
+                        </div>
+                        <div class="info-item">
+                            <div class="title">net profit</div>
+                            <div class="infoinner" id="info2"></div>
+                        </div>
+                        <div class="info-item">
+                            <div class="title">paid taxes</div>
+                            <div class="infoinner" id="info3"></div>
+                        </div>
                     </div>
                     <div id="chart">
                         <div id="mainStock" class="active">

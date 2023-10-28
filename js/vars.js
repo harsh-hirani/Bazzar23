@@ -8,6 +8,9 @@ var pricesTabs = [];
 var changeTabs = [];
 var lefter = document.getElementById("lefter");
 var righter = document.getElementById("righter");  
+var invenstmentBox = document.getElementById("info1");
+var profitBox = document.getElementById("info2");
+var taxBox = document.getElementById("info3");
 
 var leaderboardRanking = document.getElementById("leaderboardRanking"); 
 var stocklistsContainer = document.getElementById("stocklistsContainer");
@@ -37,6 +40,7 @@ var portfoliotablebody = document.getElementById("portfoliotablebody");
 // current variables
 var offcanvas = false;
 var currentGraph = 0;
+var currentGraphTypeChanged = 0;
 var operation = 0; // buy = 0, sell = 1, shortsell = 2, shortbuy = 3
 var showing = "mainStock";
 var activeSection = "c1";

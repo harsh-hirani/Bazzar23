@@ -4,6 +4,8 @@ var GRAPH = {
   "volumeSeries":undefined,
   "sbSeries":undefined
 }
+function forcechange(intard){
+
 
 am5.ready(function() {
 
@@ -205,6 +207,9 @@ var seriesSwitcher = am5stock.SeriesTypeControl.new(root, {
 
 seriesSwitcher.events.on("selected", function(ev) {
   setSeriesType(ev.item.id);
+  if(ev.item.id != "candlestick"){
+    currentGraphTypeChanged = 1;
+  }
 });
 
 function getNewSettings(series) {
@@ -231,6 +236,7 @@ function setSeriesType(seriesType) {
       series = mainPanel.series.push(am5xy.LineSeries.new(root, newSettings));
       break;
     case "candlestick":
+      
     case "procandlestick":
       newSettings.clustered = false;
       series = mainPanel.series.push(am5xy.CandlestickSeries.new(root, newSettings));
@@ -386,7 +392,7 @@ function makeEvent(date, letter, color, description) {
 
 //set data to all series
 var du = []
-$.post(baseurl+"/server/stockapi.php",{stockId:1},(data)=>{
+$.post(baseurl+"/server/stockapi.php",{stockId:intard},(data)=>{
   du = data.data;
   console.log(du);
   valueSeries.data.setAll(du);
@@ -399,3 +405,5 @@ GRAPH.valueSeries = valueSeries;
 GRAPH.volumeSeries = volumeSeries;
 GRAPH.sbSeries = sbSeries;
 }); // end am5.ready()
+}
+forcechange(1);

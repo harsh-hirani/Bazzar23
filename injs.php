@@ -11,6 +11,6 @@
         include 'js/finalchartstock.js';
         include 'js/stocklistGenerater.js';
         include 'js/stocklistUpdater.js';
-        include 'js/worker.js';
+        include 'js/worker.php';
         ?>
     </script>
