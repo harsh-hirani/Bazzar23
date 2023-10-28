@@ -164,6 +164,7 @@ function graphchange(e,graph){
             GRAPH.sbSeries.data.setAll(data.data);
     });
     currentGraph = graph;
+    doneworker(graph);
 }
 
 
