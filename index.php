@@ -118,7 +118,7 @@ if(!isset($_COOKIE['username'])){
         if(window.innerWidth > 768){
             document.getElementById("chartdiv").style.height = (document.getElementById("chartContainer").clientHeight - 30)+"px";
         } else{
-            document.getElementById("chartdiv").style.height = 300+"px";
+            document.getElementById("chartdiv").style.height = 400+"px";
 
         }
         var orignal = document.getElementsByClassName('orignal');
