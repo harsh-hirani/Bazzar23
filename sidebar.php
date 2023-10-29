@@ -26,13 +26,13 @@
         </div>
     </div>
     <div class="links" id="c2 " onclick="changeto('news');">
-        <div class="original">F.A.</div>
+        <div class="original">NEWS</div>
         <div class="letters">
             <i class="bi bi-newspaper"></i>
-            <span>F</span>
-            <span>.</span>
-            <span>A</span>
-            <span>.</span>
+            <span>N</span>
+            <span>E</span>
+            <span>W</span>
+            <span>S</span>
         </div>
     </div>
     <div class="links" id="c3" onclick="changeto('ranking');">
