@@ -24,7 +24,7 @@ function initupdates(){
     $.post(baseurl+'/server/initial.php',{},(data)=>{
         console.log(data);
         currentBalanceBox.innerHTML = parseFloat(data.data.balance).toFixed(2);
-    
+        freezed = data.data.freezed;
 
         invenstmentBox.innerHTML = parseFloat(data.data.investment).toFixed(2)+" Rs";
         profitBox.innerHTML = parseFloat(data.data.pal).toFixed(2)+" Rs";
@@ -34,7 +34,7 @@ function initupdates(){
 $.post(baseurl+'/server/initial.php',{},(data)=>{
     console.log(data);
     currentBalanceBox.innerHTML = parseFloat(data.data.balance).toFixed(2);
-
+    freezed = data.data.freezed;
     document.getElementById("stock1").click();
     pricesTabs = document.getElementsByClassName("unixprice");
     changeTabs = document.getElementsByClassName("unixchange");
@@ -42,7 +42,8 @@ $.post(baseurl+'/server/initial.php',{},(data)=>{
     profitBox.innerHTML = parseFloat(data.data.pal).toFixed(2)+" Rs";
     taxBox.innerHTML = parseFloat(data.data.tax).toFixed(2)+" Rs";
 
-    $.post(baseurl+"/server/stockprice.php",{},(data)=>{
+    $.post(baseurl+"/server/stockprice.php",{},(data)=>{console.log(data)
+        currentprices = data.data;
         data.data.forEach((element,index) => {
             pricesTabs[index].innerHTML = element.nextValue;
             let change = element.nextValue - element.prevValue;
@@ -88,23 +89,30 @@ function changeto(e) {
             let colorCode = "text-white";
             console.log(data);
             var load = ``;
+            objids = []
+            updaterarraycount = 0;
             data.data.forEach((element,index) => {
                 if(element.fixed == 0 || element.fixed == 2){
                     colorCode = "text-white";
+                    updaterarraycount++;
+                    objids.push( parseInt(element.stockId));
                 }else if(element.fixed == 1){
                     colorCode = (element.pal <0 )?"text-danger":"text-success";
                 }else if(element.fixed == 3){
                     colorCode = (element.pal <=0 )?"text-success":"text-danger";
                 }
-                console.log(stockarray[parseInt(element.stockId)-1]);
+                // console.log(stockarray[parseInt(element.stockId)-1]);
+                currprice = parseInt(currentprices[parseInt(element.stockId)-1].nextValue);
+                buyprice = parseFloat(element.value);
                 load += `<tr class="${colorCode} fw-bold">
                 <th scope="row" class="text-center">${index+1}</th>
                 <td class="text-center">${stockarray[parseInt(element.stockId)-1].name}</td>
-                <td class="text-center">${element.quantity}</td>
-                <td class="text-center">${element.value}</td>
-                <td class="text-center">${(element.fixed % 2 == 0)?'NA':element.cost}</td>
-                <td class="text-center">${(element.fixed % 2 == 0)?'NA':element.pal }</td>
-                <td class="text-center">${(element.fixed % 2 == 0)?`<span onclick="release(${(element.fixed==0)?0:2},${element.stockId},${element.quantity})" class="smallBtn">Release</span>`:getTimestampDifference(element.sellDate,element.buyDate)}</td>
+                <td class="text-center" ${(element.fixed % 2 == 0)?`id="qqq${updaterarraycount}"`:''}>${element.quantity}</td>
+                <td class="text-center" ${(element.fixed % 2 == 0)?`id="vvv${updaterarraycount}"`:''}>${element.value}</td>
+                <td class="text-center">${element.value*element.quantity}</td>
+                <td class="text-center" ${(element.fixed % 2 == 0)?`id="ccc${updaterarraycount}">`+currprice:element.cost}</td>
+                <td class="text-center" ${(element.fixed % 2 == 0)?`id="ppp${updaterarraycount}">`+(currprice - buyprice)*element.quantity:element.pal }</td>
+                <td class="text-center" ${(element.fixed % 2 == 0)?`id="hhh${updaterarraycount}">`+(currprice)*element.quantity:'setteled'}</td>
                         </tr>`;
             });
             portfoliotablebody.innerHTML = load;
@@ -174,7 +182,7 @@ function loadoffset(title) {
         case "Short Sell":
             operation = 2;
             break;
-        case "Short Buy":
+        case "Square OFF":
             operation = 3;
             break;
         default:
@@ -198,19 +206,22 @@ function loadoffset(title) {
 
 
 function buychecker(e){
-    // console.log(e.value);
-    if(e.value<1){
-        e.value = 1;
-    }else {
-        let currentStockPrice=  parseFloat(loadedStockPrice);
-        let cuttableAmmount = parseFloat(e.value)*currentStockPrice;
-        let currentBalance = parseFloat(currentBalanceBox.innerText);
-        if(cuttableAmmount> currentBalance){
-            e.value = Math.floor(currentBalance/currentStockPrice);
-            // alert("Please select a less quantity")
+    if(e.value!=''){
+        
+        // console.log(e.value);
+        if(e.value<1){
+            e.value = 1;
+        }else {
+            let currentStockPrice=  parseFloat(loadedStockPrice);
+            let cuttableAmmount = parseFloat(e.value)*currentStockPrice;
+            let currentBalance = parseFloat(currentBalanceBox.innerText);
+            if(cuttableAmmount> currentBalance-freezed){
+                e.value = Math.floor((currentBalance-freezed)/currentStockPrice);
+                // alert("Please select a less quantity")
+            }
         }
+        offsetstockprice.value = parseFloat(loadedStockPrice)*parseFloat(e.value);
     }
-    offsetstockprice.value = parseFloat(loadedStockPrice)*parseFloat(e.value);
 }
 function buy(e) {
     e.disabled = true;
@@ -235,16 +246,18 @@ function buy(e) {
 
 
 function sellchecker(e){
-    // console.log(e.value);
-    if(e.value<1){
-        e.value = 1;
-    }else {
-        if(e.value > loadedStockHolding){
-            e.value = loadedStockHolding;
-            // alert("Please select a less quantity")
+    if(e.value!=''){
+
+        if(e.value<1){
+            e.value = 1;
+        }else {
+            if(e.value > loadedStockHolding){
+                e.value = loadedStockHolding;
+                // alert("Please select a less quantity")
+            }
         }
+        offsetstockprice.value = parseInt(loadedStockPrice)*parseInt(e.value);
     }
-    offsetstockprice.value = parseInt(loadedStockPrice)*parseInt(e.value);
 }
 function sell(e) {
     e.disabled = true;
@@ -336,16 +349,16 @@ function release(t,id,q){
 // GRAPH refresher
 setInterval(()=>{
     $.post(baseurl+"/server/stockapi.php",{stockId:currentGraph},(data)=>{
-        // GRAPH.valueSeries.data.clear();
-        // GRAPH.volumeSeries.data.clear();
-        // GRAPH.sbSeries.data.clear();
+     
         setFinalData(data.data);
         setSeriesType(currentGraphType)
             GRAPH.volumeSeries.data.setAll(data.data);
             GRAPH.sbSeries.data.setAll(data.data);
     });
-
+},60000)
+setInterval(()=>{
     $.post(baseurl+"/server/stockprice.php",{},(data)=>{
+        currentprices = data.data;
         data.data.forEach((element,index) => {
             pricesTabs[index].innerHTML = element.nextValue;
             let change = element.nextValue - element.prevValue;
@@ -360,4 +373,15 @@ setInterval(()=>{
             changeTabs[index].innerHTML = (100*change/element.prevValue).toFixed(2)+"%";
         });
     }); 
-},60000)
+    if (showing == 'portfolio') {
+        for (var i = 1; i<= updaterarraycount;i++) {
+            let q = parseInt(document.getElementById('qqq'+i).innerHTML);
+            let v = parseFloat(document.getElementById('vvv'+i).innerHTML);
+            let nv = parseFloat( currentprices[objids[i-1]-1].nextValue);
+            document.getElementById('ccc'+i).innerHTML = nv.toFixed(2);
+            document.getElementById('ppp'+i).innerHTML = (q*(nv - v)).toFixed(2);
+            document.getElementById('hhh'+i).innerHTML = (q*nv).toFixed(2);
+        }
+    }
+
+},10000)

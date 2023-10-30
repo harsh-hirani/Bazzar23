@@ -40,6 +40,10 @@ var currentGraphType = 'candlestick';
 var operation = 0; // buy = 0, sell = 1, shortsell = 2, shortbuy = 3
 var showing = "mainStock";
 var activeSection = "c1";
+var freezed = 0;
+var updaterarraycount=0;
+var currentprices= [];
+var objids=[];
 // stock list
 stockarray = [
     {id:1,

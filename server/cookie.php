@@ -1,5 +1,5 @@
 <?php
-setcookie("username", "test", time() + (86400 * 30), "/");
-setcookie("userId", "16", time() + (86400 * 30), "/");
+setcookie("username", "yes_no", time() + (86400 * 30), "/");
+setcookie("userId", "2", time() + (86400 * 30), "/");
 
 ?>

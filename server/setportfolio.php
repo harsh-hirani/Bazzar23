@@ -22,33 +22,43 @@ if ($operation == 'buy') {
         $newprice = $value + 0.0*$quantity;
         $buysql = "INSERT INTO `stocklinear_$stockarray[$stockId]`(`datetime`, `buyOrSell`, `quantity`, `newPrice`, `beforePrice`) VALUES 
         ('$time','$opcode','$quantity','$newprice','$value')";
-        mysqli_query($conn,$buysql);
-        $balance =(float) mysqli_fetch_assoc(mysqli_query($conn,$sql = "SELECT balance from `user_current_sts` where id=$id"))['balance'];
+        // mysqli_query($conn,$buysql);
+        $btmp = mysqli_fetch_assoc(mysqli_query($conn,$sql = "SELECT * from `user_current_sts` where id=$id"));
+        $balance =(float) $btmp['balance'];
+        $freezed= $btmp['freez'];
         $finalbalance = $balance - $value * $quantity;
         $updatebalancesql = "UPDATE `user_current_sts` SET `balance`='$finalbalance',`date`='$time' WHERE id=$id";
         mysqli_query($conn,$updatebalancesql);
-        echo json_encode(["status" => $status, "data" => array("message" => "success","name"=>$stockarray[$stockId],"price" => $value,"newprice"=>$newprice,"quantity" => $quantity,"balance" => $finalbalance)]);
+        echo json_encode(["status" => $status, "data" => array("message" => "success","name"=>$stockarray[$stockId],"price" => $value,"newprice"=>$newprice,"quantity" => $quantity,"balance" => $finalbalance,"freezed" => $freezed)]);
     }else{
         echo json_encode(["status" => $status, "data" => array("error" => mysql_error($conn))]);
     }
 }else if($operation == 'shortsell'){
-    $opcode = 2;
-    $sql = "INSERT INTO `".$username."_portfolio` (`stockId`, `quantity`, `value`, `cost`, `pal`, `buyDate`, `sellDate`, `fixed`) 
-    VALUES ('$stockId', '$quantity','$value','-1','-1',$time,'-1','2')";
-    $data = mysqli_query($conn,$sql);
-    if ($data) {
-        $status = 'true';
-        $newprice = $value - 0.0*$quantity;
-        $buysql = "INSERT INTO `stocklinear_$stockarray[$stockId]`(`datetime`, `buyOrSell`, `quantity`, `newPrice`, `beforePrice`) VALUES 
-        ('$time','$opcode','$quantity','$newprice','$value')";
-        mysqli_query($conn,$buysql);
-        $balance =(float) mysqli_fetch_assoc(mysqli_query($conn,$sql = "SELECT balance from `user_current_sts` where id=$id"))['balance'];
-        $finalbalance = $balance - $value * $quantity;
-        $updatebalancesql = "UPDATE `user_current_sts` SET `balance`='$finalbalance',`date`='$time' WHERE id=$id";
-        mysqli_query($conn,$updatebalancesql);
-        echo json_encode(["status" => $status, "data" => array("message" => "success","name"=>$stockarray[$stockId],"price" => $value,"newprice"=>$newprice,"quantity" => $quantity,"balance" => $finalbalance)]);
-    }else{
-        echo json_encode(["status" => $status, "data" => array("error" => mysql_error($conn))]);
+    try{
+        $opcode = 2;
+        $sql = "INSERT INTO `".$username."_portfolio` (`stockId`, `quantity`, `value`, `cost`, `pal`, `buyDate`, `sellDate`, `fixed`) 
+        VALUES ('$stockId', '$quantity','$value','-1','-1',$time,'-1','2')";
+        $data = mysqli_query($conn,$sql);
+        if ($data) {
+            $status = 'true';
+            $newprice = $value - 0.0*$quantity;
+            $buysql = "INSERT INTO `stocklinear_$stockarray[$stockId]`(`datetime`, `buyOrSell`, `quantity`, `newPrice`, `beforePrice`) VALUES 
+            ('$time','$opcode','$quantity','$newprice','$value')";
+            // mysqli_query($conn,$buysql);
+            $ftmp = mysqli_fetch_assoc(mysqli_query($conn,$sql = "SELECT * from `user_current_sts` where id=$id"));
+            $balance =(float) $ftmp['balance'];
+            $freezed = (float) $ftmp['freez'];
+            $finalbalance = $balance;
+            $finalfreezed = $freezed + $quantity * $value;
+            $updatebalancesql = "UPDATE `user_current_sts` SET `freez`='$finalfreezed',`date`='$time' WHERE id=$id";
+            mysqli_query($conn,$updatebalancesql);
+            echo json_encode(["status" => $status, "data" => array("message" => "success","name"=>$stockarray[$stockId],"price" => $value,"newprice"=>$newprice,"quantity" => $quantity,"balance" => $finalbalance,"freezed"=>$finalfreezed)]);
+        }else{
+            echo json_encode(["status" => $status, "data" => array("error" => mysqli_error($conn))]);
+        }
+    }catch(Exception $e){
+        echo "error - ".$stockarray[$i]." 3<br>";
+        echo $e->getMessage()."<br>";
     }
 }elseif ($operation == 'sell') {
     $opcode = 1;
@@ -94,14 +104,15 @@ if ($operation == 'buy') {
         $newprice = $value - 0.0*($quantity-$quantityLeft);
         $buysql = "INSERT INTO `stocklinear_$stockarray[$stockId]`(`datetime`, `buyOrSell`, `quantity`, `newPrice`, `beforePrice`) VALUES 
         ('$time','$opcode','$quantity','$newprice','$value')";
-        mysqli_query($conn,$buysql);
+        // mysqli_query($conn,$buysql);
         $ttmp = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * from `user_current_sts` where id=$id"));
         $balance =(float) $ttmp['balance'];
+        $freezed = (float) $ttmp['freez'];
         $tax = (float)$ttmp['tax'] + (float) (($quantity-$quantityLeft) * $taxper * $value);
         $finalbalance = $balance + $value * ($quantity-$quantityLeft) * (1-$taxper);
         $updatebalancesql = "UPDATE `user_current_sts` SET `balance`='$finalbalance',`date`='$time',`tax`='$tax' WHERE id=$id";
         mysqli_query($conn,$updatebalancesql);
-        echo json_encode(["status" => $status, "data" => array("message" => "success","name"=>$stockarray[$stockId],"price" => $value,"newprice"=>$newprice,"quantity" => ($quantity-$quantityLeft),"balance"=>$finalbalance,"tax"=>$tax)]);
+        echo json_encode(["status" => $status, "data" => array("message" => "success","name"=>$stockarray[$stockId],"price" => $value,"newprice"=>$newprice,"quantity" => ($quantity-$quantityLeft),"balance"=>$finalbalance,"tax"=>$tax,"freezed"=>$freezed)]);
     }else{
         echo json_encode(["status" => $status, "data" => array("error" => mysql_error($conn))]);
     }
@@ -123,7 +134,8 @@ if ($operation == 'buy') {
 
         $quantityLeft = $quantity;
         $i = 0;
-        $piceincome = 0;
+        $piceincome = 0.0;
+        $picefreezed = 0.0;
         while ($quantityLeft > 0) {
             if($i==mysqli_num_rows($data))break;
             $row = $load[$i];
@@ -136,13 +148,15 @@ if ($operation == 'buy') {
                 mysqli_query($conn,$sql);
                 
                 $quantityLeft = $quantityLeft - $quantityInRow;
-                $piceincome = $piceincome + (($valuein * 2 ) - $value)*$quantityInRow;
+                $piceincome = $piceincome + ($valuein - $value)*$quantityInRow;
+                $picefreezed = $picefreezed + ($valuein * $quantityInRow);
             }else{
                 $app = $ppaall * $quantityLeft;
                 $sql = "UPDATE `".$username."_portfolio` set `fixed`='3',`cost`='$value',`pal`='$app',`sellDate`='$time',`quantity`='$quantityLeft' where id='".$row['id']."'";
                  mysqli_query($conn,$sql); 
                 $addQuantity = $quantityInRow - $quantityLeft;
-                $piceincome = $piceincome + (($valuein * 2 ) - $value)*$quantityLeft;
+                $piceincome = $piceincome + ($valuein - $value)*$quantityLeft;
+                $picefreezed = $picefreezed + $valuein * $quantityLeft;
                 $pppp = $row['value'];
                 $sql = "INSERT INTO `".$username."_portfolio` (`stockId`, `quantity`, `value`, `cost`, `pal`, `buyDate`, `sellDate`, `fixed`)
                 values ('$stockId', '$addQuantity','$pppp','-1','-1','$time','-1','0')"; 
@@ -158,15 +172,16 @@ if ($operation == 'buy') {
         $newprice = $value + 0.0*($quantity-$quantityLeft);
         $buysql = "INSERT INTO `stocklinear_$stockarray[$stockId]`(`datetime`, `buyOrSell`, `quantity`, `newPrice`, `beforePrice`) VALUES 
         ('$time','$opcode','$quantity','$newprice','$value')";
-        mysqli_query($conn,$buysql);
+        // mysqli_query($conn,$buysql);
         $ttmp = mysqli_fetch_assoc(mysqli_query($conn,$sql = "SELECT * from `user_current_sts` where id=$id"));
         $balance =(float) $ttmp['balance'];
-
-        $tax = (float)$ttmp['tax'] + (float) ($taxper * $piceincome);
+        $freezed = (float) $ttmp['freez'];
+        $newfreezed = $freezed - $picefreezed;
+        $tax = (float)$ttmp['tax'] + (float) ($taxper * ($piceincome+$picefreezed));
         $finalbalance = $balance + $piceincome;
-        $updatebalancesql = "UPDATE `user_current_sts` SET `balance`='$finalbalance',`tax`='$tax',`date`='$time' WHERE id=$id";
+        $updatebalancesql = "UPDATE `user_current_sts` SET `freez`='$newfreezed',`balance`='$finalbalance',`tax`='$tax',`date`='$time' WHERE id=$id";
         mysqli_query($conn,$updatebalancesql);
-        echo json_encode(["status" => $status, "data" => array("message" => "success","name"=>$stockarray[$stockId],"price" => $value,"newprice"=>$newprice,"quantity" => ($quantity-$quantityLeft),"balance"=>$finalbalance,"tax"=>$tax)]);
+        echo json_encode(["status" => $status, "data" => array("message" => "success","name"=>$stockarray[$stockId],"price" => $value,"newprice"=>$newprice,"quantity" => ($quantity-$quantityLeft),"balance"=>$finalbalance,"tax"=>$tax,"freezed"=>$newfreezed)]);
     }else{
         echo json_encode(["status" => $status, "data" => array("error" => mysql_error($conn))]);
     }

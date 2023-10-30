@@ -8,6 +8,7 @@ $balance = $ttmmpp['balance'];
 $load = array();
 $load['balance'] = (float)$balance;
 $load['tax']= (float)$ttmmpp['tax'];
+$load['freezed']=(float)$ttmmpp['freez'];
 $sql = "SELECT SUM(pal) as pal from `".$username."_portfolio` where fixed='1' or fixed='3'";
 $SQL2 = "SELECT SUM(quantity*value) as investment from `".$username."_portfolio` WHERE fixed='0' or fixed='2'";
 $ttmmpp = mysqli_fetch_assoc(mysqli_query($conn,$SQL2));

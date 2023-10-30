@@ -20,10 +20,11 @@
             <th scope="col"></th>
             <th scope="col" class="text-center">NAME</th>
             <th scope="col" class="text-center">QAUNTITY</th>
-            <th scope="col" class="text-center">VALUE</th>
+            <th scope="col" class="text-center">BUY PRICE</th>
             <th scope="col" class="text-center">COST</th>
+            <th scope="col" class="text-center">SELLING PRICE</th>
             <th scope="col" class="text-center">P&L</th>
-            <th scope="col" class="text-center">HOLD</th>
+            <th scope="col" class="text-center">HOLDING AMOUNT</th>
         </tr>
     </thead>
     <tbody id="portfoliotablebody">
