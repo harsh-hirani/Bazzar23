@@ -13,7 +13,7 @@ function getValueAllByParts($stockId,$ar,$c){
 $status = 'true';
 $load = array() ;
 
-for($i=1;$i<=17;$i++){
+for($i=1;$i<=35;$i++){
 
     $dump = getValueAllByParts($i,$stockarray,$conn);
     $load[] = array(
