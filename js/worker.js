@@ -339,7 +339,8 @@ setInterval(()=>{
         // GRAPH.valueSeries.data.clear();
         // GRAPH.volumeSeries.data.clear();
         // GRAPH.sbSeries.data.clear();
-            GRAPH.valueSeries.data.setAll(data.data);
+        setFinalData(data.data);
+        setSeriesType(currentGraphType)
             GRAPH.volumeSeries.data.setAll(data.data);
             GRAPH.sbSeries.data.setAll(data.data);
     });
