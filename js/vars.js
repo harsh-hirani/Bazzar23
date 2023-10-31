@@ -117,7 +117,7 @@ stockarray = [
     {id:31,
     name: "Reliance Ind."},
     {id:32,
-    name: "Reliance Ind."},
+    name: "ONGC"},
     {id:33,
     name: "IOC"},
     {id:34,
