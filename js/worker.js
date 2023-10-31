@@ -419,7 +419,7 @@ setInterval(()=>{
     $.post(baseurl+"/server/realprice.php",{},(data)=>{
         currentprices = data.data;
         data.data.forEach((element,index)=>{
-            pricesTabs[index].innerHTML = element.price;
+            pricesTabs[index].innerHTML = parseFloat(element.price).toFixed(2);
             let change = element.price - currentcandleprices[index].nextValue;
             if(change < 0){
                 //loosing
