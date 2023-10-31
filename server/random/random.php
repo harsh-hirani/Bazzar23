@@ -10,7 +10,7 @@ function getValueAllByParts($stockId,$ar,$c){
 }
 function generateRandomValue() {
     $up= rand(0, 1);
-    $change = rand(0, 150)/100;
+    $change = rand(0, 1)/1000;
     if($up==1){
         return $change;}
         else{
@@ -23,7 +23,7 @@ function generateRandomValue() {
     $quantity = vol();
     $dump = getValueAllByParts($key,$stockarray,$conn);
     $prev = $dump['newPrice'];
-    $newprice = $prev + generateRandomValue();
+    $newprice = $prev + $prev* generateRandomValue();
     
     $sql = "INSERT INTO `stocklinear_$value`(`datetime`, `buyOrSell`, `quantity`, `newPrice`, `beforePrice`) VALUES 
     ('10','0','$quantity','$newprice','$prev')";
