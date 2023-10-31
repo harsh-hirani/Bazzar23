@@ -277,9 +277,6 @@ var GRAPHOP = undefined;
     stockChart: stockChart,
     controls: [
       seriesSwitcher,
-      am5stock.DrawingControl.new(root, {
-        stockChart: stockChart
-      }),
       am5stock.ResetControl.new(root, {
         stockChart: stockChart
       }),
