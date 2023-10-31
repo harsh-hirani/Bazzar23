@@ -10,7 +10,7 @@ $load['balance'] = (float)$balance;
 $load['tax']= (float)$ttmmpp['tax'];
 $load['freezed']=(float)$ttmmpp['freez'];
 $sql = "SELECT SUM(pal) as pal from `".$username."_portfolio` where fixed='1' or fixed='3'";
-$SQL2 = "SELECT SUM(quantity*value) as investment from `".$username."_portfolio` WHERE fixed='0' or fixed='2'";
+$SQL2 = "SELECT invest as investment from `user_current_sts` where id=$id";
 $ttmmpp = mysqli_fetch_assoc(mysqli_query($conn,$SQL2));
 $load['investment'] = (float)$ttmmpp['investment'];
 $ttmmpp = mysqli_fetch_assoc(mysqli_query($conn,$sql));

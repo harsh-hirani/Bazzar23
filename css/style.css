@@ -307,7 +307,29 @@
 }
 
 
-
+  
+.huler{
+    display: flex;
+    background-color: #000;
+    
+}
+.huler > div{
+    padding: 2px 10px;
+    border: 2px solid #fff;
+    color: #000000;
+    background-color: #ffffff;
+    
+}
+.huler > div:nth-child(1){
+    border-radius: 10px 0 0 10px;
+}
+.huler > div:nth-child(2){
+    border-radius: 0 10px 10px 0;
+}
+.huler> div.active{
+    background-color: #000000;
+    color: #ffffff;
+}
 :root {
     --glow-color: hsl(200, 100%, 69%);
   }
@@ -316,7 +338,7 @@
   *::before,
   *::after {
     box-sizing: border-box;
-  }
+    }
   
   .glowing-btn {
     position: relative;
@@ -396,4 +418,3 @@
   .glowing-btn:hover:after {
     opacity: 1;
   }
-  

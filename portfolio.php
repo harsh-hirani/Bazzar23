@@ -1,5 +1,9 @@
 <div class="pageName">
     <h1 class="fw-bolder">PORTFOLIO</h1>
+    <div class="huler">
+        <div class="lest active" onclick="showportfolio(0)">type 1</div>
+        <div class="rigt" onclick="showportfolio(2)">type 2</div>
+    </div>
     <!-- <div data-tooltip="Price:-$20" class="button">
         <div class="button-wrapper">
             <div class="text">Buy Stocks</div>
@@ -16,7 +20,7 @@
 </div>
 <table class="table my-4">
     <thead>
-        <tr>
+        <tr id="myTableTitles">
             <th scope="col"></th>
             <th scope="col" class="text-center">NAME</th>
             <th scope="col" class="text-center">QAUNTITY</th>

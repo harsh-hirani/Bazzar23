@@ -41,9 +41,9 @@ $.post(baseurl+'/server/initial.php',{},(data)=>{
     invenstmentBox.innerHTML = parseFloat(data.data.investment).toFixed(2)+" Rs";
     profitBox.innerHTML = parseFloat(data.data.pal).toFixed(2)+" Rs";
     taxBox.innerHTML = parseFloat(data.data.tax).toFixed(2)+" Rs";
-
+    $.post(baseurl +"/server/realprice.php",{},(data)=>{currentprices=data.data})
     $.post(baseurl+"/server/stockprice.php",{},(data)=>{console.log(data)
-        currentprices = data.data;
+        currentcandleprices = data.data;
         data.data.forEach((element,index) => {
             pricesTabs[index].innerHTML = element.nextValue;
             let change = element.nextValue - element.prevValue;
@@ -81,42 +81,66 @@ function getTimestampDifference(timestamp1, timestamp2) {
         return `${minutes%60} min, ${second%60} sec`;
     }   
   }
+
+ function showportfolio(code){
+    var tr = '';
+    if(code==0){
+        tr= `<th scope="col"></th>
+        <th scope="col" class="text-center">NAME</th>
+        <th scope="col" class="text-center">QAUNTITY</th>
+        <th scope="col" class="text-center">BUY PRICE</th>
+        <th scope="col" class="text-center">COST</th>
+        <th scope="col" class="text-center">SELLING PRICE</th>
+        <th scope="col" class="text-center">P&L</th>
+        <th scope="col" class="text-center">HOLDING AMOUNT</th>`;
+    }else{
+        tr= `<th scope="col"></th>
+        <th scope="col" class="text-center">NAME</th>
+        <th scope="col" class="text-center">QAUNTITY</th>
+        <th scope="col" class="text-center">SELLING PRICE</th>
+        <th scope="col" class="text-center">COST</th>
+        <th scope="col" class="text-center">BUYING PRICE</th>
+        <th scope="col" class="text-center">P&L</th>
+        <th scope="col" class="text-center">HOLDING AMOUNT</th>`;
+    }
+    myTableTitles.innerHTML = tr;
+    $.post(baseurl+"/server/getportfolio.php",{fixcode:code},(data)=>{
+        let colorCode = "text-white";
+        console.log(data);
+        var load = ``;
+        objids = []
+        updaterarraycount = 0;
+        data.data.forEach((element,index) => {
+            if(element.fixed == 0 || element.fixed == 2){
+                colorCode = "text-white";
+                updaterarraycount++;
+                console.log(element);
+                objids.push( parseInt(element.stockId));
+            }
+                colorCode = (element.pal <0 )?"text-danger":"text-success";
+            
+            // console.log(stockarray[parseInt(element.stockId)-1]);
+            currprice = parseInt(currentprices[parseInt(element.stockId)-1].price);
+            buyprice = parseFloat(element.value);
+            load += `<tr class="${colorCode} fw-bold">
+            <th scope="row" class="text-center">${index+1}</th>
+            <td class="text-center">${stockarray[parseInt(element.stockId)-1].name}</td>
+            <td class="text-center" ${(element.fixed % 2 == 0)?`id="qqq${updaterarraycount}"`:''}>${element.quantity}</td>
+            <td class="text-center" ${(element.fixed % 2 == 0)?`id="vvv${updaterarraycount}"`:''}>${element.value}</td>
+            <td class="text-center">${parseFloat(element.value*element.quantity).toFixed(2)}</td>
+            <td class="text-center" ${(element.fixed % 2 == 0)?`id="ccc${updaterarraycount}">`+parseFloat(currprice).toFixed(2):">"+parseFloat(element.cost).toFixed(2)}</td>
+            <td class="text-center" ${(element.fixed % 2 == 0)?`id="ppp${updaterarraycount}">`+parseFloat((currprice - buyprice)*element.quantity).toFixed(2):">"+parseFloat(element.pal).toFixed(2) }</td>
+            <td class="text-center" ${(element.fixed % 2 == 0)?`id="hhh${updaterarraycount}">`+(currprice)*element.quantity:">"+'setteled'}</td>
+                    </tr>`;
+        });
+        portfoliotablebody.innerHTML = load;
+    });
+ }
 function changeto(e) {
     srink();
     if (e == showing) return;
     if(e== 'portfolio'){
-        $.post(baseurl+"/server/getportfolio.php",{},(data)=>{
-            let colorCode = "text-white";
-            console.log(data);
-            var load = ``;
-            objids = []
-            updaterarraycount = 0;
-            data.data.forEach((element,index) => {
-                if(element.fixed == 0 || element.fixed == 2){
-                    colorCode = "text-white";
-                    updaterarraycount++;
-                    objids.push( parseInt(element.stockId));
-                }else if(element.fixed == 1){
-                    colorCode = (element.pal <0 )?"text-danger":"text-success";
-                }else if(element.fixed == 3){
-                    colorCode = (element.pal <=0 )?"text-success":"text-danger";
-                }
-                // console.log(stockarray[parseInt(element.stockId)-1]);
-                currprice = parseInt(currentprices[parseInt(element.stockId)-1].nextValue);
-                buyprice = parseFloat(element.value);
-                load += `<tr class="${colorCode} fw-bold">
-                <th scope="row" class="text-center">${index+1}</th>
-                <td class="text-center">${stockarray[parseInt(element.stockId)-1].name}</td>
-                <td class="text-center" ${(element.fixed % 2 == 0)?`id="qqq${updaterarraycount}"`:''}>${element.quantity}</td>
-                <td class="text-center" ${(element.fixed % 2 == 0)?`id="vvv${updaterarraycount}"`:''}>${element.value}</td>
-                <td class="text-center">${element.value*element.quantity}</td>
-                <td class="text-center" ${(element.fixed % 2 == 0)?`id="ccc${updaterarraycount}">`+currprice:element.cost}</td>
-                <td class="text-center" ${(element.fixed % 2 == 0)?`id="ppp${updaterarraycount}">`+(currprice - buyprice)*element.quantity:element.pal }</td>
-                <td class="text-center" ${(element.fixed % 2 == 0)?`id="hhh${updaterarraycount}">`+(currprice)*element.quantity:'setteled'}</td>
-                        </tr>`;
-            });
-            portfoliotablebody.innerHTML = load;
-        });
+       showportfolio(portfoliocode);
     }else if(e=='ranking'){
         $.post(baseurl+"/server/ranking.php",{},(data)=>{
             console.log(data);
@@ -172,6 +196,7 @@ function loadoffset(title) {
     offsettitle.innerHTML = title;
     offsetsendbutton.style.opacity = 0;
     offsetstockQuantity.value = 1;
+    offsetstockprice.disabled = true;
     switch (title) {
         case "Buy":
             operation = 0;
@@ -197,10 +222,12 @@ function loadoffset(title) {
         console.log(data);
         offsetsendbutton.style.opacity = 1;
         offsetstockname.value = stockarray[currentGraph-1].name;
-        offsetstatus.innerHTML = "Holdings: " + data.data.allowed;
+
+        offsetstatus.innerHTML = "Holdings: " + data.data.allowed + ` ${(operation == 2)?`{freezable: ${parseFloat(data.data.price)}}`:""}`;
         offsetstockprice.value = data.data.price;
         loadedStockPrice = data.data.price;
         loadedStockHolding = data.data.allowed;
+        if(operation == 2 ){offsetstockprice.disabled=false;}
     });
 }
 
@@ -223,6 +250,25 @@ function buychecker(e){
         offsetstockprice.value = parseFloat(loadedStockPrice)*parseFloat(e.value);
     }
 }
+
+function shortsellchecker(e) {
+    
+    if(e.value!=''){
+        if(e.value<1){
+            e.value = 1;
+        }else{
+            let currentBalance = parseFloat(currentBalanceBox.innerText);
+            let usable = currentBalance - freezed;
+            if(e.value*parseFloat(offsetstockprice.value)>usable){
+                e.value= Math.floor( usable/offsetstockprice.value );
+            }
+
+        }
+    }
+    offsetstatus.innerHTML = "Holdings: "+loadedStockHolding+". {freezable: "+ e.value * parseFloat(offsetstockprice.value) +" }";
+}
+
+
 function buy(e) {
     e.disabled = true;
     e.style.opacity = 0
@@ -232,6 +278,7 @@ function buy(e) {
         offsetstatus.innerHTML = data.data.quantity+" bought at "+(data.data.price*data.data.quantity)+".";
         if(data.data.message=="success"){
             currentBalanceBox.innerHTML = parseFloat(data.data.balance).toFixed(2);
+
             doneworker();
             setTimeout(()=>{
                 e.disabled = false;
@@ -284,7 +331,7 @@ function handleChecks(q){
     }else if(operation == 1){
          sellchecker(q);
     }else if (operation == 2){
-        buychecker(q);
+        shortsellchecker(q);
     }else if (operation == 3){
         sellchecker(q);
     }
@@ -294,7 +341,7 @@ function shortsell(e){
     e.disabled = true;
     e.style.opacity = 0;
     offsetstatus.innerHTML = "Processing...";
-    $.post(baseurl+"/server/setportfolio.php",{stockId:currentGraph,operation:'shortsell',quantity:offsetstockQuantity.value},(data)=>{
+    $.post(baseurl+"/server/setportfolio.php",{stockId:currentGraph,operation:'shortsell',quantity:offsetstockQuantity.value,atprice:offsetstockprice.value},(data)=>{
         console.log(data);
         offsetstatus.innerHTML = data.data.quantity+" Short sold at "+(data.data.price*data.data.quantity)+".";
         if(data.data.message=="success"){
@@ -327,12 +374,21 @@ function shortbuy(e){
     });    
 }
 function perform(e){
+    
     if(operation == 0){
         buy(e);
     }else if(operation == 1){
         sell(e);
     }else if(operation == 2){
-        shortsell(e);
+        if(parseFloat(offsetstockprice.value) - parseFloat(loadedStockPrice) >= 0){
+            alert("can't set price higher than or same as stock price");
+        }else{
+            shortsellchecker(offsetstockQuantity)
+            shortsell(e);
+        }
+        
+        
+        
     }else if(operation == 3){
         shortbuy(e);
     }
@@ -355,13 +411,16 @@ setInterval(()=>{
             GRAPH.volumeSeries.data.setAll(data.data);
             GRAPH.sbSeries.data.setAll(data.data);
     });
+    $.post(baseurl+"/server/stockprice.php",{},(data)=>{
+        currentcandleprices = data.data;
+    }); 
 },60000)
 setInterval(()=>{
-    $.post(baseurl+"/server/stockprice.php",{},(data)=>{
+    $.post(baseurl+"/server/realprice.php",{},(data)=>{
         currentprices = data.data;
-        data.data.forEach((element,index) => {
-            pricesTabs[index].innerHTML = element.nextValue;
-            let change = element.nextValue - element.prevValue;
+        data.data.forEach((element,index)=>{
+            pricesTabs[index].innerHTML = element.price;
+            let change = element.price - currentcandleprices[index].nextValue;
             if(change < 0){
                 //loosing
                 changeTabs[index].classList.add("down");
@@ -370,18 +429,18 @@ setInterval(()=>{
                 changeTabs[index].classList.remove("down");
                 changeTabs[index].classList.add("up");
             }
-            changeTabs[index].innerHTML = (100*change/element.prevValue).toFixed(2)+"%";
+            changeTabs[index].innerHTML = (100*change/currentcandleprices[index].prevValue).toFixed(2)+"%";
         });
-    }); 
+    });
     if (showing == 'portfolio') {
         for (var i = 1; i<= updaterarraycount;i++) {
             let q = parseInt(document.getElementById('qqq'+i).innerHTML);
             let v = parseFloat(document.getElementById('vvv'+i).innerHTML);
-            let nv = parseFloat( currentprices[objids[i-1]-1].nextValue);
+            let nv = parseFloat( currentprices[objids[i-1]-1].price);
             document.getElementById('ccc'+i).innerHTML = nv.toFixed(2);
             document.getElementById('ppp'+i).innerHTML = (q*(nv - v)).toFixed(2);
             document.getElementById('hhh'+i).innerHTML = (q*nv).toFixed(2);
         }
     }
 
-},10000)
+},1000)

@@ -11,7 +11,7 @@ var righter = document.getElementById("righter");
 var invenstmentBox = document.getElementById("info1");
 var profitBox = document.getElementById("info2");
 var taxBox = document.getElementById("info3");
-
+var myTableTitles = document.getElementById("myTableTitles");
 var leaderboardRanking = document.getElementById("leaderboardRanking"); 
 var stocklistsContainer = document.getElementById("stocklistsContainer");
 var currentBalanceBox = document.getElementById("currentBalanceBox");
@@ -42,8 +42,10 @@ var showing = "mainStock";
 var activeSection = "c1";
 var freezed = 0;
 var updaterarraycount=0;
-var currentprices= [];
+var currentcandleprices= [];
+var currentprices = []
 var objids=[];
+var portfoliocode = 0;// 0-normal, 2-type2
 // stock list
 stockarray = [
     {id:1,

@@ -5,8 +5,10 @@ include 'conn.php';
 header('Content-Type:application/json');
 $status = 'false';
 if (isset($_COOKIE['username']) ) {
+    $fixcode = (int)$_POST['fixcode'];
     if( $_COOKIE['username'] != ""){
-        $sql = "SELECT * FROM `".$_COOKIE['username']."_portfolio` ORDER BY id DESC";
+        
+        $sql = "SELECT * FROM `".$_COOKIE['username']."_portfolio` where fixed = $fixcode or fixed = ".($fixcode+1)." ORDER BY id DESC ";
         $data = mysqli_query($conn,$sql);
         if ($data) {
             $status = 'true';
@@ -17,7 +19,7 @@ if (isset($_COOKIE['username']) ) {
                 $load[$i] = $dump;
                 $dump['value'] = (float)$dump['value'];
                 if(intval($dump['fixed'])%2 == 1){
-                    $load[$i]['pal'] = floatval($dump['cost']) - floatval($dump['value']);
+                    $load[$i]['pal'] = floatval($dump['pal']) ;
                 }else{
                     $load[$i]['pal'] = -1;
                 }
@@ -26,7 +28,7 @@ if (isset($_COOKIE['username']) ) {
         }else{
             if ($_POST['test'] == 'true') {
                 
-                echo json_encode(["status" => $status, "data" => array("error" => mysql_error($conn))]);
+                echo json_encode(["status" => $status, "sql"=>$sql,"data" => array("error" => mysqli_error($conn))]);
                 
             }else{
                 echo json_encode(["status" => $status, "data" => array("error" => "error")]);
