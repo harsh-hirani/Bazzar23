@@ -87,8 +87,8 @@ function getTimestampDifference(timestamp1, timestamp2) {
     if(code==0){
         tr= `<th scope="col"></th>
         <th scope="col" class="text-center">NAME</th>
-        <th scope="col" class="text-center">QAUNTITY</th>
-        <th scope="col" class="text-center">BUY PRICE</th>
+        <th scope="col" class="text-center">QUANTITY</th>
+        <th scope="col" class="text-center">BUYING PRICE</th>
         <th scope="col" class="text-center">COST</th>
         <th scope="col" class="text-center">SELLING PRICE</th>
         <th scope="col" class="text-center">P&L</th>
@@ -96,7 +96,7 @@ function getTimestampDifference(timestamp1, timestamp2) {
     }else{
         tr= `<th scope="col"></th>
         <th scope="col" class="text-center">NAME</th>
-        <th scope="col" class="text-center">QAUNTITY</th>
+        <th scope="col" class="text-center">QUANTITY</th>
         <th scope="col" class="text-center">SELLING PRICE</th>
         <th scope="col" class="text-center">COST</th>
         <th scope="col" class="text-center">BUYING PRICE</th>
@@ -130,7 +130,7 @@ function getTimestampDifference(timestamp1, timestamp2) {
             <td class="text-center">${parseFloat(element.value*element.quantity).toFixed(2)}</td>
             <td class="text-center" ${(element.fixed % 2 == 0)?`id="ccc${updaterarraycount}">`+parseFloat(currprice).toFixed(2):">"+parseFloat(element.cost).toFixed(2)}</td>
             <td class="text-center" ${(element.fixed % 2 == 0)?`id="ppp${updaterarraycount}">`+parseFloat((currprice - buyprice)*element.quantity).toFixed(2):">"+parseFloat(element.pal).toFixed(2) }</td>
-            <td class="text-center" ${(element.fixed % 2 == 0)?`id="hhh${updaterarraycount}">`+(currprice)*element.quantity:">"+'setteled'}</td>
+            <td class="text-center" ${(element.fixed % 2 == 0)?`id="hhh${updaterarraycount}">`+(currprice)*element.quantity:">"+'Settled'}</td>
                     </tr>`;
         });
         portfoliotablebody.innerHTML = load;
@@ -414,7 +414,7 @@ setInterval(()=>{
     $.post(baseurl+"/server/stockprice.php",{},(data)=>{
         currentcandleprices = data.data;
     }); 
-},60000)
+},33000)
 setInterval(()=>{
     $.post(baseurl+"/server/realprice.php",{},(data)=>{
         currentprices = data.data;
@@ -443,4 +443,4 @@ setInterval(()=>{
         }
     }
 
-},1000)
+},1300)

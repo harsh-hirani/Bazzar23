@@ -62,8 +62,8 @@ var GRAPHOP = undefined;
   
   var dateAxis = mainPanel.xAxes.push(am5xy.GaplessDateAxis.new(root, {
     baseInterval: {
-      timeUnit: "minute",
-      count: 2
+      timeUnit: "second",
+      count: 30
     },
     renderer: am5xy.AxisRendererX.new(root, {}),
     tooltip: am5.Tooltip.new(root, {})

@@ -30,7 +30,7 @@ if(!isset($_COOKIE['username'])){
   padding: 5px 5px 0 16px;
   max-width: 100%;
     }</style>
-    <title>Bazzar23 - Bulls & Bears</title>
+    <title>Bazaar 5.0 - Bulls & Bears</title>
 </head>
 
 <body>
@@ -58,7 +58,7 @@ if(!isset($_COOKIE['username'])){
                             <div class="infoinner" id="info1"></div>
                         </div>
                         <div class="info-item">
-                            <div class="title">net profit</div>
+                            <div class="title">net profit/loose</div>
                             <div class="infoinner" id="info2"></div>
                         </div>
                         <div class="info-item">
