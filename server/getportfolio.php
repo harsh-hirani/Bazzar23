@@ -8,7 +8,7 @@ if (isset($_COOKIE['username']) ) {
     $fixcode = (int)$_POST['fixcode'];
     if( $_COOKIE['username'] != ""){
         
-        $sql = "SELECT * FROM `".$_COOKIE['username']."_portfolio` where fixed = $fixcode or fixed = ".($fixcode+1)." ORDER BY id DESC ";
+        $sql = "SELECT * FROM `".$_COOKIE['username']."_portfolio` where fixed = $fixcode ORDER BY id DESC ";
         $data = mysqli_query($conn,$sql);
         if ($data) {
             $status = 'true';
@@ -24,6 +24,20 @@ if (isset($_COOKIE['username']) ) {
                     $load[$i]['pal'] = -1;
                 }
             }
+            $sql = "SELECT * FROM `".$_COOKIE['username']."_portfolio` where fixed = ".($fixcode+1)." ORDER BY id DESC ";
+            $data = mysqli_query($conn,$sql);
+            for($i=0;$i<mysqli_num_rows($data);$i++){
+                $dump = mysqli_fetch_assoc($data);
+                
+                $load[] = $dump;
+                $dump['value'] = (float)$dump['value'];
+                if(intval($dump['fixed'])%2 == 1){
+                    $load[$i]['pal'] = floatval($dump['pal']) ;
+                }else{
+                    $load[$i]['pal'] = -1;
+                }
+            }
+
             echo json_encode(["status" => $status, "data" => $load]);
         }else{
             if ($_POST['test'] == 'true') {

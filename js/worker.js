@@ -116,8 +116,10 @@ function getTimestampDifference(timestamp1, timestamp2) {
                 updaterarraycount++;
                 console.log(element);
                 objids.push( parseInt(element.stockId));
-            }
+            }else{
+
                 colorCode = (element.pal <0 )?"text-danger":"text-success";
+            }
             
             // console.log(stockarray[parseInt(element.stockId)-1]);
             currprice = parseInt(currentprices[parseInt(element.stockId)-1].price);
@@ -129,11 +131,26 @@ function getTimestampDifference(timestamp1, timestamp2) {
             <td class="text-center" ${(element.fixed % 2 == 0)?`id="vvv${updaterarraycount}"`:''}>${element.value}</td>
             <td class="text-center">${parseFloat(element.value*element.quantity).toFixed(2)}</td>
             <td class="text-center" ${(element.fixed % 2 == 0)?`id="ccc${updaterarraycount}">`+parseFloat(currprice).toFixed(2):">"+parseFloat(element.cost).toFixed(2)}</td>
-            <td class="text-center" ${(element.fixed % 2 == 0)?`id="ppp${updaterarraycount}">`+parseFloat((currprice - buyprice)*element.quantity).toFixed(2):">"+parseFloat(element.pal).toFixed(2) }</td>
+            <td class="text-center" ${(element.fixed % 2 == 0)?`id="ppp${updaterarraycount}">`+
+            (
+                (element.fixed == 0)?(parseFloat((currprice - buyprice)*element.quantity).toFixed(2)):
+                (parseFloat((buyprice - currprice)*element.quantity).toFixed(2))
+            )
+            
+            :">"+parseFloat(element.pal).toFixed(2) }</td>
             <td class="text-center" ${(element.fixed % 2 == 0)?`id="hhh${updaterarraycount}">`+(currprice)*element.quantity:">"+'Settled'}</td>
                     </tr>`;
         });
         portfoliotablebody.innerHTML = load;
+        if(code == 0){
+            document.getElementById("r").classList.remove('active');
+            document.getElementById("l").classList.add('active');
+        }else{
+            document.getElementById("r").classList.add('active');
+            document.getElementById("l").classList.remove('active');
+
+        }
+        portfoliocode = code;
     });
  }
 function changeto(e) {
@@ -195,7 +212,7 @@ function graphchange(e,graph){
 function loadoffset(title) {
     offsettitle.innerHTML = title;
     offsetsendbutton.style.opacity = 0;
-    offsetstockQuantity.value = 1;
+    offsetstockQuantity.value = "";
     offsetstockprice.disabled = true;
     switch (title) {
         case "Buy":
@@ -215,6 +232,10 @@ function loadoffset(title) {
     }
     offsetButton.innerHTML = title;
     offcanvas = true;
+    document.getElementById("labelchange").innerHTML='Price';
+    if(operation == 2){
+        document.getElementById("labelchange").innerHTML='Limit';
+    }
     console.log('object');
     let sendop = (operation<2)?0:2;
     console.log(sendop);
@@ -361,7 +382,7 @@ function shortbuy(e){
     offsetstatus.innerHTML = "Processing...";
     $.post(baseurl+"/server/setportfolio.php",{stockId:currentGraph,operation:'shortbuy',quantity:offsetstockQuantity.value},(data)=>{
         console.log(data);
-        offsetstatus.innerHTML = data.data.quantity+" sold at "+(data.data.price*data.data.quantity)+".";       
+        offsetstatus.innerHTML = data.data.quantity+" Bought at "+(data.data.price*data.data.quantity)+".";       
         if(data.data.message=="success"){
             currentBalanceBox.innerHTML = parseFloat(data.data.balance).toFixed(2);
             doneworker();
@@ -374,23 +395,28 @@ function shortbuy(e){
     });    
 }
 function perform(e){
-    
-    if(operation == 0){
-        buy(e);
-    }else if(operation == 1){
-        sell(e);
-    }else if(operation == 2){
-        if(parseFloat(offsetstockprice.value) - parseFloat(loadedStockPrice) >= 0){
-            alert("can't set price higher than or same as stock price");
-        }else{
-            shortsellchecker(offsetstockQuantity)
-            shortsell(e);
+    if(parseInt(offsetstockQuantity.value)==0 || offsetstockQuantity.value=="" || offsetstockprice.value =="" || parseInt(offsetstockprice.value)==0){
+        alert("Please enter a valid number");
+
+    }else{
+        if(operation == 0){
+            buy(e);
+        }else if(operation == 1){
+            sell(e);
+        }else if(operation == 2){
+            if(parseFloat(offsetstockprice.value) - parseFloat(loadedStockPrice) >= 0){
+                alert("can't set price higher than or same as stock price");
+            }else{
+                shortsellchecker(offsetstockQuantity)
+                shortsell(e);
+            }
+            
+            
+            
+        }else if(operation == 3){
+            shortbuy(e);
         }
-        
-        
-        
-    }else if(operation == 3){
-        shortbuy(e);
+
     }
     
 }
@@ -438,7 +464,14 @@ setInterval(()=>{
             let v = parseFloat(document.getElementById('vvv'+i).innerHTML);
             let nv = parseFloat( currentprices[objids[i-1]-1].price);
             document.getElementById('ccc'+i).innerHTML = nv.toFixed(2);
-            document.getElementById('ppp'+i).innerHTML = (q*(nv - v)).toFixed(2);
+            if(portfoliocode == 0){
+
+                document.getElementById('ppp'+i).innerHTML = (q*(nv - v)).toFixed(2);
+            }else{
+                
+                document.getElementById('ppp'+i).innerHTML = (q*(v - nv)).toFixed(2);
+
+            }
             document.getElementById('hhh'+i).innerHTML = (q*nv).toFixed(2);
         }
     }

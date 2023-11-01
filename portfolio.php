@@ -1,8 +1,8 @@
 <div class="pageName">
     <h1 class="fw-bolder">PORTFOLIO</h1>
     <div class="huler">
-        <div class="lest active" onclick="showportfolio(0)">type 1</div>
-        <div class="rigt" onclick="showportfolio(2)">type 2</div>
+        <div id="l" class="lest active" onclick="showportfolio(0)">Buy/Sell</div>
+        <div id="r" class="rigt" onclick="showportfolio(2)">Short Sell/S.Off</div>
     </div>
     <!-- <div data-tooltip="Price:-$20" class="button">
         <div class="button-wrapper">
