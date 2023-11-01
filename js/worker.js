@@ -250,8 +250,8 @@ function loadoffset(title) {
         offsetsendbutton.style.opacity = 1;
         offsetstockname.value = stockarray[currentGraph-1].name;
 
-        offsetstatus.innerHTML = "Holdings: " + data.data.allowed + ` ${(operation == 2)?`{freezable: ${parseFloat(data.data.price)}}`:""}`;
-        offsetstockprice.value = data.data.price;
+        offsetstatus.innerHTML = "Holdings: " + data.data.allowed + ` ${(operation == 2)?`[freezable: 0 ]`:""}`;
+        offsetstockprice.value = parseFloat(data.data.price).toFixed(2);
         if(operation == 2){
             offsetstockprice.value=""
         }
@@ -278,7 +278,7 @@ function buychecker(e){
             }
         }
         // offsetstockprice.value = parseFloat(loadedStockPrice)*parseFloat(e.value);
-        offsetstatus.innerHTML = "Holdings: "+loadedStockHolding+" [Total Amount: "+ e.value * parseFloat(offsetstockprice.value) +" ]";
+        offsetstatus.innerHTML = "Holdings: "+loadedStockHolding+" [Total Amount: "+ parseFloat(e.value * parseFloat(offsetstockprice.value)).toFixed(2) +" ]";
 
     }
 }
@@ -297,10 +297,12 @@ function shortsellchecker(e) {
 
         }
     }
-    offsetstatus.innerHTML = "Holdings: "+loadedStockHolding+" [freezable: "+ e.value * parseFloat(offsetstockprice.value) +" ]";
+    offsetstatus.innerHTML = "Holdings: "+loadedStockHolding+" [freezable: "+ parseFloat(e.value * parseFloat(offsetstockprice.value)).toFixed(2) +" ]";
 }
 
-
+function evehi(){
+    shortsellchecker(offsetstockQuantity);
+}
 function buy(e) {
     e.disabled = true;
     e.style.opacity = 0
@@ -336,7 +338,7 @@ function sellchecker(e){
             }
         }
         // offsetstockprice.value = parseInt(loadedStockPrice)*parseInt(e.value);
-        offsetstatus.innerHTML = "Holdings: "+loadedStockHolding+" [Total Amount: "+ e.value * parseFloat(offsetstockprice.value) +" ]";
+        offsetstatus.innerHTML = "Holdings: "+loadedStockHolding+" [Total Amount: "+ parseFloat(e.value * parseFloat(offsetstockprice.value)).toFixed(2) +" ]";
 
     }
 }

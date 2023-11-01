@@ -9,7 +9,8 @@ if (mysqli_num_rows($result)>0){
 $dump = mysqli_fetch_assoc($result);
 setcookie("username", $dump["uname"], time() + (86400 * 30), "/");
 setcookie("userId", $dump["id"], time() + (86400 * 30), "/");
-
+setcookie('lname',$dump["lname"], time() + (86400 * 30), "/");
+setcookie('fname',$dump["fname"], time() + (86400 * 30), "/");
 echo "<script>
 location.replace('../');
     </script>";

@@ -1,42 +1,34 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title>Log in | Bazaar 5.0 | Bulls & Bears</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-		<!-- MATERIAL DESIGN ICONIC FONT -->
-		<link rel="stylesheet" href="fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
-		
-		<!-- STYLE CSS -->
-		<link rel="stylesheet" href="css/style.css">
-	</head>
-
-	<body>
-
-		<div class="wrapper">
-			<div class="inner">
-				<div class="image-holder">
-					<img src="images/registration-form-6.jpg" alt="">
-				</div>
-				<form action="../server/login.php" method="post">
-					<h3>Log in<br /> Bazaar 5.0</h3>
-					<div class="form-row">
-						<input type="text" class="form-control" name="card" placeholder="Phone or email">
-				
-						<input type="password" class="form-control" name="passs" placeholder="password">
-						<!-- <input type="text" class="form-control" name="email" placeholder="Email"> -->
-					</div>
-					
-					<button>Log in
-						<i class="zmdi zmdi-long-arrow-right"></i>
-					</button>
-				</form>
-				
-			</div>
-		</div>
-
-		<script src="js/jquery-3.3.1.min.js"></script>
-		<script src="js/main.js"></script>
-	</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+<html lang="es" dir="ltr">
+  <head>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="main.css"><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="main">
+      <div class="container a-container" id="a-container">
+        <form class="form" id="a-form" method="post" action="../server/login.php">
+          <h2 class="form_title title">Ready When You Are </h2>
+			
+          <input name="card" class="form__input" type="text" placeholder="Email" required>
+          <input name="passs" class="form__input" type="Code" placeholder="Code" required>
+          <button class="form__button button submit">LOG IN</button>
+        </form>
+      </div>
+      <div class="container b-container" id="b-container">
+      </div>
+      <div class="switch" id="switch-cnt">
+        <div class="switch__circle"></div>
+        <div class="switch__circle switch__circle--t"></div>
+        <div class="switch__container" id="switch-c1">
+          <h2 class="switch__title title">BAZAAR 5.0</h2>
+          <p class="switch__description description">The most awaited event of the year</p>
+          <p class="switch__description description">The ultimate stock market stimulation game</p>
+        </div>
+      </div>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
 </html>

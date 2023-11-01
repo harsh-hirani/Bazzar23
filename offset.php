@@ -24,8 +24,8 @@
                     </div>
                     <div class="col-4">
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="sellstockprice" disabled oninput="pricecapper(this)">
-                            <label for="buystockprice" id="labelchange">price</label>
+                            <input type="number" class="form-control" id="sellstockprice" disabled oninput="evehi()">
+                            <label for="buystockprice" id="labelchange" >price</label>
                         </div>
                     </div>
                 </div>
