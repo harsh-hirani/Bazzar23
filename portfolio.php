@@ -29,8 +29,21 @@
             <th scope="col" class="text-center">SELLING PRICE</th>
             <th scope="col" class="text-center">P&L</th>
             <th scope="col" class="text-center">HOLDING AMOUNT</th>
+            <th scope="col" class="text-center">STATUS</th>
         </tr>
     </thead>
+    <tbody>
+        <tr>
+            <th class="text-center">-</th>
+            <td class="text-center"></td>
+            <td class="text-center" id="ttq"></td>
+            <td class="text-center"></td>
+            <td class="text-center" id="ttc"></td>
+            <td class="text-center"></td>
+            <td class="text-center" id="ttp"></td>
+            <td class="text-center" id="tth"></td>
+        </tr>
+    </tbody>
     <tbody id="portfoliotablebody">
         <tr>
             <th scope="row" class="text-center">1</th>

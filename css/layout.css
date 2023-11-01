@@ -298,9 +298,12 @@
 }
 .smallBtn{
     border: 2px solid #ffffff;
-    padding: 2px 4px;
+    padding: 2px 5px;
     color: #ffffff;
     background: #2c2a35;
     border-radius: 3px;
     cursor: pointer;
+}
+#freezedAmountBox{
+    color: #5097d9;
 }

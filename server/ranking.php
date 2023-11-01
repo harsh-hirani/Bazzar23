@@ -11,11 +11,11 @@ function getName($id,$c){
     return $value;
 }
 
-$sql = "SELECT * FROM `user_current_sts` ORDER BY `balance` DESC limit 10";
+$sql = "SELECT id,balance,(balance+invest) as `param` FROM `user_current_sts` ORDER BY `param` DESC limit 10";
 foreach ($conn->query($sql) as $row) {
     $load[] = array(
         "name" => getName($row['id'],$conn),
-        "balance" => $row['balance'],
+        "balance" => $row['param'],
     );
 }
     echo json_encode(["status" => $status, "data" => $load]);

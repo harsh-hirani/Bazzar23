@@ -81,22 +81,25 @@ if ($operation == 'buy') {
         }
 
         $quantityLeft = $quantity;
+        $investing=0;
         $i = 0;
         while ($quantityLeft > 0) {
             if($i==mysqli_num_rows($data))break;
             $row = $load[$i];
-            $quantityInRow = $row['quantity'];
+            $quantityInRow = (int)$row['quantity'];
+            $rowvalue = (float)$row['value'];
             $ppaall = $value - (float)$row['value'];
             if ($quantityLeft >= $quantityInRow){
                 $app = $ppaall * $quantityInRow;
                 $sql = "UPDATE `".$username."_portfolio` set `fixed`='1',`cost`='$value',`pal`='$app',`sellDate`='$time' where id='".$row['id']."'";
                  mysqli_query($conn,$sql);
-
+                $investing+=$rowvalue*$quantityInRow;
                 $quantityLeft = $quantityLeft - $quantityInRow;
             }else{
                 $app = $ppaall * $quantityLeft;
                 $sql = "UPDATE `".$username."_portfolio` set `fixed`='1',`cost`='$value',`pal`='$app',`sellDate`='$time',`quantity`='$quantityLeft' where id='".$row['id']."'";
                  mysqli_query($conn,$sql); 
+                 $investing+= $rowvalue*$quantityLeft;
                 $addQuantity = $quantityInRow - $quantityLeft;
                 $pppp = $row['value'];
                 $sql = "INSERT INTO `".$username."_portfolio` (`stockId`, `quantity`, `value`, `cost`, `pal`, `buyDate`, `sellDate`, `fixed`)
@@ -116,7 +119,7 @@ if ($operation == 'buy') {
         $balance =(float) $ttmp['balance'];
         $freezed = (float) $ttmp['freez'];
         $invested = (float) $ttmp['invest'];
-        $finalinvested = $invested - $value * ($quantity-$quantityLeft);
+        $finalinvested = $invested - $investing;
         $tax = (float)$ttmp['tax'] + (float) (($quantity-$quantityLeft) * $taxper * $value);
         $finalbalance = $balance + $value * ($quantity-$quantityLeft) * (1-$taxper);
         $updatebalancesql = "UPDATE `user_current_sts` SET `invest`='$finalinvested',`balance`='$finalbalance',`date`='$time',`tax`='$tax' WHERE id=$id";
@@ -187,7 +190,13 @@ if ($operation == 'buy') {
         $freezed = (float) $ttmp['freez'];
         $finalinvested = (float) $ttmp['invest'];
         $newfreezed = $freezed - $picefreezed;
-        $tax = (float)$ttmp['tax'] + (float) ($taxper * ($piceincome+$picefreezed));
+        if(($piceincome+$picefreezed)<0){
+
+            $tax = (float)$ttmp['tax'] - (float) ($taxper * ($piceincome+$picefreezed));
+        }else{
+
+            $tax = (float)$ttmp['tax'] + (float) ($taxper * ($piceincome+$picefreezed));
+        }
         $finalbalance = $balance + $piceincome;
         $updatebalancesql = "UPDATE `user_current_sts` SET `freez`='$newfreezed',`balance`='$finalbalance',`tax`='$tax',`date`='$time' WHERE id=$id";
         mysqli_query($conn,$updatebalancesql);

@@ -25,7 +25,7 @@ function initupdates(){
         console.log(data);
         currentBalanceBox.innerHTML = parseFloat(data.data.balance).toFixed(2);
         freezed = data.data.freezed;
-
+        document.getElementById('freezedAmountBox').innerHTML = parseFloat(data.data.freezed).toFixed(2);;
         invenstmentBox.innerHTML = parseFloat(data.data.investment).toFixed(2)+" Rs";
         profitBox.innerHTML = parseFloat(data.data.pal).toFixed(2)+" Rs";
         taxBox.innerHTML = parseFloat(data.data.tax).toFixed(2)+" Rs";
@@ -92,7 +92,8 @@ function getTimestampDifference(timestamp1, timestamp2) {
         <th scope="col" class="text-center">COST</th>
         <th scope="col" class="text-center">SELLING PRICE</th>
         <th scope="col" class="text-center">P&L</th>
-        <th scope="col" class="text-center">HOLDING AMOUNT</th>`;
+        <th scope="col" class="text-center">HOLDING AMOUNT</th>
+        <th scope="col" class="text-center">STATUS</th>`;
     }else{
         tr= `<th scope="col"></th>
         <th scope="col" class="text-center">NAME</th>
@@ -101,8 +102,10 @@ function getTimestampDifference(timestamp1, timestamp2) {
         <th scope="col" class="text-center">COST</th>
         <th scope="col" class="text-center">BUYING PRICE</th>
         <th scope="col" class="text-center">P&L</th>
-        <th scope="col" class="text-center">HOLDING AMOUNT</th>`;
+        <th scope="col" class="text-center">HOLDING AMOUNT</th>
+        <th scope="col" class="text-center">STATUS</th>`;
     }
+    
     myTableTitles.innerHTML = tr;
     $.post(baseurl+"/server/getportfolio.php",{fixcode:code},(data)=>{
         let colorCode = "text-white";
@@ -116,19 +119,20 @@ function getTimestampDifference(timestamp1, timestamp2) {
                 updaterarraycount++;
                 console.log(element);
                 objids.push( parseInt(element.stockId));
+                
+                
             }else{
 
                 colorCode = (element.pal <0 )?"text-danger":"text-success";
             }
-            
             // console.log(stockarray[parseInt(element.stockId)-1]);
             currprice = parseInt(currentprices[parseInt(element.stockId)-1].price);
             buyprice = parseFloat(element.value);
             load += `<tr class="${colorCode} fw-bold">
             <th scope="row" class="text-center">${index+1}</th>
             <td class="text-center">${stockarray[parseInt(element.stockId)-1].name}</td>
-            <td class="text-center" ${(element.fixed % 2 == 0)?`id="qqq${updaterarraycount}"`:''}>${element.quantity}</td>
-            <td class="text-center" ${(element.fixed % 2 == 0)?`id="vvv${updaterarraycount}"`:''}>${element.value}</td>
+            <td class="text-center" ${(element.fixed % 2 == 0)?`id="qqq${updaterarraycount}"`:''}>${parseFloat(element.quantity).toFixed(2)}</td>
+            <td class="text-center" ${(element.fixed % 2 == 0)?`id="vvv${updaterarraycount}"`:''}>${parseFloat(element.value).toFixed(2)}</td>
             <td class="text-center">${parseFloat(element.value*element.quantity).toFixed(2)}</td>
             <td class="text-center" ${(element.fixed % 2 == 0)?`id="ccc${updaterarraycount}">`+parseFloat(currprice).toFixed(2):">"+parseFloat(element.cost).toFixed(2)}</td>
             <td class="text-center" ${(element.fixed % 2 == 0)?`id="ppp${updaterarraycount}">`+
@@ -138,9 +142,11 @@ function getTimestampDifference(timestamp1, timestamp2) {
             )
             
             :">"+parseFloat(element.pal).toFixed(2) }</td>
-            <td class="text-center" ${(element.fixed % 2 == 0)?`id="hhh${updaterarraycount}">`+(currprice)*element.quantity:">"+'Settled'}</td>
+            <td class="text-center" ${(element.fixed % 2 == 0)?`id="hhh${updaterarraycount}">`+(currprice)*element.quantity:(">"+parseFloat(element.quantity*element.value).toFixed(2))}</td>
+            <td class="text-center" ><span ${(element.fixed % 2 == 0)?`class="smallBtn"  onclick="release(${element.fixed},${element.stockId})">Release`:`>Settled`}</span></td>
                     </tr>`;
         });
+
         portfoliotablebody.innerHTML = load;
         if(code == 0){
             document.getElementById("r").classList.remove('active');
@@ -246,6 +252,9 @@ function loadoffset(title) {
 
         offsetstatus.innerHTML = "Holdings: " + data.data.allowed + ` ${(operation == 2)?`{freezable: ${parseFloat(data.data.price)}}`:""}`;
         offsetstockprice.value = data.data.price;
+        if(operation == 2){
+            offsetstockprice.value=""
+        }
         loadedStockPrice = data.data.price;
         loadedStockHolding = data.data.allowed;
         if(operation == 2 ){offsetstockprice.disabled=false;}
@@ -264,11 +273,13 @@ function buychecker(e){
             let cuttableAmmount = parseFloat(e.value)*currentStockPrice;
             let currentBalance = parseFloat(currentBalanceBox.innerText);
             if(cuttableAmmount> currentBalance-freezed){
-                e.value = Math.floor((currentBalance-freezed)/currentStockPrice);
+                e.value = parseInt((currentBalance-freezed)/currentStockPrice);
                 // alert("Please select a less quantity")
             }
         }
-        offsetstockprice.value = parseFloat(loadedStockPrice)*parseFloat(e.value);
+        // offsetstockprice.value = parseFloat(loadedStockPrice)*parseFloat(e.value);
+        offsetstatus.innerHTML = "Holdings: "+loadedStockHolding+" [Total Amount: "+ e.value * parseFloat(offsetstockprice.value) +" ]";
+
     }
 }
 
@@ -286,7 +297,7 @@ function shortsellchecker(e) {
 
         }
     }
-    offsetstatus.innerHTML = "Holdings: "+loadedStockHolding+". {freezable: "+ e.value * parseFloat(offsetstockprice.value) +" }";
+    offsetstatus.innerHTML = "Holdings: "+loadedStockHolding+" [freezable: "+ e.value * parseFloat(offsetstockprice.value) +" ]";
 }
 
 
@@ -324,7 +335,9 @@ function sellchecker(e){
                 // alert("Please select a less quantity")
             }
         }
-        offsetstockprice.value = parseInt(loadedStockPrice)*parseInt(e.value);
+        // offsetstockprice.value = parseInt(loadedStockPrice)*parseInt(e.value);
+        offsetstatus.innerHTML = "Holdings: "+loadedStockHolding+" [Total Amount: "+ e.value * parseFloat(offsetstockprice.value) +" ]";
+
     }
 }
 function sell(e) {
@@ -420,7 +433,7 @@ function perform(e){
     }
     
 }
-function release(t,id,q){
+function release(t,id){
     document.getElementById('stock'+id).click()
     if(t== 0){
         sellbtn.click();
@@ -441,6 +454,30 @@ setInterval(()=>{
         currentcandleprices = data.data;
     }); 
 },33000)
+
+function firstrowchange(code){
+    var totalq= 0;
+    var totalcost=0;
+    var totalpal=0;
+    var totalhold=0;
+    for(var i = 1; i<= updaterarraycount;i++){
+        let q = parseInt(document.getElementById('qqq'+i).innerHTML);
+        let v = parseFloat(document.getElementById('vvv'+i).innerHTML);
+        let nv = parseFloat( currentprices[objids[i-1]-1].price);
+        totalq+=q;
+        totalcost+=q*v;
+        if(code == 0){
+            totalpal+= (q*(nv - v));
+        }else{
+            totalpal+= (q*(v - nv));
+        }
+        totalhold+=q*nv;
+    }
+    document.getElementById('ttq').innerText = (totalq);
+    document.getElementById('ttc').innerText = parseFloat(totalcost).toFixed(2);
+    document.getElementById('ttp').innerText = parseFloat(totalpal).toFixed(2);
+    document.getElementById('tth').innerText = parseFloat(totalhold).toFixed(2);
+}
 setInterval(()=>{
     $.post(baseurl+"/server/realprice.php",{},(data)=>{
         currentprices = data.data;
@@ -465,15 +502,13 @@ setInterval(()=>{
             let nv = parseFloat( currentprices[objids[i-1]-1].price);
             document.getElementById('ccc'+i).innerHTML = nv.toFixed(2);
             if(portfoliocode == 0){
-
                 document.getElementById('ppp'+i).innerHTML = (q*(nv - v)).toFixed(2);
             }else{
-                
                 document.getElementById('ppp'+i).innerHTML = (q*(v - nv)).toFixed(2);
-
             }
             document.getElementById('hhh'+i).innerHTML = (q*nv).toFixed(2);
         }
     }
+    firstrowchange(portfoliocode)
 
 },1300)
