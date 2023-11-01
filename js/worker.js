@@ -166,15 +166,24 @@ function changeto(e) {
        showportfolio(portfoliocode);
     }else if(e=='ranking'){
         $.post(baseurl+"/server/ranking.php",{},(data)=>{
+            var rankelement ;
             console.log(data);
             var load = ``;
             data.data.forEach((element,index) => {
-                load += `<article class="leaderboard__profile">
-                            <span class="leaderboard__name">#${index+1} ${element.name}</span>
-                            <span class="leaderboard__value">${parseFloat(element.balance).toFixed(2)}<span>Rs</span></span>
-                        </article>`;
+                if(element.id==id){rankelement=element;}
+                else{
+
+                    load += `<article class="leaderboard__profile">
+                    <span class="leaderboard__name">#${element.rank} ${element.name}</span>
+                    <span class="leaderboard__value">${parseFloat(element.balance).toFixed(2)}<span>Rs</span></span>
+                    </article>`;
+                }
             });
-            leaderboardRanking.innerHTML = load;
+            let yourplate = `<article class="leaderboard__profile">
+            <span class="leaderboard__name">#${rankelement.rank} ${rankelement.name}</span>
+            <span class="leaderboard__value">${parseFloat(rankelement.balance).toFixed(2)}<span>Rs</span></span>
+            </article>`;
+            leaderboardRanking.innerHTML = yourplate+load;
         });
     }
     document.getElementById(showing).classList.remove("active");
@@ -478,6 +487,11 @@ function firstrowchange(code){
     document.getElementById('ttq').innerText = (totalq);
     document.getElementById('ttc').innerText = parseFloat(totalcost).toFixed(2);
     document.getElementById('ttp').innerText = parseFloat(totalpal).toFixed(2);
+    if(totalpal<0){
+        document.getElementById('ttp').style.color = "#E5380F";
+    }else{
+        document.getElementById('ttp').style.color = "#0FE25E";
+    }
     document.getElementById('tth').innerText = parseFloat(totalhold).toFixed(2);
 }
 setInterval(()=>{
@@ -503,10 +517,18 @@ setInterval(()=>{
             let v = parseFloat(document.getElementById('vvv'+i).innerHTML);
             let nv = parseFloat( currentprices[objids[i-1]-1].price);
             document.getElementById('ccc'+i).innerHTML = nv.toFixed(2);
+            var pll ;
             if(portfoliocode == 0){
-                document.getElementById('ppp'+i).innerHTML = (q*(nv - v)).toFixed(2);
+                pll = (q*(nv - v)).toFixed(2);
             }else{
-                document.getElementById('ppp'+i).innerHTML = (q*(v - nv)).toFixed(2);
+                pll = (q*(v - nv)).toFixed(2);
+            }
+            document.getElementById('ppp'+i).innerHTML = pll;
+            if(pll<0){
+                document.getElementById('ppp'+i).style.color = "#E5380F";
+
+            }else{
+                document.getElementById('ppp'+i).style.color = "#0FE25E";
             }
             document.getElementById('hhh'+i).innerHTML = (q*nv).toFixed(2);
         }

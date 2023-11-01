@@ -10,10 +10,22 @@ function getName($id,$c){
     $value = $tmp? $tmp['fname']." ".$tmp['lname'] : "User Not Found";
     return $value;
 }
-
-$sql = "SELECT id,balance,(balance+invest) as `param` FROM `user_current_sts` ORDER BY `param` DESC limit 10";
+$sql = "
+With cte as
+(
+    SELECT 
+        id,(balance+invest) as `param`,
+        RANK() OVER (ORDER BY param DESC) ranking 
+    FROM 
+        `user_current_sts`
+)
+select * 
+from cte";
+// $sql = "SELECT id,balance,(balance+invest) as `param` FROM `user_current_sts` ORDER BY `param` DESC";
 foreach ($conn->query($sql) as $row) {
     $load[] = array(
+        "id" => $row['id'],
+        "rank" => $row['ranking'],
         "name" => getName($row['id'],$conn),
         "balance" => $row['param'],
     );

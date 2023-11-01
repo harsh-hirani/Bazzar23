@@ -91,7 +91,7 @@
         for(i=0;i<stockarray.length;i++){
             load += `<input type="text" name="${stockarray[i].id}" placeholder="${stockarray[i].name}">`
         }
-        load+= '<input type="submit" value="submit">'
+        load+= '<br /><br /><input type="reset" value="reset"><br /><br /><br /><br /><input type="submit" value="submit">'
         document.getElementById('change').innerHTML = load;
         $('#change').submit(function(e){
             e.preventDefault();

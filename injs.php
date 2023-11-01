@@ -6,7 +6,9 @@
     <script src="https://cdn.amcharts.com/lib/5/stock.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
     <script >
+      const id = 
         <?php 
+        echo $_COOKIE['userId'].";\n";
         include "js/vars.js";
         //  include 'js/finalchartstock.js';
          include "js/testchart.js";
