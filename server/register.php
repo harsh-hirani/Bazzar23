@@ -44,7 +44,7 @@ if ($conn->query($sql) === TRUE) {
     $result = $conn->query($sql);
     $idd = mysqli_fetch_assoc($result)['id'];
     $sql = "INSERT INTO `user_current_sts`( `id`,`balance`, `invest`, `profit`, `tax`, `date`, `freez`) VALUES 
-    ('$idd','100000','0','0','0','$time','1')";
+    ('$idd','100000','0','0','0','$time','0')";
    if( mysqli_query($conn,$sql)){
     echo "New record created successfully";
    }else{
