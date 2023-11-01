@@ -203,7 +203,7 @@ function graphchange(e,graph){
 
    
     $.post(baseurl+"/server/stockapi.php",{stockId:graph},(data)=>{
-
+            console.log(data);
             // GRAPH.valueSeries.data.setAll(data.data);
             setFinalData(data.data);
             setSeriesType(currentGraphType)

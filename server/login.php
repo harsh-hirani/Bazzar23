@@ -3,7 +3,7 @@ include 'conn.php';
 $card = $_POST['card'];
 $password = $_POST['passs'];
 $sql = "SELECT * FROM users WHERE (phone = '$card' or email= '$card')and data = '".md5($password)."' limit 1";
-$result = $conn->query($sql);
+$result = mysqli_query($conn,$sql);
 if (mysqli_num_rows($result)>0){
 
 $dump = mysqli_fetch_assoc($result);
