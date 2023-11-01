@@ -10,6 +10,7 @@ function getName($id,$c){
     $value = $tmp? $tmp['fname']." ".$tmp['lname'] : "User Not Found";
     return $value;
 }
+try{
 $sql = "With cte as( SELECT id,(balance+invest) as `param`, RANK() OVER (ORDER BY param DESC) ranking FROM `user_current_sts`) select * from cte";
 // $sql = "SELECT id,balance,(balance+invest) as `param` FROM `user_current_sts` ORDER BY `param` DESC";
 $res = mysqli_query($conn,$sql);
@@ -26,7 +27,9 @@ for($i=0;$i<$rows;$i++) {
 }
     echo json_encode(["status" => $status, "data" => $load]);
 
-
+}catch(Exception $e){
+    echo json_encode(["status" => $status, "data" => array("error" => $e->getMessage())]);
+}
     // echo json_encode(["status" => $status, "data" => array("error" => mysql_error($conn))]);
 
 ?>
