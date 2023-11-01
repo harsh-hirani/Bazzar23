@@ -10,19 +10,13 @@ function getName($id,$c){
     $value = $tmp? $tmp['fname']." ".$tmp['lname'] : "User Not Found";
     return $value;
 }
-$sql = "
-With cte as
-(
-    SELECT 
-        id,(balance+invest) as `param`,
-        RANK() OVER (ORDER BY param DESC) ranking 
-    FROM 
-        `user_current_sts`
-)
-select * 
-from cte";
+$sql = "With cte as( SELECT id,(balance+invest) as `param`, RANK() OVER (ORDER BY param DESC) ranking FROM `user_current_sts`) select * from cte";
 // $sql = "SELECT id,balance,(balance+invest) as `param` FROM `user_current_sts` ORDER BY `param` DESC";
-foreach ($conn->query($sql) as $row) {
+$res = mysqli_query($conn,$sql);
+$load = array();
+$rows = mysqli_num_rows($res);
+for($i=0;$i<$rows;$i++) {
+    $row = mysqli_fetch_assoc($res);
     $load[] = array(
         "id" => $row['id'],
         "rank" => $row['ranking'],
