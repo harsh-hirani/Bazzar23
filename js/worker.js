@@ -423,12 +423,12 @@ function perform(e){
         }else if(operation == 1){
             sell(e);
         }else if(operation == 2){
-            if(parseFloat(offsetstockprice.value) - parseFloat(loadedStockPrice) >= 0){
-                alert("can't set price higher than or same as stock price");
-            }else{
-                shortsellchecker(offsetstockQuantity)
+            // if(parseFloat(offsetstockprice.value) - parseFloat(loadedStockPrice) >= 0){
+                // alert("can't set price higher than or same as stock price");
+            // }else{
+                // shortsellchecker(offsetstockQuantity)
                 shortsell(e);
-            }
+            // }
             
             
             
