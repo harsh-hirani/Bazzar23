@@ -248,9 +248,7 @@ function loadoffset(title) {
     offsetButton.innerHTML = title;
     offcanvas = true;
     document.getElementById("labelchange").innerHTML='Price';
-    if(operation == 2){
-        document.getElementById("labelchange").innerHTML='Limit';
-    }
+   
     console.log('object');
     let sendop = (operation<2)?0:2;
     console.log(sendop);
@@ -261,12 +259,9 @@ function loadoffset(title) {
 
         offsetstatus.innerHTML = "Holdings: " + data.data.allowed + ` ${(operation == 2)?`[freezable: 0 ]`:""}`;
         offsetstockprice.value = parseFloat(data.data.price).toFixed(2);
-        if(operation == 2){
-            offsetstockprice.value=""
-        }
+       
         loadedStockPrice = data.data.price;
         loadedStockHolding = data.data.allowed;
-        if(operation == 2 ){offsetstockprice.disabled=false;}
     });
 }
 
