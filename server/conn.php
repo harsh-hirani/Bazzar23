@@ -1,7 +1,7 @@
 <?php
 
-//  $conn = mysqli_connect("localhost", "root", "", "bazzar");
- $conn = mysqli_connect("localhost", "restless", "goGETit", "bazzar");
+$conn = mysqli_connect("localhost", "root", "", "bazzar");
+//  $conn = mysqli_connect("localhost", "restless", "goGETit", "bazzar");
 $stockarray = array(
 1=>'tcs',
 2=>'jfs',

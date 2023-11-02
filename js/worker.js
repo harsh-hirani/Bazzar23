@@ -313,7 +313,7 @@ function buy(e) {
     offsetstatus.innerHTML = "Processing...";
     $.post(baseurl+"/server/setportfolio.php",{stockId:currentGraph,operation:'buy',quantity:offsetstockQuantity.value},(data)=>{
         console.log(data);  
-        offsetstatus.innerHTML = data.data.quantity+" bought at "+(data.data.price*data.data.quantity)+".";
+        offsetstatus.innerHTML = data.data.quantity+" bought at "+(data.data.price*data.data.quantity).toFixed(2)+".";
         if(data.data.message=="success"){
             currentBalanceBox.innerHTML = parseFloat(data.data.balance).toFixed(2);
 
@@ -352,7 +352,7 @@ function sell(e) {
     offsetstatus.innerHTML = "Processing...";
     $.post(baseurl+"/server/setportfolio.php",{stockId:currentGraph,operation:'sell',quantity:offsetstockQuantity.value},(data,s)=>{
         console.log(s,data);
-        offsetstatus.innerHTML = data.data.quantity+" sold at "+(data.data.price*data.data.quantity)+".";       
+        offsetstatus.innerHTML = data.data.quantity+" sold at "+(data.data.price*data.data.quantity).toFixed(2)+".";       
         if(data.data.message=="success"){
             currentBalanceBox.innerHTML = data.data.balance.toFixed(2);
             doneworker();
@@ -401,7 +401,7 @@ function shortbuy(e){
     offsetstatus.innerHTML = "Processing...";
     $.post(baseurl+"/server/setportfolio.php",{stockId:currentGraph,operation:'shortbuy',quantity:offsetstockQuantity.value},(data)=>{
         console.log(data);
-        offsetstatus.innerHTML = data.data.quantity+" Bought at "+(data.data.price*data.data.quantity)+".";       
+        offsetstatus.innerHTML = data.data.quantity+" Bought at "+(data.data.price*data.data.quantity).toFixed(2)+".";       
         if(data.data.message=="success"){
             currentBalanceBox.innerHTML = parseFloat(data.data.balance).toFixed(2);
             doneworker();
@@ -494,7 +494,7 @@ setInterval(()=>{
         currentprices = data.data;
         data.data.forEach((element,index)=>{
             pricesTabs[index].innerHTML = parseFloat(element.price).toFixed(2);
-            let change = element.price - currentcandleprices[index].nextValue;
+            let change = element.price - currentcandleprices[index];
             if(change < 0){
                 //loosing
                 changeTabs[index].classList.add("down");
@@ -503,7 +503,7 @@ setInterval(()=>{
                 changeTabs[index].classList.remove("down");
                 changeTabs[index].classList.add("up");
             }
-            changeTabs[index].innerHTML = (100*change/currentcandleprices[index].prevValue).toFixed(2)+"%";
+            changeTabs[index].innerHTML = (100*change/currentcandleprices[index]).toFixed(2)+"%";
         });
     });
     if (showing == 'portfolio') {
