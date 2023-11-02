@@ -2,7 +2,6 @@
     <div class="investedMoney">
         <p>Current Balance:</p>
         <p class="money"><span id="currentBalanceBox">--.--</span> Rs.</p>
-        <p id="freezedAmount"><span id="freezedAmountBox">--.--</span> Rs.</p>
     </div>
 </div>
 <div id="menu">

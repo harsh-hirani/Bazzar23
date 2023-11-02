@@ -59,7 +59,7 @@ if(!isset($_COOKIE['username'])){
                             <div class="infoinner" id="info1"></div>
                         </div>
                         <div class="info-item">
-                            <div class="title">net profit / loss</div>
+                            <div class="title">Realized profit / loss</div>
                             <div class="infoinner" id="info2"></div>
                         </div>
                         <div class="info-item">

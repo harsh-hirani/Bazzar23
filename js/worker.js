@@ -25,7 +25,7 @@ function initupdates(){
         console.log(data);
         currentBalanceBox.innerHTML = parseFloat(data.data.balance).toFixed(2);
         freezed = data.data.freezed;
-        document.getElementById('freezedAmountBox').innerHTML = parseFloat(data.data.freezed).toFixed(2);;
+        // document.getElementById('freezedAmountBox').innerHTML = parseFloat(data.data.freezed).toFixed(2);;
         invenstmentBox.innerHTML = parseFloat(data.data.investment).toFixed(2)+" Rs";
         profitBox.innerHTML = parseFloat(data.data.pal).toFixed(2)+" Rs";
         taxBox.innerHTML = parseFloat(data.data.tax).toFixed(2)+" Rs";
@@ -43,7 +43,7 @@ $.post(baseurl+'/server/initial.php',{},(data)=>{
     taxBox.innerHTML = parseFloat(data.data.tax).toFixed(2)+" Rs";
     $.post(baseurl +"/server/realprice.php",{},(data)=>{currentprices=data.data})
     $.post(baseurl+"/server/stockprice.php",{},(data)=>{console.log(data)
-        currentcandleprices = data.data;
+        // currentcandleprices = data.data;
         data.data.forEach((element,index) => {
             pricesTabs[index].innerHTML = element.nextValue;
             let change = element.nextValue - element.prevValue;
@@ -456,9 +456,9 @@ setInterval(()=>{
             GRAPH.volumeSeries.data.setAll(data.data);
             GRAPH.sbSeries.data.setAll(data.data);
     });
-    $.post(baseurl+"/server/stockprice.php",{},(data)=>{
-        currentcandleprices = data.data;
-    }); 
+    // $.post(baseurl+"/server/stockprice.php",{},(data)=>{
+    //     currentcandleprices = data.data;
+    // }); 
 },33000)
 
 function firstrowchange(code){
