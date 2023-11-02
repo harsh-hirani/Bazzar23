@@ -10,7 +10,7 @@ function getValueAllByParts($stockId,$ar,$c){
 }
 function generateRandomValue() {
     $up= rand(0, 1);
-    $change = rand(0, 1)/1000;
+    $change = rand(0, 15)/100000;
     if($up==1){
         return $change;}
         else{

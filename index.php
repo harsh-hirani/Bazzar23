@@ -1,6 +1,6 @@
 <?php
 if(!isset($_COOKIE['username'])){
-    echo "<script>location.replace('./register')</script>";
+    echo "<script>location.replace('./login')</script>";
 }else{
 ?>
 

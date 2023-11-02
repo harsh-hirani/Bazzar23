@@ -112,16 +112,16 @@ if(isset($_POST['oip'])){
             }console.log(send);
 
             
-            // $.post('./changing.php',send,(data,sts)=>{
-            //     console.log(sts,data);
-            // });
+            $.post('./changing.php',send,(data,sts)=>{
+                console.log(sts,data);
+            });
         }) 
         
-        // setInterval(() => {
-        //     $.post('../random/random.php',{},(data,sts)=>{
-        //         console.log(sts,data);
-        //     });
-        // }, 1000);
+        setInterval(() => {
+            $.post('../random/random.php',{},(data,sts)=>{
+                console.log(sts,data);
+            });
+        }, 1000);
 
         function handle(e){
             if(e.value!=''){
