@@ -2,6 +2,11 @@
 
 include '../conn.php';
 try{
+    if(isset($_GET['pass'])){
+        if(isset($_POST['pass']) && $_POST['pass']==""){
+            
+        }
+    }
     $values = array(
         3350,220,1380,380,600,1470,560,7500,15,
         10560,640,5370,1020,1110,5400,570,1170,

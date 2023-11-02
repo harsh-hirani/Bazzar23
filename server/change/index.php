@@ -1,3 +1,13 @@
+<?php
+
+if(isset($_POST['oip'])){
+    if(isset($_POST['oip']) && $_POST['oip']=='1254'){
+        ?>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,13 +33,13 @@
             {id:5,
             name: "LIC"},
             {id:6,
-            name: "HDFC"},
+            name: "HDFC Bnk"},
             {id:7,
-            name: "SBI"},
+            name: "SBI Bank"},
             {id:8,
             name: "Bajaj Finance"},
             {id:9,
-            name: "YES"},
+            name: "YES Bank"},
 
             {id:10,
             name: "Maruti Suzuki"},
@@ -81,7 +91,7 @@
             {id:31,
             name: "Reliance Ind."},
             {id:32,
-            name: "Reliance Ind."},
+            name: "ONGC"},
             {id:33,
             name: "IOC"},
             {id:34,
@@ -89,7 +99,7 @@
         ];
         var load = ""
         for(i=0;i<stockarray.length;i++){
-            load += `<input type="text" name="${stockarray[i].id}" placeholder="${stockarray[i].name}">`
+            load += `<input oninput="handle(this)" type="text" name="${stockarray[i].id}" placeholder="${stockarray[i].name}">`
         }
         load+= '<br /><br /><input type="reset" value="reset"><br /><br /><br /><br /><input type="submit" value="submit">'
         document.getElementById('change').innerHTML = load;
@@ -102,16 +112,31 @@
             }console.log(send);
 
             
-            $.post('./changing.php',send,(data,sts)=>{
-                console.log(sts,data);
-            });
+            // $.post('./changing.php',send,(data,sts)=>{
+            //     console.log(sts,data);
+            // });
         }) 
         
-        setInterval(() => {
-            $.post('../random/random.php',{},(data,sts)=>{
-                console.log(sts,data);
-            });
-        }, 1000);
+        // setInterval(() => {
+        //     $.post('../random/random.php',{},(data,sts)=>{
+        //         console.log(sts,data);
+        //     });
+        // }, 1000);
+
+        function handle(e){
+            if(e.value!=''){
+                if(e.value<-2){
+                    e.value = -2;
+                }else if(e.value>2){
+                    e.value =2;
+                }
+            }
+        }
     </script>
 </body>
 </html>
+<?php
+    }
+}
+
+?>
