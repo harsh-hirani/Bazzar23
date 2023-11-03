@@ -131,10 +131,10 @@ for ($i = 0; $i < count($nums); $i++) {
     $num = $nums[$i];
     $sql = "INSERT INTO `codes` (`id`, `number`,`byWhom`,`uname`,`date`) VALUES (NULL, '$num','0','0','0' );";
     echo $i." - ".$sql . " ||<br>";
-    // if (mysqli_query($conn, $sql)) {
-    //     echo 'success<br>';
-    // }else{
-    //     echo mysqli_error($conn).'<br>';
-    // }
+    if (mysqli_query($conn, $sql)) {
+        echo 'success<br>';
+    }else{
+        echo mysqli_error($conn).'<br>';
+    }
 }
 ?>
