@@ -1,6 +1,6 @@
 <?php
 include 'conn.php';
-$card = $_POST['card'];
+$card = trim($_POST['card']);
 $password = $_POST['passs'];
 $sql = "SELECT * FROM users WHERE (phone = '$card' or email= '$card')and data = '".md5($password)."' limit 1";
 $result = mysqli_query($conn,$sql);

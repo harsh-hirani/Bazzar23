@@ -47,9 +47,21 @@
     background-color: #20211c;
     min-height: 70px;
     height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     z-index: 4;
 }
-
+#nav figure{
+    margin: 0px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80%;
+}
+#nav figure img{
+    height: 100%;
+}
 #screen #content #main {
     background-color: rgb(241, 241, 241);
     display: flex;
@@ -212,6 +224,10 @@
     #chart {
         grid-area: 2/3/3/-1;
     }
+    .d-b-laptop{
+        display: none;
+    }
+    
 }
 
 @media (max-width: 768px) {
@@ -306,4 +322,8 @@
 }
 #freezedAmountBox{
     color: #5097d9;
+}
+#news{
+    background: #fff;
+    overflow-y: auto;
 }

@@ -43,7 +43,7 @@ var activeSection = "c1";
 var freezed = 0;
 var updaterarraycount=0;
 var currentcandleprices= [
-    3350,220,1380,380,600,1470,560,7500,15,
+    3350,1260,1380,380,600,1470,560,7500,15,
         10560,640,5370,1020,1110,5400,570,1170,
         3120,37540,2480,890,2260,640,120,310,
         780,420,2900,240,8210,2270,180,90,120
@@ -56,7 +56,7 @@ stockarray = [
     {id:1,
     name:"TCS"},
     {id:2,
-    name: "JFS"},
+    name: "HCL Tech"},
     {id:3,
     name: "Infosys"},
     {id:4,

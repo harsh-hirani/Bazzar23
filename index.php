@@ -44,7 +44,23 @@ if(!isset($_COOKIE['username'])){
 
         <div id="content">
             <nav id="nav" class="text-danger px-5 fs-1 fw-bolder"> 
-                <?php echo $_COOKIE['username'];?>
+                <figure>
+                    <img src="assets/logo.png" alt="logo">
+                </figure>
+                <div class="d-b-laptop">
+                    <div>
+                        BAZAAR 5.0
+                    </div>
+                    <div>
+                        <?php echo $_COOKIE['fname'];?>
+                    </div>
+                </div>
+                <div class="d-b-mobile">
+                    BAZAAR 5.0
+                </div>
+                <div class="d-b-mobile">
+                    <?php echo $_COOKIE['fname'];?>
+                </div>
             </nav>
             <main id="main">
                 <div id="notification"></div>
@@ -75,7 +91,9 @@ if(!isset($_COOKIE['username'])){
                         <div id="portfolio">
                            <?php include 'portfolio.php';?>
                         </div>
-                        <div id="news">news</div>
+                        <div id="news">
+                            <?php include 'news.php';?>
+                        </div>
                         <div id="ranking">
                             <?php include 'ranking.php';?>
                         </div>

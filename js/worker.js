@@ -257,7 +257,7 @@ function loadoffset(title) {
         offsetsendbutton.style.opacity = 1;
         offsetstockname.value = stockarray[currentGraph-1].name;
 
-        offsetstatus.innerHTML = "Holdings: " + data.data.allowed + ` ${(operation == 2)?`[freezable: 0 ]`:""}`;
+        offsetstatus.innerHTML = "Holdings: " + data.data.allowed + ` ${(operation == 2)?`[Total Amount: 0 ]`:""}`;
         offsetstockprice.value = parseFloat(data.data.price).toFixed(2);
        
         loadedStockPrice = data.data.price;
@@ -301,7 +301,7 @@ function shortsellchecker(e) {
 
         }
     }
-    offsetstatus.innerHTML = "Holdings: "+loadedStockHolding+" [freezable: "+ parseFloat(e.value * parseFloat(offsetstockprice.value)).toFixed(2) +" ]";
+    offsetstatus.innerHTML = "Holdings: "+loadedStockHolding+" [Total Amount: "+ parseFloat(e.value * parseFloat(offsetstockprice.value)).toFixed(2) +" ]";
 }
 
 function evehi(){
