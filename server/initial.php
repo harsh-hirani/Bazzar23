@@ -1,7 +1,7 @@
 <?php
+try{
 include 'conn.php';
 header('Content-Type: application/json');
-try{
 
 
 $sql = "SELECT * from `user_current_sts` where id=$id";
