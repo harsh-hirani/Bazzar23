@@ -31,8 +31,9 @@ function initupdates(){
         taxBox.innerHTML = parseFloat(data.data.tax).toFixed(2)+" Rs";
     });
 }
-$.post(baseurl+'/server/initial.php',{},(data)=>{
-    console.log(data);
+console.log('object');
+$.post(baseurl+'/server/initial.php',{},(data,STS)=>{
+    console.log(STS,data);
     currentBalanceBox.innerHTML = parseFloat(data.data.balance).toFixed(2);
     freezed = data.data.freezed;
     document.getElementById("stock1").click();
