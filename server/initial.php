@@ -1,6 +1,8 @@
 <?php
 include 'conn.php';
 header('Content-Type: application/json');
+try{
+
 
 $sql = "SELECT * from `user_current_sts` where id=$id";
 $ttmmpp = mysqli_fetch_assoc(mysqli_query($conn,$sql));
@@ -16,4 +18,8 @@ $load['investment'] = (float)$ttmmpp['investment'];
 $ttmmpp = mysqli_fetch_assoc(mysqli_query($conn,$sql));
 $load['pal'] = (float)$ttmmpp['pal'];
 echo json_encode(["status" => 'true', "data" => $load]);
+}catch(Exception $e){
+    echo "error - ".$stockarray[$i]." 3<br>";
+    echo $e->getMessage()."<br>";
+}
 ?>
