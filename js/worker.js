@@ -180,6 +180,7 @@ function changeto(e) {
                     </article>`;
                 }
             });
+            
             let yourplate = `<article class="leaderboard__profile">
             <span class="leaderboard__name">#${rankelement.rank} ${rankelement.name}</span>
             <span class="leaderboard__value">${parseFloat(rankelement.balance).toFixed(2)}<span>Rs</span></span>
