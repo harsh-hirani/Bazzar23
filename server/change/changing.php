@@ -20,7 +20,7 @@ foreach ($_POST as $key => $value) {
                   );
            }else{
                 $senddata[]=array
-                ("error" => mysql_error($conn));
+                ("error" => mysqli_error($conn));
            }
     }catch(Exception $e){
         $senddata[]=array

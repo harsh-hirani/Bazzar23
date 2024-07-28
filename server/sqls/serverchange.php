@@ -8,7 +8,7 @@ include '../conn.php';
         echo "success - user_current_sts<br>";
     }else{
         echo "error - user_current_sts<br>";
-        echo mysql_error($conn)."<br>";
+        echo mysqli_error($conn)."<br>";
     }
     $sql2 = "SELECT uname FROM `users`";
     $data = mysqli_query($conn,$sql2);
@@ -20,7 +20,7 @@ include '../conn.php';
             echo "success - ".$uname."_portfolio<br>";
         }else{
             echo "error - ".$uname."_portfolio<br>";
-            echo mysql_error($conn)."<br>";
+            echo mysqli_error($conn)."<br>";
         }
 
     } 

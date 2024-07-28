@@ -11,6 +11,7 @@ if (isset($_POST['stockId'])) {
         $load = array() ;
         for($i=0;$i<mysqli_num_rows($data);$i++){
             $dump = mysqli_fetch_assoc($data);
+            // convert to float from string for compatibility
             foreach ($dump as $key => $value) {
                 $dump[$key] = (float)$value;
             }
@@ -18,7 +19,7 @@ if (isset($_POST['stockId'])) {
         }
         echo json_encode(["status" => $status, "data" => $load]);
     }else{  
-        echo json_encode(["status" => $status, "data" => array("error" => mysql_error($conn))]);
+        echo json_encode(["status" => $status, "data" => array("error" => mysqli_error($conn))]);
     }
 }
 
