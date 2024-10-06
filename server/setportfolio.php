@@ -33,7 +33,7 @@ if ($operation == 'buy') {
         mysqli_query($conn,$updatebalancesql);
         echo json_encode(["status" => $status, "data" => array("message" => "success","name"=>$stockarray[$stockId],"price" => $value,"newprice"=>$newprice,"quantity" => $quantity,"balance" => $finalbalance,"freezed" => $freezed,"invested"=>$finalinvested)]);
     }else{
-        echo json_encode(["status" => $status, "data" => array("error" => mysql_error($conn))]);
+        echo json_encode(["status" => $status, "data" => array("error" => mysqli_error($conn))]);
     }
 }else if($operation == 'shortsell'){
     try{
@@ -126,7 +126,7 @@ if ($operation == 'buy') {
         mysqli_query($conn,$updatebalancesql);
         echo json_encode(["status" => $status, "data" => array("message" => "success","name"=>$stockarray[$stockId],"price" => $value,"newprice"=>$newprice,"quantity" => ($quantity-$quantityLeft),"balance"=>$finalbalance,"tax"=>$tax,"freezed"=>$freezed,"invested"=>$finalinvested)]);
     }else{
-        echo json_encode(["status" => $status, "data" => array("error" => mysql_error($conn))]);
+        echo json_encode(["status" => $status, "data" => array("error" => mysqli_error($conn))]);
     }
 }catch(Exception $e){
     echo json_encode(["status" => $status, "data" => array("error" => $e,"sql"=>$sql,"message"=>$e->getMessage() . " at line " . $e->getLine() . " of " . $e->getFile() . "<br>" . $e->getTraceAsString())]);
@@ -202,7 +202,7 @@ if ($operation == 'buy') {
         mysqli_query($conn,$updatebalancesql);
         echo json_encode(["status" => $status, "data" => array("message" => "success","name"=>$stockarray[$stockId],"price" => $value,"newprice"=>$newprice,"quantity" => ($quantity-$quantityLeft),"balance"=>$finalbalance,"tax"=>$tax,"freezed"=>$newfreezed,"invested"=>$finalinvested)]);
     }else{
-        echo json_encode(["status" => $status, "data" => array("error" => mysql_error($conn))]);
+        echo json_encode(["status" => $status, "data" => array("error" => mysqli_error($conn))]);
     }
 
 }
